@@ -1,0 +1,88 @@
+<!-- <p>view-receipts-by-client works!</p> -->
+
+<body>
+    <div class="filter mt-2 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
+            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getReceiptsByClient(this.client.id)">Get Receipts By Client</button>&nbsp;
+            <!-- <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
+                {{showImage ? 'Hide': 'Show'}} Image
+            </button> -->
+        </div>
+        <div class="container-fluid">
+            <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-receipts-by-client" method=post>
+                <div class="form-row text-center justify-content-center">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <label for="exampleInputId"><h4>Enter client ID</h4></label>&nbsp;
+                        <button type="reset" class="btn btn-outline-light">Reset</button>
+                        <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a client ID.
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <h6>Format: yyyy-MM-dd HH:mm</h6>
+                        <input type='text' [(ngModel)] = 'listFilter' name="listFilter" id="type" placeholder="Filter by Receipt Date">
+                        <h4>Filtered by: {{listFilter}}</h4>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="table-responsive mt-3">
+                <div *ngIf="clientReceipts">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Client ID</th>
+                                <th>Receipt ID</th>
+                                <th>Client Name</th>
+                                <th>Client Phone Number</th>
+                                <th>Client Email</th>
+                                <th>Client Balance</th>
+                                <th>Receipt Date</th>
+                                <th>Car ID</th>
+                                <th>Car Number</th>
+                                <th>Car Color</th>
+                                <th>Car Type</th>
+                                <th>Car Price</th>
+                                <!-- <th *ngIf="showImage">Image for familiarize only</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cr of clientReceipts | clientReceiptDateFilter: listFilter">
+                                <td class="table-dark">{{client.id}}</td>
+                                <td class="table-secondary">
+                                    <a routerLink="../view-all-receipts/receipt-details/{{cr.receiptId}}" routerLinkActive="active-link">
+                                        {{cr.receiptId}}
+                                    </a>
+                                </td>
+                                <td>{{cr.clientName}}</td>
+                                <td>{{cr.clientPhoneNumber}}</td>
+                                <td>{{cr.clientEmail}}</td>
+                                <td>&#36;{{cr.clientBalance}}</td>
+                                <td>{{cr.receiptDate}}</td>
+                                <td>{{cr.carId}}</td>
+                                <td>{{cr.carNumber}}</td>
+                                <td>{{cr.carColor}}</td>
+                                <td>{{cr.carType}}</td>
+                                <td>&#36;{{cr.carPrice}}</td>
+                                <!-- <td *ngIf="showImage">
+                                    <a href="/assets/images/CARS/{{cr.carType}}.jpg" target="blank">
+                                    <img src="/assets/images/CARS/{{cr.carType}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                    </a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>

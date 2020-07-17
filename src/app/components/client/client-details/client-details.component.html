@@ -1,0 +1,56 @@
+<!-- <p>client-details works!</p> -->
+
+<body>
+    <div class="filter mt-2 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAllClients()">Back to all clients</button>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container text-center">
+            <!-- <div class="details"> do not delete
+                <h3>ID: {{client?.id}}</h3>
+                <h3>Name: {{client?.name}}</h3>
+                <h3>DOB: {{client?.birthday}}</h3>
+                <h3>Phone number: {{client?.phoneNumber}}</h3>
+                <h3>Email: {{client?.email}}</h3>
+                <h3>Password: {{client?.password}}</h3>
+                <h3>Balance: {{client?.balance}}</h3>
+            </div> -->
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered table-hover text-center">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{client?.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{client?.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>DOB</th>
+                            <td>{{client?.birthday}}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone number</th>
+                            <td>{{client?.phoneNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{client?.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Password</th>
+                            <td>{{client?.password}}</td>
+                        </tr>
+                        <tr>
+                            <th>Balance</th>
+                            <td>&#36;{{client?.balance}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

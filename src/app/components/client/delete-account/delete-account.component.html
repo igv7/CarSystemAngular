@@ -1,0 +1,38 @@
+<!-- <p>delete-account works!</p> -->
+
+<body>
+    <div class="filter mt-2 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToMainPage()">Back to Main Page</button>&nbsp;
+            <button type="button" class="btn btn-danger mb-2 mt-2" (click)="deleteAccount()">Delete Account</button>&nbsp;
+        </div>
+        <p style="font-size: 50px;">😢
+            <a routerLink="/home" routerLinkActive="active-link">
+                <span style="font-size: 50px;">Please stay with us</span>
+            </a>&#10084;
+        </p>
+    </div>
+    <!-- <div class="container-fluid">
+        <div class="container">
+            <p style="font-size: 50px;">😭😢&#10084;</p>
+            <div class="table-responsive mt-3">
+                <img *ngIf="!client" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="client">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Client Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{client}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</body>
+<router-outlet></router-outlet>

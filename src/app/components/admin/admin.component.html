@@ -1,0 +1,85 @@
+
+<br><br>
+<body>
+    <div class="container-fluid">
+        <div class="container"><hr>
+            <div class="row text-center justify-content-center">
+                <div class="button">
+                    <button type="button" class="btn btn-dark mb-3 mt-3" (click)="logout()">Sign Out</button>
+                </div>
+            </div><hr>
+            <div class="row text-center justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-success mb-1 mt-1" (click)="addClient()">Add Client</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-warning mb-1 mt-1" (click)="updateClient()">Update Client</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewClient()">View Client</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllClients()">View All Clients</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-danger mb-1 mt-1" (click)="deleteClient()">Delete Client</button>
+                </div>
+            </div><hr>
+            <div class="row text-center justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-success mb-1 mt-1" (click)="addCar()">Add Car</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-warning mb-1 mt-1" (click)="updateCar()">Update Car</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewCar()">View Car</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewCarByNumber()">View Car By Number</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllCars()">View All Cars</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-danger mb-1 mt-1" (click)="deleteCar()">Delete Car</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllCarsByType()">View All Cars By Type</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllCarsByColor()">View All Cars By Color</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-danger mb-1 mt-1" (click)="returnCar()">Return Car</button>
+                </div>
+            </div><hr>
+            <div class="row text-center justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewClientCarByNumber()">View Client Car By Number</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllClientCars()">View All Client Cars</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllClientCarsByType()">View All Client Cars By Type</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllClientCarsByColor()">View All Client Cars By Color</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllClientCarsByPriceUntil()">View All Client Cars By Price</button>
+                </div>
+            </div><hr>
+            <div class="row text-center justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewReceiptsByClient()">View Receipts By Client</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" class="btn btn-info mb-1 mt-1" (click)="viewAllReceipts()">View All Receipts</button>
+                </div>
+            </div><hr>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>

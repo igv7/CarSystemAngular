@@ -1,0 +1,73 @@
+<!-- <p>view-car-by-number works!</p> -->
+
+<body>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">View Car By Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form  #formInfo="ngForm" class="needs-validation" novalidate  action="view-car-by-number" method=post>
+                        <div class="form-group">
+                            <label for="exampleInputNumber">Enter car Number "format: 123-45-678" and then click on View Car By Number button</label>
+                            <input type="text" class="form-control" id="exampleInputNumber" placeholder="123-45-678" [(ngModel)]="car.number" ngModel name="number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" autofocus required>
+                            <!-- <div class="valid-feedback">
+                                Looks good!
+                            </div> -->
+                            <div class="invalid-feedback">
+                                Please enter a car number "format: 123-45-678" and then click on View Car By Number button.
+                            </div>
+                        </div> 
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" (click)="getCarByNumber()">View Car By Number</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered table-hover text-center">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{car.id}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Number</th>
+                                    <td>{{car.number}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Color</th>
+                                    <td>{{car.color}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Type</th>
+                                    <td>{{car.type}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Amount</th>
+                                    <td>{{car.amount}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Price</th>
+                                    <td>&#36;{{car.price}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Image for familiarize only</th>
+                                    <td>
+                                        <a href="/assets/images/CARS/{{car.type}}.jpg" target="blank">
+                                        <img src="/assets/images/CARS/{{car.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

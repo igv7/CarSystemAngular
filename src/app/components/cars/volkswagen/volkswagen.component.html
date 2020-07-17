@@ -1,0 +1,51 @@
+<!-- <br><br> -->
+<!-- <p>volkswagen works!</p> -->
+
+<body>
+    <div class="filter mt-5 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-3" (click)="backToHome()">Back to Home page</button>&nbsp;
+            <!-- <button type="button" class='btn btn-light mb-2 mt-3' (click) = "toggleImage()" >
+                {{showImage ? 'Hide': 'Show'}} Image
+            </button> -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="table-responsive mt-3">
+                <img *ngIf="!cars" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="cars">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <!-- <th>ID</th> -->
+                                <!-- <th>Number</th> -->
+                                <th>Color</th>
+                                <th>Type</th>
+                                <!-- <th>Amount</th> -->
+                                <th>Price</th>
+                                <th>Image for familiarize only</th> <!-- *ngIf="showImage" -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of cars">
+                                <!-- <td class="table-dark">{{c.id}}</td> -->
+                                <!-- <td class="table-secondary">{{c.number}}</td> -->
+                                <td>{{c.color}}</td>
+                                <td>{{c.type}}</td>
+                                <!-- <td>{{c.amount}}</td> -->
+                                <td>&#36;{{c.price}}</td>
+                                <td> <!-- *ngIf="showImage" -->
+                                    <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
+                                    <img src="/assets/images/CARS/{{c.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>

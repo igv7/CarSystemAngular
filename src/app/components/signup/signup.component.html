@@ -1,0 +1,109 @@
+
+<br><br>
+<body>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form #formInfo="ngForm" class="needs-validation" novalidate (ngSubmit)="onSubmit()" #f="ngForm"  action="signup" method=post  oninput='pass2.setCustomValidity(pass2.value != password.value ? "Passwords do not match." : "")'> 
+            <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong>
+            <div class="form-group">
+              <label for="exampleInputName">Username</label>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" autofocus required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a username.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputBirthday">Date of Birth</label>
+              <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" max="2150-12-31" [(ngModel)]="client.birthday" name="birthday" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter Your date of birth.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" name="email" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter Your email.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPhoneNumber">Phone number</label>
+              <input type="tel" class="form-control" id="exampleInputPhoneNumber" placeholder="050-1234567" [(ngModel)]="client.phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{7}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter Your phone number. Format: 050-1234567
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPass">Password</label>
+              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" required name="password">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter Your password.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputConfirmPass">Confirm password</label>
+              <input type="password" class="form-control" id="exampleInputConfirmPass" placeholder="confirm password" required name="pass2">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Passwords do not match! Please confirm Your password.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputBalance">Balance. <span><strong>Gift from administration $100!</strong></span> Enter "100".</label>
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="Balance" value="0" min="0" max="100" step="0.01" [(ngModel)]="client.balance" name="balance" required oninput="validity.valid||(value='');">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a balance.
+              </div>
+              <strong id="balanceHelp" class="form-text text-muted">Contact the administration to replenish the balance</strong>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputType">Type</label>
+              <input type="text" class="form-control" id="exampleInputType" placeholder="Type" value="CLIENT" name="type" disabled required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a type.
+              </div>
+              <strong id="typeHelp" class="form-text text-muted">This field does not change</strong>
+            </div>
+            <br><br>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!formInfo.form.valid">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

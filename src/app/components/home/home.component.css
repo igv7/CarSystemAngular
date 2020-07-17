@@ -1,0 +1,31 @@
+body {
+    background: url("/assets/images/home-carousel-slide/2019_bugatti_divo_1_1920x1080.jpg") no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    position: absolute;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    font-family: sans-serif;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+h1 {
+    margin-top: 10%;
+    font-size: 7em;
+    font-family: Impact, fantasy;
+    text-align: center;
+    mix-blend-mode: overlay;
+    color: thistle;
+}
+
+blockquote {
+    font-family: cursive;
+    text-align: center;
+    mix-blend-mode: lighten;
+    color: yellow;
+}

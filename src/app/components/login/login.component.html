@@ -1,0 +1,60 @@
+
+<br><br>
+<body>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Sign In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form class="needs-validation" novalidate (ngSubmit)="onSubmit()" #f="ngForm" action="login" method="post"> 
+            <div class="form-group">
+              <label for="exampleInputName">Username</label>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" ngModel name="userName" autofocus required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a username.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPass">Password</label>
+              <input type="password" class="form-control" id="exampleInputPass" placeholder="enter a password" ngModel name="password" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a password.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="examplInputType" id="examplInputType">Select Your type</label>
+              <select id="examplInputType" class="form-control" name="type" ngModel required>
+                <option selected disabled></option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="CLIENT">CLIENT</option>
+              </select>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please choose a type.
+              </div>
+            </div>
+            <br><br><br>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

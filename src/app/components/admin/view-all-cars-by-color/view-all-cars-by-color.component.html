@@ -1,0 +1,72 @@
+<!-- <p>view-all-cars-by-color works!</p> -->
+
+<body>
+    <div class="filter mt-2 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
+            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getAllCarsByColor(this.car.color)">Get All Cars By Color</button>&nbsp;
+            <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
+                {{showImage ? 'Hide': 'Show'}} Image
+            </button>
+        </div>
+        <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-all-cars-by-color" method=post>
+            <div class="form-group">
+                <label for="examplInputColor" id="examplInputColor"><h4>Select Car Color</h4></label>&nbsp;
+                <button type="reset" class="btn btn-outline-light">Reset</button>
+                <select id="examplInputColor" class="form-control" type="text" name="color" [(ngModel)]="car.color" ngModel required>
+                  <option selected disabled></option>
+                  <option value="WHITE">WHITE</option>
+                  <option value="GREEN">GREEN</option>
+                  <option value="BLUE">BLUE</option>
+                  <option value="YELLOW">YELLOW</option>
+                  <option value="RED">RED</option>
+                  <option value="BLACK">BLACK</option>
+                  <option value="GREY">GREY</option>
+                </select>
+                <!-- <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please choose a car color.
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="table-responsive mt-3">
+                <div *ngIf="cars">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>ID</th>
+                                <th>Number</th>
+                                <th>Color</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th *ngIf="showImage">Image for familiarize only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of cars">
+                                <td class="table-dark">{{c.id}}</td>
+                                <td>{{c.number}}</td>
+                                <td>{{c.color}}</td>
+                                <td>{{c.type}}</td>
+                                <td>{{c.amount}}</td>
+                                <td>&#36;{{c.price}}</td>
+                                <td *ngIf="showImage">
+                                    <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
+                                    <img src="/assets/images/CARS/{{c.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>

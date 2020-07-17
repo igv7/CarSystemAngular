@@ -1,0 +1,126 @@
+<!-- <p>update-car works!</p> -->
+
+<body>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Update Car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="update-car" method=post>
+              <!-- <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong> -->
+              <div class="form-group">
+                <label for="exampleInputId">Enter Car ID and then click on View Car button</label>
+                <input type="number" class="form-control" id="exampleInputId" placeholder="ID" [(ngModel)]="car.id" autofocus ngModel name="id" required  oninput="validity.valid||(value='');">
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter car ID to update this Car.
+                </div>
+                <!-- <small id="idHelp" class="form-text text-muted">Enter ID</small> -->
+              </div>
+              <button type="submit" class="btn btn-primary" (click)="getCar()">View Car</button><br><br>
+              <div class="form-group">
+                <label for="exampleInputNumber">Update car number</label>
+                <input type="text" class="form-control" id="exampleInputNumber" placeholder="123-45-678" [(ngModel)]="car.number" autocomplete="on" name="number" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter a car number. Format: 123-45-678
+                </div>
+                <!-- <small id="numberHelp" class="form-text text-muted">Enter car number</small> -->
+              </div>
+              <div class="form-group">
+                <label for="examplInputColor" id="examplInputColor">Update car color</label>
+                <select id="examplInputColor" class="form-control" type="text" name="color" [(ngModel)]="car.color" ngModel required>
+                  <option selected disabled></option>
+                  <option value="WHITE">WHITE</option>
+                  <option value="GREEN">GREEN</option>
+                  <option value="BLUE">BLUE</option>
+                  <option value="YELLOW">YELLOW</option>
+                  <option value="RED">RED</option>
+                  <option value="BLACK">BLACK</option>
+                  <option value="GREY">GREY</option>
+                </select>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please choose a car color.
+                </div>
+                <!-- <small id="colorHelp" class="form-text text-muted">Select car color</small> -->
+              </div>
+              <div class="form-group">
+                <label for="examplInputType" id="examplInputType">Update car type</label>
+                <select id="examplInputType" class="form-control" type="text" name="type" [(ngModel)]="car.type" ngModel required>
+                  <option selected disabled></option>
+                  <option value="AUDI">AUDI</option>
+                  <option value="BMW">BMW</option>
+                  <option value="HONDA">HONDA</option>
+                  <option value="MAZDA">MAZDA</option>
+                  <option value="MERCEDES">MERCEDES</option>
+                  <option value="MITSUBISHI">MITSUBISHI</option>
+                  <option value="SUBARU">SUBARU</option>
+                  <option value="TOYOTA">TOYOTA</option>
+                  <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                </select>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please choose a car type.
+                </div>
+                <!-- <small id="typeHelp" class="form-text text-muted">Select car type</small> -->
+              </div>
+              <div class="form-group">
+                <label for="exampleInputAmount">Update car amount. Must be only one "1"</label>
+                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" value="1" min="1" max="1" [(ngModel)]="car.amount" ngModel name="amount" required  oninput="validity.valid||(value='');">
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter a car amount.
+                </div>
+                <!-- <small id="amountHelp" class="form-text text-muted">Enter amount</small> -->
+              </div> 
+              <div class="form-group">
+                <label for="exampleInputPrice">Update car price. Max value: 1000</label>
+                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" value="0" min="0" max="1000" step="0.01" required  oninput="validity.valid||(value='');">
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please enter a car price. Max value: 1000
+                </div>
+                <!-- <small id="priceHelp" class="form-text text-muted">Enter car price</small> -->
+              </div>
+              <div class="form-group">
+                <label for="exampleInputImage">Update car image</label>
+                <input type="file" class="form-control" id="exampleInputImage" placeholder="image" [(ngModel)]="car.image" multiple required name="image">
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please choose a car image.
+                </div>
+                <!-- <small id="imageHelp" class="form-text text-muted">Choose car image</small> -->
+              </div>
+              <br><br>
+              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+              <div class="modal-footer">
+                <!-- <button type="reset" class="btn btn-outline-secondary">Reset</button> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-warning" [disabled]="!formInfo.form.valid" (click)="updateCar()">Update Car</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>

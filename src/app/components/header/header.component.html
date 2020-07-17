@@ -1,0 +1,56 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <img src="/assets/images/header-nav-car-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">&nbsp;
+  <a class="navbar-brand" href="#">Car System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" routerLinkActive="active-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cars
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/audi" routerLinkActive="active-link">AUDI</a>
+          <a class="dropdown-item" routerLink="/bmw" routerLinkActive="active-link">BMW</a>
+          <a class="dropdown-item" routerLink="/honda" routerLinkActive="active-link">HONDA</a>
+          <a class="dropdown-item" routerLink="/mazda" routerLinkActive="active-link">MAZDA</a>
+          <a class="dropdown-item" routerLink="/mercedes" routerLinkActive="active-link">MERCEDES</a>
+          <a class="dropdown-item" routerLink="/mitsubishi" routerLinkActive="active-link">MITSUBISHI</a>
+          <a class="dropdown-item" routerLink="/subaru" routerLinkActive="active-link">SUBARU</a>
+          <a class="dropdown-item" routerLink="/toyota" routerLinkActive="active-link">TOYOTA</a>
+          <a class="dropdown-item" routerLink="/volkswagen" routerLinkActive="active-link">VOLKSWAGEN</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/cars" routerLinkActive="active-link">All Cars</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/client" routerLinkActive="active-link" data-toggle="modal" data-target="#staticBackdrop">Client</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin" routerLinkActive="active-link" data-toggle="modal" data-target="#staticBackdrop">Admin</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login" *ngIf="!loginService.isLoggedIn" routerLinkActive="active-link" data-toggle="modal" data-target="#staticBackdrop">Sign In &nbsp;&nbsp;&nbsp;|</a>
+        <a class="nav-link" href="javascript:void" (click)="logout()" *ngIf="loginService.isLoggedIn">Sign Out &nbsp;&nbsp;&nbsp;|</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/signup" routerLinkActive="active-link" data-toggle="modal" data-target="#staticBackdrop">Sign Up &nbsp;&nbsp;&nbsp;|</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about" routerLinkActive="active-link">About Us</a>
+      </li>
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+  </div>
+</nav>

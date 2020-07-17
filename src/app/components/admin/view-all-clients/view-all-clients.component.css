@@ -1,0 +1,59 @@
+body {
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("/assets/images/home-carousel-slide/2019_bugatti_divo_1_1920x1080.jpg") no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    position: absolute;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.btn {
+    position: relative;
+  }
+
+  h4 {
+    color: white;
+}
+
+  .container {
+    margin-top: 3%;
+    border: 1px solid white;
+    height: 70%;
+    position: fixed;
+    overflow: auto;
+    top: 20%;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+.filter {
+    position: sticky;
+    /* background-color:gray; */
+    width: 100%;
+}
+
+table {
+    /* margin-top: 12%; */
+    margin-top: 0%;
+}
+
+td {
+    color: white;
+}
+
+img {
+    margin-top: 12%;
+    margin-left: 32%;
+    background-color: cornsilk;
+}
+
+a {
+    font-size: large;
+}
+
+.active-link {
+    color: indigo;
+    font-weight: bold;
+}

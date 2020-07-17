@@ -1,0 +1,83 @@
+<!-- <p>view-client works!</p> -->
+
+<body>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">View Client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form  #formInfo="ngForm" class="needs-validation" novalidate  action="view-client" method=post>
+                        <div class="form-group">
+                            <label for="exampleInputId">Enter client ID and then click on View Client button</label>
+                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                            <!-- <div class="valid-feedback">
+                                Looks good!
+                            </div> -->
+                            <div class="invalid-feedback">
+                                Please enter a client ID and then click on View Client button.
+                            </div>
+                        </div> 
+                        <!-- <div class="form-group">
+                            <label for="exampleInputName">Client Name</label>
+                            <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a client name.
+                            </div>
+                            <small id="nameHelp" class="form-text text-muted">Enter client name</small>
+                        </div> -->
+                        <!-- <br><br> -->
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" (click)="getClient()">View Client</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered table-hover text-center">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{client.id}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{client.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>DOB</th>
+                                    <td>{{client.birthday}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone number</th>
+                                    <td>{{client.phoneNumber}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{client.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Password</th>
+                                    <td>{{client.password}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Balance</th>
+                                    <td>&#36;{{client.balance}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+

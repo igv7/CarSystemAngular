@@ -1,0 +1,84 @@
+<!-- <p>view-all-client-cars-by-price-until works!</p> -->
+<!-- <br><br> -->
+<body>
+    <div class="filter mt-2 text-center position-fixed">
+        <div class="button">
+            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
+            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary mb-2 mt-2"  (click)="getAllClientCarsByPrice(this.client.id, this.car.price)">Get All Client Cars By Price (until)</button>&nbsp;
+            <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
+                {{showImage ? 'Hide': 'Show'}} Image
+            </button>
+        </div>
+        <div class="container-fluid">
+            <!-- <div class="container"> -->
+                <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-all-client-cars-by-price" method=post>
+                    <div class="form-row text-center justify-content-center">
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <label for="exampleInputId"><h4>Enter client ID</h4></label>
+                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                            <!-- <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a client ID.
+                            </div> -->
+                        </div>
+                        <button type="reset" class="btn btn-outline-light" style="height: 40px;">Reset</button>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <label for="exampleInputPrice"><h4>Enter Car Price (until)</h4></label>
+                            <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" value="0" min="0" step="0.01" required  oninput="validity.valid||(value='');">
+                            <!-- <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a car price
+                            </div> -->
+                        </div>
+                        <!-- <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <button type="reset" class="btn btn-outline-light">Reset</button>
+                        </div> -->
+                    </div>
+                </form>
+            <!-- </div> -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="table-responsive mt-3">
+                <div *ngIf="cars">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Client ID</th>
+                                <th>Car ID</th>
+                                <th>Number</th>
+                                <th>Color</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th *ngIf="showImage">Image for familiarize only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of cars">
+                                <td class="table-dark">{{client.id}}</td>
+                                <td class="table-dark">{{c.id}}</td>
+                                <td>{{c.number}}</td>
+                                <td>{{c.color}}</td>
+                                <td>{{c.type}}</td>
+                                <td>{{c.amount}}</td>
+                                <td>&#36;{{c.price}}</td>
+                                <td *ngIf="showImage">
+                                    <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
+                                    <img src="/assets/images/CARS/{{c.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>

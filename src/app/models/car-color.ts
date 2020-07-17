@@ -1,0 +1,3 @@
+enum CarColor {
+    WHITE, GREEN, BLUE, YELLOW, RED, BLACK, GREY
+}

@@ -1,0 +1,45 @@
+import { Component, OnInit } from '@angular/core';
+import { Client } from 'src/app/models/client';
+import { AdminService } from 'src/app/services/admin.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-view-client',
+  templateUrl: './view-client.component.html',
+  styleUrls: ['./view-client.component.css']
+})
+export class ViewClientComponent implements OnInit {
+
+  public client = new Client();
+
+  public constructor(private adminService: AdminService, private router: Router) { } //, private activatedRoute: ActivatedRoute
+
+  ngOnInit() {
+  }
+
+  public getClient():void {
+    this.adminService.getClient(this.client.id).subscribe(client => {
+      console.log(`Success! `,
+        this.client.id = client.id, 
+        this.client.name = client.name,
+        this.client.birthday = client.birthday,
+        this.client.phoneNumber = client.phoneNumber,
+        this.client.email = client.email, 
+        this.client.password = client.password, 
+        this.client.balance = client.balance);
+      this.router.navigate(["/admin/view-client/client-id/"+this.client.id]);
+    }, err => {
+      console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
+      alert(`Error on get Client! Wrong ID: ${this.client.id}` +` `+ `\n`+err.message);
+    });
+  }
+
+  public cancel() {
+    this.router.navigate(["/admin"])
+  }
+
+  public close() {
+    this.router.navigate(["/admin"])
+  }
+
+}
