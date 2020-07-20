@@ -31,25 +31,24 @@ export class UpdateClientComponent implements OnInit {
       this.router.navigate(["/admin/update-client/client-id/"+this.client.id]);
     }, err => {
       console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
-      alert(`Error on get Client! Wrong ID: ${this.client.id}` +` `+ `\n`+err.message);
+      alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.client.id}`);
     });
   }
 
   public updateClient(): void {
     this.adminService.updateClient(this.client).subscribe(client => {
       console.log(`Success on update Client! `,this.client = client);
-      alert(`Client Name: ${this.client.name} has been succesfully updated! ` + 
-      "\nId: " + client.id +
-      "\nName: " + client.name +
-      "\nDOB: " + client.birthday +
-      "\nPassword: " + client.password +
-      "\nPhone Number: " + client.phoneNumber +
-      "\nEmail: " + client.email +
-      "\nBalance: " + client.balance);
+      alert(`Client Name: ${this.client.name} has been succesfully updated!`);
       this.router.navigate(["/admin/view-all-clients"])
     }, err => {
       console.log(`Failed on update Client! `,this.client.name + `\n` +err.message);
-      alert(`Error on update Client! Wrong ID: ${this.client.id}` +` `+ `\n`+err.message);
+      alert(`Error on update Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.client.id}`);
     });
   }
 

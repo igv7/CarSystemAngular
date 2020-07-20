@@ -29,24 +29,28 @@ export class ReturnCarComponent implements OnInit {
         this.car.image = car.image);
       this.router.navigate(["/admin/return-car/car-id/"+this.car.id]);
     }, err => {
-      console.log(`Failed on get Car ID: `,this.car.id + `\n` +err.message);
-      alert(`Error on get Car! Wrong ID: ${this.car.id}` +` `+ `\n`+err.message);
+      console.log(`Failed on get Car! Wrong ID: `,this.car.id + `\n` +err.message);
+      alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
   }
 
   public returnCar(): void {
-    // confirm(`Are You sure You want to remove this Car?
-    // Id: ${this.car.id}
-    // `);
-
+    if(confirm(`Are You sure You want to return this Car? ` + `\n` + `Car ID: ${this.car.id}`)) {
     this.adminService.returnCar(this.car.id).subscribe((c) => {
       console.log(`Success on return Car Id: `,this.car.id = c.id);
         alert(`Car Id: ${c.id} Number: `+c.number+ ` has been succesfully returned!`);
         this.router.navigate(["/admin/view-all-cars"]);
     }, err => {
-      console.log(`Failed on return Car Id: `,this.car.id + `\n` +err.message);
-      alert(`Error on return Car! Wrong Id: ${this.car.id}` +` `+ `\n`+err.message);
+      console.log(`Failed on return Car! Wrong ID: `,this.car.id + `\n` +err.message);
+      alert(`Error on return Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
+   }
   }
 
 

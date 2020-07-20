@@ -14,7 +14,8 @@ export class DeleteClientComponent implements OnInit {
 
   public constructor(private adminService: AdminService, private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+   
   }
 
   public getClient():void {
@@ -30,23 +31,27 @@ export class DeleteClientComponent implements OnInit {
       this.router.navigate(["/admin/delete-client/client-id/"+this.client.id]);
     }, err => {
       console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
-      alert(`Error on get Client! Wrong ID: ${this.client.id}` +` `+ `\n`+err.message);
+      alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.client.id}`);
     });
   }
 
   public deleteClient(): void {
-    // confirm(`Are You sure You want to remove this Client?
-    // Id: ${this.client.id}
-    // `);
-
+    if(confirm(`Are You sure You want to remove this Client? ` + `\n` + `Client ID: ${this.client.id}`)) {
     this.adminService.deleteClient(this.client.id).subscribe((c) => {
       console.log(`Success on delele Client Id: `,this.client.id = c.id);
         alert(`Client Id: ${c.id} Name: `+c.name+ ` has been succesfully deleted!`);
         this.router.navigate(["/admin/view-all-clients"]);
     }, err => {
       console.log(`Failed on delele Client Id: `,this.client.id + `\n` +err.message);
-      alert(`Error on delete Client! Wrong Id: ${this.client.id}` +` `+ `\n`+err.message);
+      alert(`Error on delele Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.client.id}`);
     });
+   }
   }
 
 

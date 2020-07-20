@@ -12,7 +12,7 @@ export class ViewCarComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private adminService: AdminService, private router: Router) { } //, private activatedRoute: ActivatedRoute
+  public constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,7 +30,10 @@ export class ViewCarComponent implements OnInit {
       this.router.navigate(["/admin/view-car/car-id/"+this.car.id]);
     }, err => {
       console.log(`Failed on get Car ID: `,this.car.id + `\n` +err.message);
-      alert(`Error on get Car! Wrong ID: ${this.car.id}` +` `+ `\n`+err.message);
+      alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
   }
 

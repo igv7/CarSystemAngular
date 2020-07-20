@@ -12,7 +12,7 @@ export class ViewClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private adminService: AdminService, private router: Router) { } //, private activatedRoute: ActivatedRoute
+  public constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,7 +30,10 @@ export class ViewClientComponent implements OnInit {
       this.router.navigate(["/admin/view-client/client-id/"+this.client.id]);
     }, err => {
       console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
-      alert(`Error on get Client! Wrong ID: ${this.client.id}` +` `+ `\n`+err.message);
+      alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.client.id}`);
     });
   }
 

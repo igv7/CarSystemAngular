@@ -1,4 +1,3 @@
-<!-- <p>update-car works!</p> -->
 
 <body>
     <div class="modal-dialog" role="document">
@@ -12,7 +11,6 @@
         <div class="modal-body">
           <div class="container-fluid">
             <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="update-car" method=post>
-              <!-- <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong> -->
               <div class="form-group">
                 <label for="exampleInputId">Enter Car ID and then click on View Car button</label>
                 <input type="number" class="form-control" id="exampleInputId" placeholder="ID" [(ngModel)]="car.id" autofocus ngModel name="id" required  oninput="validity.valid||(value='');">
@@ -22,7 +20,6 @@
                 <div class="invalid-feedback">
                   Please enter car ID to update this Car.
                 </div>
-                <!-- <small id="idHelp" class="form-text text-muted">Enter ID</small> -->
               </div>
               <button type="submit" class="btn btn-primary" (click)="getCar()">View Car</button><br><br>
               <div class="form-group">
@@ -34,7 +31,6 @@
                 <div class="invalid-feedback">
                   Please enter a car number. Format: 123-45-678
                 </div>
-                <!-- <small id="numberHelp" class="form-text text-muted">Enter car number</small> -->
               </div>
               <div class="form-group">
                 <label for="examplInputColor" id="examplInputColor">Update car color</label>
@@ -54,7 +50,6 @@
                 <div class="invalid-feedback">
                   Please choose a car color.
                 </div>
-                <!-- <small id="colorHelp" class="form-text text-muted">Select car color</small> -->
               </div>
               <div class="form-group">
                 <label for="examplInputType" id="examplInputType">Update car type</label>
@@ -76,7 +71,6 @@
                 <div class="invalid-feedback">
                   Please choose a car type.
                 </div>
-                <!-- <small id="typeHelp" class="form-text text-muted">Select car type</small> -->
               </div>
               <div class="form-group">
                 <label for="exampleInputAmount">Update car amount. Must be only one "1"</label>
@@ -87,7 +81,6 @@
                 <div class="invalid-feedback">
                   Please enter a car amount.
                 </div>
-                <!-- <small id="amountHelp" class="form-text text-muted">Enter amount</small> -->
               </div> 
               <div class="form-group">
                 <label for="exampleInputPrice">Update car price. Max value: 1000</label>
@@ -98,7 +91,6 @@
                 <div class="invalid-feedback">
                   Please enter a car price. Max value: 1000
                 </div>
-                <!-- <small id="priceHelp" class="form-text text-muted">Enter car price</small> -->
               </div>
               <div class="form-group">
                 <label for="exampleInputImage">Update car image</label>
@@ -109,12 +101,10 @@
                 <div class="invalid-feedback">
                   Please choose a car image.
                 </div>
-                <!-- <small id="imageHelp" class="form-text text-muted">Choose car image</small> -->
               </div>
               <br><br>
               <button type="reset" class="btn btn-outline-secondary">Reset</button>
               <div class="modal-footer">
-                <!-- <button type="reset" class="btn btn-outline-secondary">Reset</button> -->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
                 <button type="submit" class="btn btn-warning" [disabled]="!formInfo.form.valid" (click)="updateCar()">Update Car</button>
               </div>

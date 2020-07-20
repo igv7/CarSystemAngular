@@ -1,34 +1,17 @@
-<!-- <p>view-all-receipts works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
-            <!-- <button type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
-                {{showImage ? 'Hide': 'Show'}} Image
-            </button> -->
         </div>
         <input type='text' [(ngModel)] = 'listFilter' id="type" placeholder="Filter by Client Name">
         <h4>Filtered by: {{listFilter}}</h4>
-        <!-- <div class="button">
-            <button type="button" class='btn btn-light mb-2 mt-0' (click) = "toggleImage()" >
-                {{showImage ? 'Hide': 'Show'}} Image
-            </button>
-        </div> -->
     </div>
     <div class="container-fluid">
-        <!-- <div class="button">
-            <button type="button" class="btn btn-dark mb-2 mt-3" (click)="backToAdmin()">Back to admin page</button>
-        </div> -->
         <div class="container">
             <div class="table-responsive mt-3">
                 <img *ngIf="!clientReceipts" src="/assets/images/loadingGifTransparant1.gif">
                 <div *ngIf="clientReceipts">
-                    <!-- <div class="filter mt-3 text-center position-relative">
-                        <h4>Filter by name:</h4>
-                        <input type='text' [(ngModel)] = 'listFilter'>
-                        <h4>Filtered by: {{listFilter}}</h4>
-                    </div> -->
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
@@ -44,7 +27,6 @@
                                 <th>Car Color</th>
                                 <th>Car Type</th>
                                 <th>Car Price</th>
-                                <!-- <th *ngIf="showImage">Image for familiarize only</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -65,11 +47,6 @@
                                 <td>{{cr.carColor}}</td>
                                 <td>{{cr.carType}}</td>
                                 <td>&#36;{{cr.carPrice}}</td>
-                                <!-- <td *ngIf="showImage">
-                                    <a href="/assets/images/CARS/{{cr.carType}}.jpg" target="blank">
-                                    <img src="/assets/images/CARS/{{cr.carType}}.jpg" width="150" height="90" class="mt-0 ml-0">
-                                    </a>
-                                </td> -->
                             </tr>
                         </tbody>
                     </table>

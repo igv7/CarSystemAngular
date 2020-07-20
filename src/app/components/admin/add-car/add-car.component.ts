@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-car',
@@ -12,29 +13,33 @@ export class AddCarComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  ngOnInit(): void {
-    
+  public ngOnInit(): void {
+    this.title.setTitle("Add car");
   }
 
   public addCar(): void {
+    if (!this.car.number || !this.car.color || !this.car.type || !this.car.amount || !this.car.price || !this.car.image) {
+      this.router.navigate(["/admin/add-car"])
+      this.adminService.addCar(this.car).subscribe(car => {}, err => {
+        console.log(`Failed on add Car! `,this.car.number + `\n` +err.message);
+        alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
+      })
+    } else {
     this.adminService.addCar(this.car).subscribe(car => {
       console.log(`Success on add Car! `,this.car = car);
-      alert(`Car Number: ${this.car.number} has been succesfully added! ` + 
-      "\nId: " + car.id +
-      "\nNumber: " + car.number +
-      "\nColor: " + car.color +
-      "\nType: " + car.type +
-      "\nAmount: " + car.amount +
-      "\nPrice: " + car.price +
-      "\nImage: " + car.image);
       this.router.navigate(["/admin/view-all-cars"])
     }, err => {
       console.log(`Failed on add Car! `,this.car.number + `\n` +err.message);
-      alert(`Error on add Car! This Car number: ${this.car.number}` +` `+ 
-      `already exists in the system!` +` `+ `\n`+err.message);
+      alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. This Car number: ${this.car.number} already exists in the system!`);
     });
+   }
   }
 
 

@@ -1,4 +1,3 @@
-<!-- <p>delete-client works!</p> -->
 
 <body>
     <div class="modal-dialog" role="document">
@@ -15,26 +14,14 @@
                         <div class="form-group">
                             <label for="exampleInputId">Enter client ID and then click on View Client button</label>
                             <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
-                            <!-- <div class="valid-feedback">
+                            <div class="valid-feedback">
                                 Looks good!
-                            </div> -->
+                            </div>
                             <div class="invalid-feedback">
                                 Please enter a client ID and then click on View Client button.
                             </div>
                         </div> 
                         <button type="submit" class="btn btn-primary" [disabled]="!formInfo.form.valid" (click)="getClient()">View Client</button><br><br>
-                        <!-- <div class="form-group">
-                            <label for="exampleInputName">Client Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please enter a client name.
-                            </div>
-                            <small id="nameHelp" class="form-text text-muted">Enter client name</small>
-                        </div> -->
-                        <!-- <br><br> -->
                         <button type="reset" class="btn btn-outline-secondary">Reset</button>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>

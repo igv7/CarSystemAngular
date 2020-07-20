@@ -22,7 +22,9 @@ export class ViewAllClientsComponent implements OnInit {
       setTimeout(() => this.clients = clients, 1000);
     }, err => {
       console.log(`Failed on get all Clients! `+ `\n` +err.message);
-      alert(`Error on get all Clients! ` + `\n` +err.message);
+      alert(`Error on view all Clients! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
     });
   }
 

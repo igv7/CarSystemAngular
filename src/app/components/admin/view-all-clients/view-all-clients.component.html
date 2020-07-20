@@ -1,27 +1,17 @@
 
-
 <body>
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>
         </div>
-        <!-- <h4>Filter by name:</h4> -->
         <input type='text' [(ngModel)] = 'listFilter' id="name" placeholder="Filter by name">
         <h4>Filtered by: {{listFilter}}</h4>
     </div>
     <div class="container-fluid">
-        <!-- <div class="button">
-            <button type="button" class="btn btn-dark mb-2 mt-3" (click)="backToAdmin()">Back to admin page</button>
-        </div> -->
         <div class="container">
             <div class="table-responsive mt-3">
                 <img *ngIf="!clients" src="/assets/images/loadingGifTransparant1.gif">
                 <div *ngIf="clients">
-                    <!-- <div class="filter mt-3 text-center position-relative">
-                        <h4>Filter by name:</h4>
-                        <input type='text' [(ngModel)] = 'listFilter'>
-                        <h4>Filtered by: {{listFilter}}</h4>
-                    </div> -->
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
@@ -56,60 +46,3 @@
     </div>
 </body>
 <router-outlet></router-outlet>
-
-
-
-
-
-
-
-<!-- <br><br><br> -->
-<!-- <p>view-all-clients works!</p> -->
-
-<!--<table class="table table-bordered table-striped">--> <!--table-hover--> <!--table-condensed-->
-
-<!-- <body>
-    <p>view-all-clients works!</p>
-    <img *ngIf="!clients" src="/assets/images/loadingGifTransparant1.gif">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="button">
-                <button type="button" class="btn btn-dark mb-2 mt-3" (click)="backToAdmin()">Back to admin page</button>
-            </div>
-            <div class="table-responsive"  *ngIf="clients">
-                <p>Filter by name:</p>
-                <input type='text' [(ngModel)] = 'listFilter'>
-                <h4>Filtered by: {{listFilter}}</h4>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr class="active">
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>DOB</th>
-                            <th>Phone number</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let c of clients | clientFilter: listFilter">
-                            <td class="success"></td>
-                            <td>{{c.id}}</td>
-                            <td>
-                                <a routerLink="../view-all-clients/client-details/{{c.id}}" routerLinkActive="active-link">
-                                    {{c.name}}
-                                </a>
-                            </td>
-                            <td>{{c.birthday}}</td>
-                            <td>{{c.phoneNumber}}</td>
-                            <td>{{c.password}}</td>
-                            <td>{{c.balance}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</body>
-<router-outlet></router-outlet> -->

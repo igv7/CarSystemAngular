@@ -31,25 +31,24 @@ export class UpdateCarComponent implements OnInit {
       this.router.navigate(["/admin/update-car/car-id/"+this.car.id]);
     }, err => {
       console.log(`Failed on get Car ID: `,this.car.id + `\n` +err.message);
-      alert(`Error on get Car! Wrong ID: ${this.car.id}` +` `+ `\n`+err.message);
+      alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
   }
 
   public updateCar(): void {
     this.adminService.updateCar(this.car).subscribe(car => {
       console.log(`Success on update Car! `,this.car = car);
-      alert(`Car ID: ${this.car.id} has been succesfully updated! ` + 
-      "\nId: " + car.id +
-      "\nNumber: " + car.number +
-      "\nColor: " + car.color +
-      "\nType: " + car.type +
-      "\nAmount: " + car.amount +
-      "\nPrice: " + car.price +
-      "\nImage: " + car.image);
+      alert(`Car ID: ${this.car.id} has been succesfully updated!`);
       this.router.navigate(["/admin/view-all-cars"])
     }, err => {
       console.log(`Failed on update Car! `,this.car.id + `\n` +err.message);
-      alert(`Error on update Car! Wrong ID: ${this.car.id}` +` `+ `\n`+err.message);
+      alert(`Error on update Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
   }
 

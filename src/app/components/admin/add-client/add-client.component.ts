@@ -13,29 +13,33 @@ export class AddClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  ngOnInit(): void {
-    
+  public ngOnInit(): void {
+    this.title.setTitle("Add client");
   }
 
   public addClient(): void {
+    if (!this.client.name || !this.client.birthday || !this.client.password || !this.client.phoneNumber || !this.client.email) {
+      this.router.navigate(["/admin/add-client"])
+      this.adminService.addClient(this.client).subscribe(client => {}, err => {
+        console.log(`Failed on add Client! `,this.client.name + `\n` +err.message);
+        alert(`Error on add Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
+      })
+    } else {
     this.adminService.addClient(this.client).subscribe(client => {
       console.log(`Success on add Client! `,this.client = client);
-      alert(`Client Name: ${this.client.name} has been succesfully added! ` + 
-      "\nId: " + client.id +
-      "\nName: " + client.name +
-      "\nDOB: " + client.birthday +
-      "\nPassword: " + client.password +
-      "\nPhone Number: " + client.phoneNumber +
-      "\nEmail: " + client.email +
-      "\nBalance: " + client.balance);
       this.router.navigate(["/admin/view-all-clients"])
     }, err => {
       console.log(`Failed on add Client! `,this.client.name + `\n` +err.message);
-      alert(`Error on add Client! This Client name: ${this.client.name}` +` `+ 
-      `already exists in the system!` +` `+ `\n`+err.message);
+      alert(`Error on add Client! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. This Client name: ${this.client.name} already exists in the system!`);
     });
+   }
   }
 
 

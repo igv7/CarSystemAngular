@@ -1,4 +1,3 @@
-<!-- <p>view-all-client-cars works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
@@ -14,12 +13,6 @@
                 <label for="exampleInputId"><h4>Enter client ID</h4></label>&nbsp;
                 <button type="reset" class="btn btn-outline-light">Reset</button>
                 <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Please enter a client ID.
-                </div>
             </div>
         </form>
     </div>

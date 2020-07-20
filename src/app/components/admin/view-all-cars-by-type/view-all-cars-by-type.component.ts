@@ -27,7 +27,10 @@ export class ViewAllCarsByTypeComponent implements OnInit {
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       console.log(`Failed on get all Cars By Type! `+ `\n` +err.message);
-      alert(`Error on get all Cars By Type! ` + `\n` +err.message);
+      alert(`Error on view all Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. No ${this.car.type} cars`);
     });
   }
 

@@ -12,7 +12,7 @@ export class ViewCarByNumberComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private adminService: AdminService, private router: Router) { } //, private activatedRoute: ActivatedRoute
+  public constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -27,10 +27,13 @@ export class ViewCarByNumberComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/view-car-by-number/car-id/"+this.car.id]); //number
+      this.router.navigate(["/admin/view-car-by-number/car-id/"+this.car.id]);
     }, err => {
-      console.log(`Failed on get Car number: `,this.car.number + `\n` +err.message);
-      alert(`Error on get Car! Wrong number: ${this.car.number}` +` `+ `\n`+err.message);
+      console.log(`Failed on get Car by number: `,this.car.number + `\n` +err.message);
+      alert(`Error on view Car by number! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. No Car by number: ${this.car.number}`);
     });
   }
 

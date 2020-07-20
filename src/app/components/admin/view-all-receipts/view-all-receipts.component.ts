@@ -16,8 +16,6 @@ export class ViewAllReceiptsComponent implements OnInit {
 
   listFilter: string = "";
 
-  // showImage: boolean = false;
-
   public constructor(private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
@@ -26,16 +24,14 @@ export class ViewAllReceiptsComponent implements OnInit {
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
       console.log(`Failed on get all Receipts! `+ `\n` +err.message);
-      alert(`Error on get all Receipts! ` + `\n` +err.message);
+      alert(`Error on view all Receipts! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
     });
   }
 
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
   }
-
-  // public toggleImage() {
-  //   this.showImage = !this.showImage;
-  // }
 
 }

@@ -1,4 +1,3 @@
-<!-- <p>return-car works!</p> -->
 
 <body>
     <div class="modal-dialog" role="document">
@@ -15,9 +14,9 @@
                         <div class="form-group">
                             <label for="exampleInputId">Enter car ID and then click on View Car button</label>
                             <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="car.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
-                            <!-- <div class="valid-feedback">
+                            <div class="valid-feedback">
                                 Looks good!
-                            </div> -->
+                            </div>
                             <div class="invalid-feedback">
                                 Please enter a car ID and then click on View Car button.
                             </div>

@@ -1,13 +1,9 @@
-<!-- <p>view-receipts-by-client works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
             <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getReceiptsByClient(this.client.id)">Get Receipts By Client</button>&nbsp;
-            <!-- <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
-                {{showImage ? 'Hide': 'Show'}} Image
-            </button> -->
         </div>
         <div class="container-fluid">
             <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-receipts-by-client" method=post>
@@ -51,7 +47,6 @@
                                 <th>Car Color</th>
                                 <th>Car Type</th>
                                 <th>Car Price</th>
-                                <!-- <th *ngIf="showImage">Image for familiarize only</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -72,11 +67,6 @@
                                 <td>{{cr.carColor}}</td>
                                 <td>{{cr.carType}}</td>
                                 <td>&#36;{{cr.carPrice}}</td>
-                                <!-- <td *ngIf="showImage">
-                                    <a href="/assets/images/CARS/{{cr.carType}}.jpg" target="blank">
-                                    <img src="/assets/images/CARS/{{cr.carType}}.jpg" width="150" height="90" class="mt-0 ml-0">
-                                    </a>
-                                </td> -->
                             </tr>
                         </tbody>
                     </table>

@@ -1,159 +1,96 @@
-<!-- <p>update-client works!</p> -->
 
 <body>
-    <!-- <img src="/assets/images/home-carousel-slide/2019_bugatti_divo_1_1920x1080.jpg" alt="" class="d-block w-100"> -->
-
-<!-- <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Update Client</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="update-client" method=post>
-              <!-- <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong> -->
-              <div class="form-group">
-                <label for="exampleInputId">Enter Client ID and then click on View Client button</label>
-                <input type="number" class="form-control" id="exampleInputId" placeholder="ID" [(ngModel)]="client.id" autofocus ngModel name="id" required  oninput="validity.valid||(value='');">
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter client ID to update this Client.
-                </div>
-                <!-- <small id="idHelp" class="form-text text-muted">Enter ID</small> -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Update Client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="update-client" method=post>
+            <div class="form-group">
+              <label for="exampleInputId">Enter Client ID and then click on View Client button</label>
+              <input type="number" class="form-control" id="exampleInputId" placeholder="ID" [(ngModel)]="client.id" autofocus ngModel name="id" required  oninput="validity.valid||(value='');">
+              <div class="valid-feedback">
+                Looks good!
               </div>
-              <button type="submit" class="btn btn-primary" (click)="getClient()">View Client</button><br><br>
-              <div class="form-group">
-                <label for="exampleInputName">Update client name</label>
-                <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" autocomplete="on" name="userName" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a client name.
-                </div>
-                <!-- <small id="nameHelp" class="form-text text-muted">Enter client name</small> -->
+              <div class="invalid-feedback">
+                Please enter client ID to update this Client.
               </div>
-              <!-- <div class="form-group">
-                <label for="exampleInputAge">Client Age</label>
-                <input type="text" class="form-control" id="exampleInputAge" placeholder="age" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a client age.
-                </div>
-                <small id="ageHelp" class="form-text text-muted">Enter a client age</small>
-              </div> -->
-              <div class="form-group">
-                <label for="exampleInputBirthday">Update client birthday</label>
-                <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" max="2150-12-31" [(ngModel)]="client.birthday" autocomplete="on" name="birthday" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a client birthday.
-                </div>
-                <!-- <small id="birthdayHelp" class="form-text text-muted">Enter Your date of birth</small> -->
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="getClient()">View Client</button><br><br>
+            <div class="form-group">
+              <label for="exampleInputName">Update client name</label>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" autocomplete="on" name="userName" required>
+              <div class="valid-feedback">
+                Looks good!
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail">Update client email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" autocomplete="on" name="email" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter an email.
-                </div>
-                <!-- <small id="emailHelp" class="form-text text-muted">Enter Your email</small> -->
+              <div class="invalid-feedback">
+                Please enter a client name.
               </div>
-              <div class="form-group">
-                <label for="exampleInputPhoneNumber">Update client phone number</label>
-                <input type="tel" class="form-control" id="exampleInputPhoneNumber" placeholder="050-1234567" [(ngModel)]="client.phoneNumber" autocomplete="on" name="phoneNumber" pattern="[0-9]{3}-[0-9]{7}" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a client phone number. Format: 050-1234567
-                </div>
-                <!-- <small id="phoneNumberHelp" class="form-text text-muted">Enter client phone number</small> -->
+            </div>
+            <div class="form-group">
+              <label for="exampleInputBirthday">Update client birthday</label>
+              <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" max="2150-12-31" [(ngModel)]="client.birthday" autocomplete="on" name="birthday" required>
+              <div class="valid-feedback">
+                Looks good!
               </div>
-              <div class="form-group">
-                <label for="exampleInputPass">Update client password</label>
-                <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" autocomplete="on" required name="password">
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a client password.
-                </div>
-                <!-- <small id="passHelp" class="form-text text-muted">Enter client password</small> -->
+              <div class="invalid-feedback">
+                Please enter a client birthday.
               </div>
-              <!-- <div class="form-group">
-                <label for="exampleInputConfirmPass">Confirm client password</label>
-                <input type="password" class="form-control" id="exampleInputConfirmPass" placeholder="confirm password" required name="pass2">
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Passwords do not match! Please confirm a client password.
-                </div>
-                <small id="confirmPassHelp" class="form-text text-muted">Confirm client password</small>
-              </div> -->
-              <div class="form-group">
-                <label for="exampleInputBalance">Update client balance. Max value: 10000</label>
-                <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" autocomplete="on" name="balance" value="0" min="0" max="10000" step="0.01" required  oninput="validity.valid||(value='');">
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a balance. Max value: 10000
-                </div>
-                <!-- <small id="balanceHelp" class="form-text text-muted">Enter Your balance</small> -->
-                <!-- <strong id="balanceHelp" class="form-text text-muted">Contact the administration to replenish the balance</strong> -->
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Update client email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" autocomplete="on" name="email" required>
+              <div class="valid-feedback">
+                Looks good!
               </div>
-              <!-- <div class="form-group">
-                <label for="examplInputType" id="examplInputType">Type</label>
-                <select id="examplInputType" class="form-control" name="type" ngModel required>
-                  <option selected disabled></option>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="CLIENT">CLIENT</option>
-                </select>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please choose a type.
-                </div>
-                <small id="typeHelp" class="form-text text-muted">Select Your type</small>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="exampleInputType">Type</label>
-                <input type="text" class="form-control" id="exampleInputType" placeholder="Type" value="CLIENT" disabled required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-                <div class="invalid-feedback">
-                  Please enter a type.
-                </div>
-                <strong id="typeHelp" class="form-text text-muted">This field does not change</strong>
-              </div> -->
-              <br><br>
-              <button type="reset" class="btn btn-outline-secondary">Reset</button>
-              <div class="modal-footer">
-                <!-- <button type="reset" class="btn btn-outline-secondary">Reset</button> -->
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
-                <button type="submit" class="btn btn-warning" [disabled]="!formInfo.form.valid" (click)="updateClient()">Update Client</button>
+              <div class="invalid-feedback">
+                Please enter an email.
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPhoneNumber">Update client phone number</label>
+              <input type="tel" class="form-control" id="exampleInputPhoneNumber" placeholder="050-1234567" [(ngModel)]="client.phoneNumber" autocomplete="on" name="phoneNumber" pattern="[0-9]{3}-[0-9]{7}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a client phone number. Format: 050-1234567
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPass">Update client password</label>
+              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" autocomplete="on" required name="password">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a client password.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputBalance">Update client balance. Max value: 10000</label>
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" autocomplete="on" name="balance" value="0" min="0" max="10000" step="0.01" required  oninput="validity.valid||(value='');">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a balance. Max value: 10000
+              </div>
+            </div>
+            <br><br>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-warning" [disabled]="!formInfo.form.valid" (click)="updateClient()">Update Client</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </body>
