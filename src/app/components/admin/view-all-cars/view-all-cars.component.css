@@ -12,7 +12,7 @@ body {
     position: relative;
   }
 
-  h4 {
+  h4, h1 {
       color: white;
   }
 
@@ -42,7 +42,7 @@ td {
 }
 
 img {
-    margin-top: 12%;
+    margin-top: 5%;
     margin-left: 32%;
     background-color: cornsilk;
 }

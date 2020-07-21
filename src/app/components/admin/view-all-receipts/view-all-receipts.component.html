@@ -10,6 +10,7 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
+                <h1 *ngIf="!clientReceipts" class="text-center">No Receipts</h1>
                 <img *ngIf="!clientReceipts" src="/assets/images/loadingGifTransparant1.gif">
                 <div *ngIf="clientReceipts">
                     <table class="table table-bordered table-hover text-center">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/models/client';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-client',
@@ -12,9 +13,10 @@ export class ViewClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit():void {
+    this.title.setTitle("View Client");
   }
 
   public getClient():void {

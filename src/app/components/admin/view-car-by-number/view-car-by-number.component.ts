@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-car-by-number',
@@ -12,9 +13,10 @@ export class ViewCarByNumberComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit():void {
+    this.title.setTitle("View Car By Number");
   }
 
   public getCarByNumber():void {

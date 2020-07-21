@@ -4,6 +4,7 @@ import { Client } from 'src/app/models/client';
 import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-receipts-by-client',
@@ -19,10 +20,10 @@ export class ViewReceiptsByClientComponent implements OnInit {
 
   listFilter: string = "";
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  public ngOnInit(): void {
-    
+  public ngOnInit():void {
+    this.title.setTitle("Receipts By Client");
   }
 
   public getReceiptsByClient(id: number): void {
@@ -34,7 +35,8 @@ export class ViewReceiptsByClientComponent implements OnInit {
       alert(`Error on view all Client Receipts! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
-      `3. Wrong Client ID: ${this.client.id}`);
+      `3. No Receipts by this Client` + `\n` + 
+      `4. Wrong Client ID: ${this.client.id}`);
     });
   }
 

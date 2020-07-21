@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-all-cars-by-color',
@@ -15,10 +16,10 @@ export class ViewAllCarsByColorComponent implements OnInit {
 
   showImage: boolean = false;
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
-    
+    this.title.setTitle("All Cars By Color")
   }
 
   public getAllCarsByColor(color: string): void {
@@ -30,7 +31,8 @@ export class ViewAllCarsByColorComponent implements OnInit {
       alert(`Error on view all Cars by color! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
-      `3. No ${this.car.color} cars`);
+      `3. No cars` + `\n` + 
+      `4. No cars by color: ${this.car.color}`);
     });
   }
 

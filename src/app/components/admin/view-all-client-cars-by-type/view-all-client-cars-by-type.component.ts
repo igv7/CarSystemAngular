@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-all-client-cars-by-type',
@@ -17,10 +18,10 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
 
   showImage: boolean = false;
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
-    
+    this.title.setTitle("All Client Cars By Type");
   }
 
   public getAllClientCarsByType(id: number, type: string): void {
@@ -32,7 +33,9 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
       alert(`Error on view all Client Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
-      `3. No cars by type ${this.car.type}`);
+      `3. This Client has no cars` + `\n` + 
+      `4. No Client Cars by type ${this.car.type}` + `\n` + 
+      `5. Wrong Client ID: ${this.client.id}`);
     });
   }
 

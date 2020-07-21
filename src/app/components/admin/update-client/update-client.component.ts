@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/models/client';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-update-client',
@@ -12,10 +13,10 @@ export class UpdateClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
-  ngOnInit(): void {
-    
+  public ngOnInit():void {
+    this.title.setTitle("Update Client");
   }
 
   public getClient():void {

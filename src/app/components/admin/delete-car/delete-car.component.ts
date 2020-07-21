@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-delete-car',
@@ -12,10 +13,10 @@ export class DeleteCarComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
-   
+   this.title.setTitle("Delete Car");
   }
 
   public getCar():void {

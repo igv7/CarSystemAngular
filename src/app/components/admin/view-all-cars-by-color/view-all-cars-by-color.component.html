@@ -28,6 +28,7 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
+                <h1 *ngIf="!cars" class="text-center">No Cars</h1>
                 <div *ngIf="cars">
                     <table class="table table-bordered table-hover text-center">
                         <thead>

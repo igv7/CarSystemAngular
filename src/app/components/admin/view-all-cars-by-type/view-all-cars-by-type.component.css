@@ -12,7 +12,7 @@ body {
     position: relative;
   }
 
-  h4 {
+  h4, h1 {
     color: white;
 }
 

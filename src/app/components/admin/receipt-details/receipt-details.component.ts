@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientReceipt } from 'src/app/models/clientReceipt';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-receipt-details',
@@ -12,7 +13,7 @@ export class ReceiptDetailsComponent implements OnInit {
 
   public clientReceipt: ClientReceipt;
 
-  public constructor(private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
     this.adminService.getAllReceipts().subscribe((clientReceipts) => {
@@ -23,6 +24,7 @@ export class ReceiptDetailsComponent implements OnInit {
       console.log(`Failed on get Receipt details! ` + `\n` +err.message);
       alert(`Error on get Receipt details! ` + `\n` +err.message);
     });
+    this.title.setTitle("Receipt Details");
   }
 
   public backToAllReceipts(): void {
