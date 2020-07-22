@@ -1,4 +1,3 @@
-<!-- <p>details works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
@@ -9,22 +8,9 @@
     </div>
     <div class="container-fluid">
         <div class="container text-center">
-            <!-- <div class="details"> do not delete
-                <h3>ID: {{car?.id}}</h3>
-                <h3>Number: {{car?.number}}</h3>
-                <h3>Color: {{car?.color}}</h3>
-                <h3>Type: {{car?.type}}</h3>
-                <h3>Amount: {{car?.amount}}</h3>
-                <h3>Price: {{car?.price}}</h3>
-                <h3> <img src="/assets/images/CARS/{{car?.type}}.jpg"></h3>
-            </div> -->
             <div class="table-responsive mt-3">
                 <table class="table table-bordered table-hover text-center">
                     <tbody>
-                        <!-- <tr>
-                            <th>ID</th>
-                            <td>{{car?.id}}</td>
-                        </tr> -->
                         <tr>
                             <th>Number</th>
                             <td>{{car?.number}}</td>
@@ -37,10 +23,6 @@
                             <th>Type</th>
                             <td>{{car?.type}}</td>
                         </tr>
-                        <!-- <tr>
-                            <th>Amount</th>
-                            <td>{{car?.amount}}</td>
-                        </tr> -->
                         <tr>
                             <th>Price</th>
                             <td>&#36;{{car?.price}}</td>
@@ -49,7 +31,6 @@
                             <th>Image for familiarize only</th>
                             <td class="table-dark">
                                 <button *ngIf="car.amount" type="submit" class="btn btn-success" (click)="getCar(car.id)">Get Car</button>&nbsp;&nbsp;
-                                <!-- <button *ngIf="!car.amount" type="submit" class="btn btn-danger" (click)="returnCar(car.id)">Return Car</button>&nbsp;&nbsp; -->
                                 <a href="/assets/images/CARS/{{car?.type}}.jpg" target="blank">
                                 <img src="/assets/images/CARS/{{car?.type}}.jpg" width="150" height="90">
                                 </a>

@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { Client } from 'src/app/models/client';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-details',
@@ -14,7 +15,7 @@ export class DetailsComponent implements OnInit {
   public car: Car;
   public client = new Client();
 
-  public constructor(private activatedRoute: ActivatedRoute, private clientService: ClientService, private router: Router) { }
+  public constructor(private title: Title, private activatedRoute: ActivatedRoute, private clientService: ClientService, private router: Router) { }
 
   public ngOnInit(): void {
     this.clientService.getCars().subscribe((cars) => {
@@ -23,8 +24,11 @@ export class DetailsComponent implements OnInit {
       console.log(`Success on get Car details! `);
     }, err => {
       console.log(`Failed on get Car details! ` + `\n` +err.message);
-      alert(`Error on get Car details! ` + `\n` +err.message);
+      alert(`Error on view Car details! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
     });
+    this.title.setTitle("Details");
   }
 
   public getCar(id: number):void {
@@ -37,24 +41,15 @@ export class DetailsComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      // this.router.navigate(["/client/view-car/car-id/"+this.car.id]);
       this.router.navigate(["/client/view-my-cars"]);
     }, err => {
       console.log(`Failed on get Car ID: `,this.car.id + `\n` +err.message);
-      alert(`Error on get Car! Wrong ID: ${this.car.id}` +` `+ `\n`+err.message);
+      alert(`Error on get Car! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. Wrong ID: ${this.car.id}`);
     });
   }
-
-  // public returnCar(id: number): void {
-  //   this.clientService.returnCar(id).subscribe((c) => {
-  //     console.log(`Success on return Car Id: `,this.car.id = c.id);
-  //       alert(`Car Id: ${c.id} Number: `+c.number+ ` has been succesfully returned!`);
-  //       this.router.navigate(["/client/view-my-cars"]);
-  //   }, err => {
-  //     console.log(`Failed on delele Car Id: `,this.car.id + `\n` +err.message);
-  //     alert(`Error on delete Car! Wrong Id: ${this.car.id}` +` `+ `\n`+err.message);
-  //   });
-  // }
 
   public backToCars(): void {
     this.router.navigate(["/client/view-cars"]);

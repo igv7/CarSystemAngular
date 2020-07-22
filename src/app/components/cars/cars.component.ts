@@ -25,7 +25,10 @@ export class CarsComponent implements OnInit {
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       console.log(`Failed on get all Cars! `+ `\n` +err.message);
-      // alert(`Error on get all Cars! ` + `\n` +err.message);
+      alert(`Error on view all Cars! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. No Cars`);
     });
     this.title.setTitle("All cars");
   }

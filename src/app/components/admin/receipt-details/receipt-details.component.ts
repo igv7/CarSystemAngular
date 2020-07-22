@@ -22,7 +22,9 @@ export class ReceiptDetailsComponent implements OnInit {
       console.log(`Success on get Receipt details! `);
     }, err => {
       console.log(`Failed on get Receipt details! ` + `\n` +err.message);
-      alert(`Error on get Receipt details! ` + `\n` +err.message);
+      alert(`Error on view Receipt details! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
     });
     this.title.setTitle("Receipt Details");
   }

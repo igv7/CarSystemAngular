@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-car-details',
@@ -12,7 +13,7 @@ export class CarDetailsComponent implements OnInit {
 
   public car: Car;
 
-  public constructor(private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router) { }
+  public constructor(private title: Title, private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router) { }
 
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe((cars) => {
@@ -21,8 +22,11 @@ export class CarDetailsComponent implements OnInit {
       console.log(`Success on get Car details! `);
     }, err => {
       console.log(`Failed on get Car details! ` + `\n` +err.message);
-      alert(`Error on get Car details! ` + `\n` +err.message);
+      alert(`Error on view Car details! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server`);
     });
+    this.title.setTitle("Car Details");
   }
 
   public backToAllCars(): void {
