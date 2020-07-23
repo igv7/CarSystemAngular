@@ -1,7 +1,6 @@
-<!-- <p>view-cars works!</p> -->
 
 <body>
-    <!-- <div class="filter mt-2 text-center position-fixed">
+    <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToMainPage()">Back to Main Page</button>&nbsp;
             <button type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
@@ -10,59 +9,42 @@
         </div>
         <input type='text' [(ngModel)] = 'listFilter' id="type" placeholder="Filter by type">
         <h4>Filtered by: {{listFilter}}</h4>
-    </div> -->
-    <div class="container-fluid text-center mt-2 position-fixed">
-        <div class="row text-center justify-content-center">
-            <div class="button">
-                <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToMainPage()">Back to Main Page</button>&nbsp;
-                <button type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
-                    {{showImage ? 'Hide': 'Show'}} Image
-                </button>
-            </div>
-        </div>
-        <!-- <div class="row text-center justify-content-center"> -->
-            <input type='text' [(ngModel)] = 'listFilter' id="type" placeholder="Filter by type">
-            <h4>Filtered by: {{listFilter}}</h4>
-        <!-- </div> -->
-        <div class="row text-center justify-content-center">
-            <div class="container">
-                <div class="table-responsive mt-3">
-                    <img *ngIf="!cars" src="/assets/images/loadingGifTransparant1.gif">
-                    <div *ngIf="cars">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                                <tr class="table-primary">
-                                    <!-- <th>ID</th> -->
-                                    <th>Number</th>
-                                    <th>Color</th>
-                                    <th>Type</th>
-                                    <!-- <th>Amount</th> -->
-                                    <th>Price</th>
-                                    <th *ngIf="showImage">Image for familiarize only</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let c of cars | carTypeFilter: listFilter">
-                                    <!-- <td class="table-dark">{{c.id}}</td> -->
-                                    <td class="table-dark">
-                                        <button *ngIf="c.amount" type="submit" class="btn btn-success" (click)="getCar(c.id)">Get Car</button>&nbsp;&nbsp;
-                                        <a routerLink="../view-cars/details/{{c.id}}" routerLinkActive="active-link">
-                                            {{c.number}}
-                                        </a>
-                                    </td>
-                                    <td>{{c.color}}</td>
-                                    <td>{{c.type}}</td>
-                                    <!-- <td>{{c.amount}}</td> -->
-                                    <td>&#36;{{c.price}}</td>
-                                    <td *ngIf="showImage">
-                                        <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
-                                        <img src="/assets/images/CARS/{{c.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="table-responsive mt-3">
+                <h1 *ngIf="!cars" class="text-center">No Cars</h1>
+                <img *ngIf="!cars" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="cars">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Number</th>
+                                <th>Color</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th *ngIf="showImage">Image for familiarize only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of cars | carTypeFilter: listFilter">
+                                <td class="table-dark">
+                                    <button *ngIf="c.amount" type="submit" class="btn btn-success" (click)="getCar(c.id)">Get Car</button>&nbsp;&nbsp;
+                                    <a routerLink="../view-cars/details/{{c.id}}" routerLinkActive="active-link">
+                                        {{c.number}}
+                                    </a>
+                                </td>
+                                <td>{{c.color}}</td>
+                                <td>{{c.type}}</td>
+                                <td>&#36;{{c.price}}</td>
+                                <td *ngIf="showImage">
+                                    <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
+                                    <img src="/assets/images/CARS/{{c.type}}.jpg" width="150" height="90" class="mt-0 ml-0">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

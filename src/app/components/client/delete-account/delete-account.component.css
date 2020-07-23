@@ -16,47 +16,14 @@ body {
       background-color: goldenrod;
   }
 
-  /* h4 {
-      color: white;
-  } */
-
-  /* h1 {
-    color: white;
-  } */
-
-  /* .container {
-    margin-top: 3%;
-    border: 1px solid white;
-    height: 70%;
-    position: fixed;
-    overflow: auto;
-    top: 20%;
-    left: 0;
-    right: 0;
-    width: 100%;
-  } */
-
 .filter {
     position: sticky;
     width: 100%;
 }
 
-/* table {
-    margin-top: 0%;
-} */
-
-/* td {
-    color: white;
-} */
-
-/* img {
-    margin-top: 5%;
-    margin-left: 32%;
-    background-color: cornsilk;
-} */
-
 a {
     font-size: large;
+    font-family: cursive;
 }
 
 .active-link {

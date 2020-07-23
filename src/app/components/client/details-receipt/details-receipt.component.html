@@ -1,39 +1,15 @@
-<!-- <p>details-receipt works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToMyReceipts()">Back to my receipts</button>&nbsp;
-            <!-- <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAllReceiptsByDate()">Back to all receipts by date</button> -->
         </div>
     </div>
     <div class="container-fluid">
         <div class="container text-center">
-            <!-- <div class="details"> do not delete
-                <h3>Receipt ID: {{clientReceipt?.receiptId}}</h3>
-                <h3>Client ID: {{clientReceipt?.clientId}}</h3>
-                <h3>Client name: {{clientReceipt?.clientName}}</h3>
-                <h3>Client phone number: {{clientReceipt?.clientPhoneNumber}}</h3>
-                <h3>Client email: {{clientReceipt?.clientEmail}}</h3>
-                <h3>Receipt Date: {{clientReceipt?.receiptDate}}</h3>
-                <h3>Car ID: {{clientReceipt?.carId}}</h3>
-                <h3>Car number: {{clientReceipt?.carNumber}}</h3>
-                <h3>Car color: {{clientReceipt?.carColor}}</h3>
-                <h3>Car type: {{clientReceipt?.carType}}</h3>
-                <h3>Car price: {{clientReceipt?.carPrice}}</h3>
-                <h3> <img src="/assets/images/CARS/{{clientReceipt?.carType}}.jpg"></h3>
-            </div> -->
             <div class="table-responsive mt-3">
                 <table class="table table-bordered table-hover text-center">
                     <tbody>
-                        <!-- <tr>
-                            <th>Receipt ID</th>
-                            <td>{{clientReceipt?.receiptId}}</td>
-                        </tr> -->
-                        <!-- <tr>
-                            <th>Client ID</th>
-                            <td>{{clientReceipt?.clientId}}</td>
-                        </tr> -->
                         <tr>
                             <th>Client name</th>
                             <td>{{clientReceipt?.clientName}}</td>
@@ -50,10 +26,6 @@
                             <th>Receipt Date</th>
                             <td>{{clientReceipt?.receiptDate}}</td>
                         </tr>
-                        <!-- <tr>
-                            <th>Car ID</th>
-                            <td>{{clientReceipt?.carId}}</td>
-                        </tr> -->
                         <tr>
                             <th>Car number</th>
                             <td>{{clientReceipt?.carNumber}}</td>

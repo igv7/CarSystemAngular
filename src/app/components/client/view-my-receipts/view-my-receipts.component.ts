@@ -3,6 +3,7 @@ import { ClientReceipt } from 'src/app/models/clientReceipt';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-my-receipts',
@@ -16,9 +17,7 @@ export class ViewMyReceiptsComponent implements OnInit {
 
   listFilter: string = "";
 
-  // showImage: boolean = false;
-
-  public constructor(private clientService: ClientService, private router: Router) { }
+  public constructor(private title: Title, private clientService: ClientService, private router: Router) { }
 
   public ngOnInit(): void {
     this.clientService.getMyReceipts().subscribe((clientReceipts) => {
@@ -26,16 +25,17 @@ export class ViewMyReceiptsComponent implements OnInit {
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
       console.log(`Failed on get my Receipts! `+ `\n` +err.message);
-      alert(`Error on get my Receipts! ` + `\n` +err.message);
+      alert(`Error on view My Receipts! ` + `\n` + `The reasons: ` + `\n` + 
+      `1. No internet connection` + `\n` + 
+      `2. No connection to the server` + `\n` + 
+      `3. No Receipts`);
     });
+    this.title.setTitle("My Receipts");
   }
 
   public backToMainPage(): void {
     this.router.navigate(["/client"]);
+    this.title.setTitle("Client Page");
   }
-
-  // public toggleImage() {
-  //   this.showImage = !this.showImage;
-  // }
 
 }

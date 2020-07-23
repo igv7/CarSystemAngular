@@ -1,10 +1,8 @@
-<!-- <p>view-my-cars works!</p> -->
 
 <body>
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToMainPage()">Back to Main Page</button>&nbsp;
-            <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToCars()">Back to Cars</button>&nbsp;
             <button type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
                 {{showImage ? 'Hide': 'Show'}} Image
             </button>
@@ -21,18 +19,15 @@
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
-                                <!-- <th>ID</th> -->
                                 <th>Number</th>
                                 <th>Color</th>
                                 <th>Type</th>
-                                <!-- <th>Amount</th> -->
                                 <th>Price</th>
                                 <th *ngIf="showImage">Image for familiarize only</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let c of cars | carTypeFilter: listFilter">
-                                <!-- <td class="table-dark">{{c.id}}</td> -->
                                 <td class="table-dark">
                                     <button *ngIf="!c.amount" type="submit" class="btn btn-danger" (click)="returnCar(c.id)">Return Car</button>&nbsp;&nbsp;
                                     <a routerLink="../view-my-cars/details/{{c.id}}" routerLinkActive="active-link">
@@ -41,7 +36,6 @@
                                 </td>
                                 <td>{{c.color}}</td>
                                 <td>{{c.type}}</td>
-                                <!-- <td>{{c.amount}}</td> -->
                                 <td>&#36;{{c.price}}</td>
                                 <td *ngIf="showImage">
                                     <a href="/assets/images/CARS/{{c.type}}.jpg" target="blank">
