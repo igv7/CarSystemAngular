@@ -58,10 +58,12 @@ export class DeleteClientComponent implements OnInit {
 
   public close(): void {
     this.router.navigate(["/admin"]);
+    this.title.setTitle("Admin Page");
   }
 
   public cancel(): void {
     this.router.navigate(["/admin"]);
+    this.title.setTitle("Admin Page");
   }
 
 }

@@ -35,6 +35,7 @@ export class ViewAllCarsComponent implements OnInit {
 
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
+    this.title.setTitle("Admin Page");
   }
 
   public toggleImage() {

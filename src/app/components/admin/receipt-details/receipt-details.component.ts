@@ -31,10 +31,12 @@ export class ReceiptDetailsComponent implements OnInit {
 
   public backToAllReceipts(): void {
     this.router.navigate(["/admin/view-all-receipts"]);
+    this.title.setTitle("All Receipts");
   }
 
   public backToReceiptsByClient() {
     this.router.navigate(["/admin/view-receipts-by-client"]);
+    this.title.setTitle("Receipts By Client");
   }
 
 }

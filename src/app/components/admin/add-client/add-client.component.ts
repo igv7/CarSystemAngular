@@ -46,10 +46,12 @@ export class AddClientComponent implements OnInit {
 
   public cancel() {
     this.router.navigate(["/admin"])
+    this.title.setTitle("Admin Page");
   }
 
   public close() {
     this.router.navigate(["/admin"])
+    this.title.setTitle("Admin Page");
   }
 
 }
