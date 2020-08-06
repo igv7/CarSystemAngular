@@ -1,0 +1,20 @@
+
+<form class="form-inline my-2 my-lg-0">
+    <div class="nav-item dropdown">
+        <input class="form-control mr-sm-2 dropdown-toggle" id="search" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="car.type" name="type" required>
+        <div *ngIf="car.type" class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <p class="search">
+                <a class="dropdown-item" routerLink="/audi" (click)="pastAudi()" id="audi">AUDI</a>
+                <a class="dropdown-item" routerLink="/bmw" (click)="pastBmw()" id="bmw">BMW</a>
+                <a class="dropdown-item" routerLink="/honda" (click)="pastHonda()" id="honda">HONDA</a>
+                <a class="dropdown-item" routerLink="/mazda" (click)="pastMazda()" id="mazda">MAZDA</a>
+                <a class="dropdown-item" routerLink="/mercedes" (click)="pastMercedes()" id="mercedes">MERCEDES</a>
+                <a class="dropdown-item" routerLink="/mitsubishi" (click)="pastMitsubishi()" id="mitsubishi">MITSUBISHI</a>
+                <a class="dropdown-item" routerLink="/subaru" (click)="pastSubaru()" id="subaru">SUBARU</a>
+                <a class="dropdown-item" routerLink="/toyota" (click)="pastToyota()" id="toyota">TOYOTA</a>
+                <a class="dropdown-item" routerLink="/volkswagen" (click)="pastVolkswagen()" id="volkswagen">VOLKSWAGEN</a>
+            </p>
+        </div>
+    </div>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="searchCar()">Search</button>
+</form>

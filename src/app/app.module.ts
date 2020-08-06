@@ -67,6 +67,7 @@ import { ViewMyReceiptsComponent } from './components/client/view-my-receipts/vi
 import { DetailsReceiptComponent } from './components/client/details-receipt/details-receipt.component';
 import { ClientReceiptDateFilterPipe } from './pipes/client-receipt-date-filter.pipe';
 import { ReturnCarComponent } from './components/admin/return-car/return-car.component';
+import { CarSearchComponent } from './components/car-search/car-search.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { ReturnCarComponent } from './components/admin/return-car/return-car.com
     ViewMyReceiptsComponent,
     DetailsReceiptComponent,
     ClientReceiptDateFilterPipe,
-    ReturnCarComponent
+    ReturnCarComponent,
+    CarSearchComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, HttpClientModule
