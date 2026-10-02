@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { SignupService } from 'src/app/services/signup.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,9 @@ export class SignupComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private signupService: SignupService,private title: Title, private router: Router) { }
+  private log = this.logger.for('SignupComponent');
+
+  public constructor(private signupService: SignupService,private title: Title, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.title.setTitle("Sign Up");
@@ -21,7 +24,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     this.signupService.signUp(this.client).subscribe(client => {
-      console.log(`Success on sign up Client! `,this.client = client);
+      this.log.info(`Success on sign up Client! `,this.client = client);
       alert(`Client Name: ${this.client.name} has been succesfully added! ` + 
       "\nId: " + client.id +
       "\nName: " + client.name +
@@ -32,7 +35,7 @@ export class SignupComponent implements OnInit {
       "\nBalance: " + client.balance);
       this.router.navigate(["/login"])
     }, err => {
-      console.log(`Failed on sign up Client! `,this.client.name + `\n` +err.message);
+      this.log.error(`Failed on sign up Client! `, this.client.name, err);
       alert(`Error on sign up Client! This Client name: ${this.client.name}` +` `+ 
       `already exists in the system!` +` `+ `\n`+err.message);
     });

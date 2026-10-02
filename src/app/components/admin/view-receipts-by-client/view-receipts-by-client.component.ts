@@ -5,6 +5,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-receipts-by-client',
@@ -20,7 +21,9 @@ export class ViewReceiptsByClientComponent implements OnInit {
 
   listFilter: string = "";
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewReceiptsByClientComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit():void {
     this.title.setTitle("Receipts By Client");
@@ -28,10 +31,10 @@ export class ViewReceiptsByClientComponent implements OnInit {
 
   public getReceiptsByClient(id: number): void {
     this.adminService.getReceiptsByClient(id).subscribe((clientReceipts) => {
-      console.log(`Success! `,this.clientReceipts = clientReceipts);
+      this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
-      console.log(`Failed on get all Client Receipts! `+ `\n` +err.message);
+      this.log.error(`Failed on get all Client Receipts! `, err);
       alert(`Error on view all Client Receipts! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

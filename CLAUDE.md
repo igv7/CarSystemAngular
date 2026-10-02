@@ -8,7 +8,8 @@ Angular 9 (Angular CLI 9.1, TypeScript 3.8, RxJS 6, Bootstrap 4) front end for a
 
 ## Commands
 
-- `npm start` — dev server on http://localhost:4200 (runs `ng serve --proxy-config proxy.conf.json`; the proxy forwards `/api` to `localhost:8080`, but services currently call `http://localhost:8080` directly, so the proxy is effectively unused)
+- `npm start` — runs `log-server.js --serve`: the log server on port 4300 plus `ng serve` on http://localhost:4200. The proxy (`proxy.conf.json`) forwards `/__log` to the log server; its `/api` entry is unused because services call `http://localhost:8080` directly.
+- `npm run start:app-only` — dev server without the log server; `npm run log-server` — log server only
 - `npm run build` — build to `dist/` (`ng build --prod` for production)
 - `npm test` — Karma + Jasmine unit tests in Chrome (watch mode)
 - Single spec: temporarily change `describe`/`it` to `fdescribe`/`fit`, or narrow the `require.context` regex in `src/test.ts`. Most `*.spec.ts` files are unmodified CLI stubs and many will fail on missing providers.
@@ -41,6 +42,8 @@ Angular 9 (Angular CLI 9.1, TypeScript 3.8, RxJS 6, Bootstrap 4) front end for a
 
 - Forms are template-driven (`FormsModule`, `#f="ngForm"` with `@ViewChild('f')`), not reactive forms.
 - Each component sets the browser tab title via `Title.setTitle()` in `ngOnInit`, and "back" buttons navigate explicitly with `router.navigate([...])`.
-- Errors are reported with `console.log` plus `alert()`.
+- Logging goes through `LoggerService`, never `console.*`. Classes declare `private log = this.logger.for('ClassName');` and call `this.log.debug|info|error(message, ...data)`. Use `debug` for fetches, `info` for completed user actions (add/update/delete, login/logout) and `error` for failures, passing the `err` object. Entries are batched to `logs/app.log` by `log-server.js`; password/token fields and the token in URLs are masked. Settings (`logLevel`, `logServerUrl`, `logToConsole`) live in `src/environments/`.
+- `HttpLoggingInterceptorService` logs every HTTP call at `debug`, and `LoggingErrorHandlerService` logs uncaught errors.
+- User-facing errors are still shown with `alert()`.
 - Imports use absolute `src/app/...` paths.
 - Brand images are in `src/assets/images/CARS/<BRAND>.jpg` (upper-case brand names matching `CarType`).

@@ -4,6 +4,7 @@ import { Client } from 'src/app/models/client';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-all-client-cars-by-price-until',
@@ -18,7 +19,9 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
 
   showImage: boolean = false;
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewAllClientCarsByPriceUntilComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.title.setTitle("All Client Cars By Price");
@@ -26,10 +29,10 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
 
   public getAllClientCarsByPrice(id: number, price: number): void {
     this.adminService.getAllClientCarsByPrice(id, price).subscribe((cars) => {
-      console.log(`Success! `,this.cars = cars);
+      this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
-      console.log(`Failed on get all Client Cars By Price! `+ `\n` +err.message);
+      this.log.error(`Failed on get all Client Cars By Price! `, err);
       alert(`Error on view all Client Cars by price! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

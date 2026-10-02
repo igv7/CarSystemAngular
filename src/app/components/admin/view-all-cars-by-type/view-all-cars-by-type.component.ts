@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-all-cars-by-type',
@@ -16,7 +17,9 @@ export class ViewAllCarsByTypeComponent implements OnInit {
 
   showImage: boolean = false;
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewAllCarsByTypeComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.title.setTitle("All Cars By Type")
@@ -24,10 +27,10 @@ export class ViewAllCarsByTypeComponent implements OnInit {
 
   public getAllCarsByType(type: string): void {
     this.adminService.getAllCarsByType(type).subscribe((cars) => {
-      console.log(`Success! `,this.cars = cars);
+      this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
-      console.log(`Failed on get all Cars By Type! `+ `\n` +err.message);
+      this.log.error(`Failed on get all Cars By Type! `, err);
       alert(`Error on view all Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

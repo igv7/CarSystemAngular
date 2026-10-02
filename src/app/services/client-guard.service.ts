@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { LoginService } from './login.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,9 @@ import { LoginService } from './login.service';
 
 export class ClientGuardService implements CanActivate {
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  private log = this.logger.for('ClientGuardService');
+
+  constructor(private loginService: LoginService, private router: Router, private logger: LoggerService) { }
 
   path: ActivatedRouteSnapshot[];
   route: ActivatedRouteSnapshot;
@@ -19,6 +22,7 @@ export class ClientGuardService implements CanActivate {
       return true;
     }
     else {
+      this.log.info(`Access to ${s.url} denied: not logged in as client, redirecting to /login`);
       this.router.navigate(["/login"]);
       return false;
     }

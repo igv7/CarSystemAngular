@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { CarService } from 'src/app/services/car.service';
 import { Router } from '@angular/router';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-car-search',
@@ -13,7 +14,9 @@ export class CarSearchComponent implements OnInit {
   public cars: Car[];
   public car = new Car();
   
-  constructor(private carService: CarService, private router: Router) { }
+  private log = this.logger.for('CarSearchComponent');
+
+  constructor(private carService: CarService, private router: Router, private logger: LoggerService) { }
 
   ngOnInit() {
       (<HTMLInputElement>document.querySelector('#search')).oninput = function() {
@@ -47,13 +50,13 @@ export class CarSearchComponent implements OnInit {
 
   public searchCar() {
     this.carService.getAllCarsByType(this.car.type.toUpperCase().replace(/\s/g, "")).subscribe((cars) => {
-      console.log(`Success! `,this.cars = cars);
+      this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);
       this.router.navigate([`/${this.car.type.toLowerCase().replace(/\s/g, "")}`]);
       let inputSearch = (<HTMLInputElement>document.querySelector('#search'));
       inputSearch.value = `${this.car.type.toUpperCase()}`;
     }, err => {
-      console.log(`Failed on get all Cars By Type! ${this.car.type.toUpperCase()}`+ `\n` +err.message);
+      this.log.error(`Failed on get all Cars By Type! ${this.car.type.toUpperCase()}`, err);
       let inputSearch = (<HTMLInputElement>document.querySelector('#search'));
       inputSearch.value = '';
       alert(`Error on get Cars By Type! ${this.car.type.toUpperCase()}` + `\n` + `The reasons: ` + `\n` + 
@@ -69,7 +72,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -83,7 +86,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -97,7 +100,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -111,7 +114,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -125,7 +128,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -139,7 +142,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -153,7 +156,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -167,7 +170,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -181,7 +184,7 @@ export class CarSearchComponent implements OnInit {
     this.car.type = inp;
     inputSearch.value = this.car.type;
       err => {
-        console.log(`Failed on get Cars By Type! ${this.car.type}`+ `\n` +err.message);
+        this.log.error(`Failed on get Cars By Type! ${this.car.type}`, err);
         alert(`Error on view Cars by type! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

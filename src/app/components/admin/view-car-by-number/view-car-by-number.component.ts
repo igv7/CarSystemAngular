@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-car-by-number',
@@ -13,7 +14,9 @@ export class ViewCarByNumberComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewCarByNumberComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit():void {
     this.title.setTitle("View Car By Number");
@@ -21,7 +24,7 @@ export class ViewCarByNumberComponent implements OnInit {
 
   public getCarByNumber():void {
     this.adminService.getCarByNumber(this.car.number).subscribe(car => {
-      console.log(`Success! `,
+      this.log.debug(`Success! `,
         this.car.id = car.id, 
         this.car.number = car.number,
         this.car.color = car.color,
@@ -31,7 +34,7 @@ export class ViewCarByNumberComponent implements OnInit {
         this.car.image = car.image);
       this.router.navigate(["/admin/view-car-by-number/car-id/"+this.car.id]);
     }, err => {
-      console.log(`Failed on get Car by number: `,this.car.number + `\n` +err.message);
+      this.log.error(`Failed on get Car by number: `, this.car.number, err);
       alert(`Error on view Car by number! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

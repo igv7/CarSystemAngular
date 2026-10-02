@@ -3,6 +3,7 @@ import { Client } from 'src/app/models/client';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-delete-client',
@@ -13,7 +14,9 @@ export class DeleteClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('DeleteClientComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
    this.title.setTitle("Delete Client");
@@ -21,7 +24,7 @@ export class DeleteClientComponent implements OnInit {
 
   public getClient():void {
     this.adminService.getClient(this.client.id).subscribe(client => {
-      console.log(`Success! `,
+      this.log.debug(`Success! `,
         this.client.id = client.id, 
         this.client.name = client.name,
         this.client.birthday = client.birthday,
@@ -31,7 +34,7 @@ export class DeleteClientComponent implements OnInit {
         this.client.balance = client.balance);
       this.router.navigate(["/admin/delete-client/client-id/"+this.client.id]);
     }, err => {
-      console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
+      this.log.error(`Failed on get Client ID: `, this.client.id, err);
       alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -42,11 +45,11 @@ export class DeleteClientComponent implements OnInit {
   public deleteClient(): void {
     if(confirm(`Are You sure You want to remove this Client? ` + `\n` + `Client ID: ${this.client.id}`)) {
     this.adminService.deleteClient(this.client.id).subscribe((c) => {
-      console.log(`Success on delele Client Id: `,this.client.id = c.id);
+      this.log.info(`Success on delete Client Id: `,this.client.id = c.id);
         alert(`Client Id: ${c.id} Name: `+c.name+ ` has been succesfully deleted!`);
         this.router.navigate(["/admin/view-all-clients"]);
     }, err => {
-      console.log(`Failed on delele Client Id: `,this.client.id + `\n` +err.message);
+      this.log.error(`Failed on delete Client Id: `, this.client.id, err);
       alert(`Error on delele Client! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

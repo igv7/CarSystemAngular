@@ -3,6 +3,7 @@ import { Client } from 'src/app/models/client';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-client',
@@ -13,7 +14,9 @@ export class ViewClientComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewClientComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit():void {
     this.title.setTitle("View Client");
@@ -21,7 +24,7 @@ export class ViewClientComponent implements OnInit {
 
   public getClient():void {
     this.adminService.getClient(this.client.id).subscribe(client => {
-      console.log(`Success! `,
+      this.log.debug(`Success! `,
         this.client.id = client.id, 
         this.client.name = client.name,
         this.client.birthday = client.birthday,
@@ -31,7 +34,7 @@ export class ViewClientComponent implements OnInit {
         this.client.balance = client.balance);
       this.router.navigate(["/admin/view-client/client-id/"+this.client.id]);
     }, err => {
-      console.log(`Failed on get Client ID: `,this.client.id + `\n` +err.message);
+      this.log.error(`Failed on get Client ID: `, this.client.id, err);
       alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

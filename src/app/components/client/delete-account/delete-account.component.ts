@@ -4,6 +4,7 @@ import { ClientService } from 'src/app/services/client.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -14,7 +15,9 @@ export class DeleteAccountComponent implements OnInit {
 
   public client = new Client();
 
-  public constructor(private title: Title, private clientService: ClientService, private router: Router, private loginService: LoginService) { }
+  private log = this.logger.for('DeleteAccountComponent');
+
+  public constructor(private title: Title, private clientService: ClientService, private router: Router, private loginService: LoginService, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.title.setTitle("Delete Account");
@@ -23,11 +26,11 @@ export class DeleteAccountComponent implements OnInit {
   public deleteAccount() {
     if(confirm(`Are You sure You want to Delete Your Account?`)) {
     this.clientService.deleteAccount().subscribe((client) => {
-      console.log(`Success on delete Account `,this.client = client);
+      this.log.info(`Success on delete Account `,this.client = client);
       this.loginService.setClientUserF();
       this.router.navigate(["/home"]);
     }, err => {
-      console.log(`Failed on delete Account! `+ `\n` +err.message);
+      this.log.error(`Failed on delete Account! `, err);
       alert(`Error on delele Account! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);

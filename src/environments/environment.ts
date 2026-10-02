@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // Lowest level that gets logged: 'debug' | 'info' | 'error'.
+  logLevel: 'debug',
+  // Proxied by the dev server to log-server.js, which writes logs/app.log.
+  logServerUrl: '/__log' as string,
+  // Also mirror entries to the browser console (DevTools).
+  logToConsole: true
 };
 
 /*

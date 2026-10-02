@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "node log-server.js --serve",
+    "start:app-only": "ng serve --proxy-config proxy.conf.json",
+    "log-server": "node log-server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

@@ -4,6 +4,7 @@ import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-my-receipts',
@@ -17,14 +18,16 @@ export class ViewMyReceiptsComponent implements OnInit {
 
   listFilter: string = "";
 
-  public constructor(private title: Title, private clientService: ClientService, private router: Router) { }
+  private log = this.logger.for('ViewMyReceiptsComponent');
+
+  public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.clientService.getMyReceipts().subscribe((clientReceipts) => {
-      console.log(`Success! `,this.clientReceipts = clientReceipts);
+      this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
-      console.log(`Failed on get my Receipts! `+ `\n` +err.message);
+      this.log.error(`Failed on get my Receipts! `, err);
       alert(`Error on view My Receipts! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

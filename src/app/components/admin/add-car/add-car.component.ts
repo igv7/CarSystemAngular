@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-add-car',
@@ -13,7 +14,9 @@ export class AddCarComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('AddCarComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.title.setTitle("Add car");
@@ -23,17 +26,17 @@ export class AddCarComponent implements OnInit {
     if (!this.car.number || !this.car.color || !this.car.type || !this.car.amount || !this.car.price || !this.car.image) {
       this.router.navigate(["/admin/add-car"])
       this.adminService.addCar(this.car).subscribe(car => {}, err => {
-        console.log(`Failed on add Car! `,this.car.number + `\n` +err.message);
+        this.log.error(`Failed on add Car! `, this.car.number, err);
         alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);
       })
     } else {
     this.adminService.addCar(this.car).subscribe(car => {
-      console.log(`Success on add Car! `,this.car = car);
+      this.log.info(`Success on add Car! `,this.car = car);
       this.router.navigate(["/admin/view-all-cars"])
     }, err => {
-      console.log(`Failed on add Car! `,this.car.number + `\n` +err.message);
+      this.log.error(`Failed on add Car! `, this.car.number, err);
       alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

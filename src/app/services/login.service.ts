@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UrlsService } from './urls.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class LoginService {
   public isLoggedIn: boolean =false;
   public type: string;
 
-  public constructor(private httpClient: HttpClient, private urlsService: UrlsService) { }
+  private log = this.logger.for('LoginService');
+
+  public constructor(private httpClient: HttpClient, private urlsService: UrlsService, private logger: LoggerService) { }
 
 
   public token: string = localStorage.getItem("token");
@@ -22,7 +25,7 @@ export class LoginService {
   login(userName, password, type): Observable<any> {
     let url = this.urlsService.getLoginUrl() + '?userName=' + userName + "&password=" + password + "&type=" + type;
     this.isLoggedIn = true;
-    console.log(url)
+    this.log.debug(`Sending login request for ${userName} (${type})`);
     return this.httpClient.post(url, null, { observe: 'response', responseType: 'text' });
   }
 
@@ -31,6 +34,7 @@ export class LoginService {
     this.setAdminUserF();
     this.setClientUserF(); 
     this.isLoggedIn = false;
+    this.log.info('User logged out');
     // alert("Are You sure You want to exit?");
   }
 

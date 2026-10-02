@@ -3,6 +3,7 @@ import { ClientReceipt } from 'src/app/models/clientReceipt';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-details-receipt',
@@ -13,15 +14,17 @@ export class DetailsReceiptComponent implements OnInit {
 
   public clientReceipt: ClientReceipt;
 
-  public constructor(private title: Title, private activatedRoute: ActivatedRoute, private clientService: ClientService, private router: Router) { }
+  private log = this.logger.for('DetailsReceiptComponent');
+
+  public constructor(private title: Title, private activatedRoute: ActivatedRoute, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.clientService.getMyReceipts().subscribe((clientReceipts) => {
       const id = +this.activatedRoute.snapshot.params.id;
       this.clientReceipt = clientReceipts.find(cr => cr.receiptId == id);
-      console.log(`Success on get Receipt details! `);
+      this.log.debug(`Success on get Receipt details! `);
     }, err => {
-      console.log(`Failed on get Receipt details! ` + `\n` +err.message);
+      this.log.error(`Failed on get Receipt details! `, err);
       alert(`Error on view Receipt details! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);

@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-view-all-cars',
@@ -17,14 +18,16 @@ export class ViewAllCarsComponent implements OnInit {
 
   showImage: boolean = false;
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ViewAllCarsComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe((cars) => {
-      console.log(`Success! `,this.cars = cars);
+      this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
-      console.log(`Failed on get all Cars! `+ `\n` +err.message);
+      this.log.error(`Failed on get all Cars! `, err);
       alert(`Error on view all Cars! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

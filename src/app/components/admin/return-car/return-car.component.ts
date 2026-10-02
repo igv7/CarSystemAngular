@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-return-car',
@@ -13,7 +14,9 @@ export class ReturnCarComponent implements OnInit {
 
   public car = new Car();
 
-  public constructor(private title: Title, private adminService: AdminService, private router: Router) { }
+  private log = this.logger.for('ReturnCarComponent');
+
+  public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   public ngOnInit():void {
     this.title.setTitle("Return Car");
@@ -21,7 +24,7 @@ export class ReturnCarComponent implements OnInit {
 
   public getCar():void {
     this.adminService.getCar(this.car.id).subscribe(car => {
-      console.log(`Success! `,
+      this.log.debug(`Success! `,
         this.car.id = car.id, 
         this.car.number = car.number,
         this.car.color = car.color,
@@ -31,7 +34,7 @@ export class ReturnCarComponent implements OnInit {
         this.car.image = car.image);
       this.router.navigate(["/admin/return-car/car-id/"+this.car.id]);
     }, err => {
-      console.log(`Failed on get Car! Wrong ID: `,this.car.id + `\n` +err.message);
+      this.log.error(`Failed on get Car! Wrong ID: `, this.car.id, err);
       alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
@@ -42,11 +45,11 @@ export class ReturnCarComponent implements OnInit {
   public returnCar(): void {
     if(confirm(`Are You sure You want to return this Car? ` + `\n` + `Car ID: ${this.car.id}`)) {
     this.adminService.returnCar(this.car.id).subscribe((c) => {
-      console.log(`Success on return Car Id: `,this.car.id = c.id);
+      this.log.info(`Success on return Car Id: `,this.car.id = c.id);
         alert(`Car Id: ${c.id} Number: `+c.number+ ` has been succesfully returned!`);
         this.router.navigate(["/admin/view-all-cars"]);
     }, err => {
-      console.log(`Failed on return Car! Wrong ID: `,this.car.id + `\n` +err.message);
+      this.log.error(`Failed on return Car! Wrong ID: `, this.car.id, err);
       alert(`Error on return Car! ` + `\n` + `The reasons: ` + `\n` + 
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 

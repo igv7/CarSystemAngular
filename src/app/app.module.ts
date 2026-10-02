@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -30,6 +30,8 @@ import { ClientGuardService } from './services/client-guard.service';
 import { ExitClientGuardService } from './services/exit-client-guard.service';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { HttpLoggingInterceptorService } from './http-logging-interceptor.service';
+import { LoggingErrorHandlerService } from './logging-error-handler.service';
 import { AddClientComponent } from './components/admin/add-client/add-client.component';
 import { UpdateClientComponent } from './components/admin/update-client/update-client.component';
 import { ViewClientComponent } from './components/admin/view-client/view-client.component';
@@ -136,6 +138,13 @@ import { CarSearchComponent } from './components/car-search/car-search.component
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpLoggingInterceptorService,
+    multi: true
+  }, {
+    provide: ErrorHandler,
+    useClass: LoggingErrorHandlerService
   }],
   bootstrap: [LayoutComponent]
 })
