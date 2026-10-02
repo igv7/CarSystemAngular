@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+/** Log levels, from least to most severe. */
 export type LogLevel = 'debug' | 'info' | 'error';
 
 const LEVEL_ORDER: { [level: string]: number } = { debug: 0, info: 1, error: 2 };
@@ -8,16 +9,18 @@ const SENSITIVE_KEY = /password|token/i;
 const FLUSH_DELAY_MS = 1000;
 const MAX_BATCH = 50;
 
+/** One log line as sent to the log server. */
 interface LogEntry {
   time: string;
   level: LogLevel;
   source: string;
+  /** Path of the page the user was on. */
   page: string;
   message: string;
   data?: any;
 }
 
-// Masks the login token in URL paths and password/token query parameters.
+/** Masks the login token in URL paths and password/token query parameters. */
 export function redactUrl(url: string, token?: string): string {
   let redacted = url.replace(/((?:password|token)=)[^&]*/gi, '$1***');
   if (token && token !== 'null') {
@@ -26,7 +29,7 @@ export function redactUrl(url: string, token?: string): string {
   return redacted;
 }
 
-// Turns errors and objects into JSON-safe values, masking password and token fields.
+/** Turns errors and objects into JSON-safe values, masking password and token fields. */
 function toLoggable(value: any): any {
   if (value === undefined) {
     return undefined;
@@ -47,7 +50,7 @@ function toLoggable(value: any): any {
   }
 }
 
-// Buffers entries and sends them to the log server in batches.
+/** Buffers entries and sends them to the log server in batches. */
 class LogTransport {
   private buffer: LogEntry[] = [];
   private timer: any = null;
@@ -57,6 +60,10 @@ class LogTransport {
     window.addEventListener('pagehide', () => this.flush(true));
   }
 
+  /**
+   * Queues an entry (and mirrors it to the console in development). Errors and full batches are sent at once;
+   * anything else within a second.
+   */
   public add(entry: LogEntry, schedule: (fn: () => void) => void = fn => fn()): void {
     if (environment.logToConsole) {
       const write = entry.level === 'error' ? console.error : entry.level === 'info' ? console.info : console.debug;
@@ -73,6 +80,10 @@ class LogTransport {
     }
   }
 
+  /**
+   * Sends queued entries to the log server. When the page is closing, uses sendBeacon so the request survives
+   * the unload.
+   */
   public flush(unloading = false): void {
     clearTimeout(this.timer);
     this.timer = null;
@@ -91,6 +102,7 @@ class LogTransport {
       .catch(() => this.reportServer(false));
   }
 
+  /** Warns once in the console when the log server stops answering. */
   private reportServer(ok: boolean): void {
     if (!ok && !this.serverDown && environment.logToConsole) {
       console.warn(`Log server unreachable at ${environment.logServerUrl}; start it with "npm start" or "npm run log-server".`);
@@ -99,8 +111,13 @@ class LogTransport {
   }
 }
 
+/** Single transport shared by every logger, so all entries go out in the same batches. */
 export const logTransport = new LogTransport();
 
+/**
+ * Records one entry if `level` is at or above environment.logLevel. Works without Angular DI (used by
+ * main.ts).
+ */
 export function writeLog(level: LogLevel, source: string, message: string, data: any[], schedule?: (fn: () => void) => void): void {
   if (LEVEL_ORDER[level] < LEVEL_ORDER[environment.logLevel]) {
     return;
@@ -116,17 +133,21 @@ export function writeLog(level: LogLevel, source: string, message: string, data:
   }, schedule);
 }
 
+/** Logger for one class; every entry is tagged with its source name. */
 export class Logger {
   constructor(private source: string, private zone: NgZone) { }
 
+  /** Logs details useful while developing, such as data loaded from the server. */
   public debug(message: string, ...data: any[]): void {
     this.write('debug', message, data);
   }
 
+  /** Logs a completed user action, such as adding a car or signing in. */
   public info(message: string, ...data: any[]): void {
     this.write('info', message, data);
   }
 
+  /** Logs a failure; pass the error object as data so its status and URL are recorded. */
   public error(message: string, ...data: any[]): void {
     this.write('error', message, data);
   }
@@ -144,7 +165,7 @@ export class LoggerService {
 
   constructor(private zone: NgZone) { }
 
-  // Returns a logger whose entries are tagged with the given source, usually the class name.
+  /** Returns a logger whose entries are tagged with the given source, usually the class name. */
   public for(source: string): Logger {
     return new Logger(source, this.zone);
   }

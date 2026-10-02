@@ -12,19 +12,24 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewAllCarsByColorComponent implements OnInit {
 
+  /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
+  /** Form model; `color` holds the selected color. */
   public car = new Car();
 
+  /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
   private log = this.logger.for('ViewAllCarsByColorComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("All Cars By Color")
   }
 
+  /** Loads the cars of the selected color into the table. */
   public getAllCarsByColor(color: string): void {
     this.adminService.getAllCarsByColor(color).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
@@ -39,11 +44,13 @@ export class ViewAllCarsByColorComponent implements OnInit {
     });
   }
 
+  /** Returns to /admin. */
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");
   }
 
+  /** Shows or hides the car pictures in the table. */
   public toggleImage() {
     this.showImage = !this.showImage;
   }

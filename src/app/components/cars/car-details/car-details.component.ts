@@ -5,6 +5,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 
+/** Car details shown under the admin's car list (`car-details/:id`). */
 @Component({
   selector: 'app-car-details',
   templateUrl: './car-details.component.html',
@@ -12,12 +13,14 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class CarDetailsComponent implements OnInit {
 
+  /** The car picked by the id in the URL. */
   public car: Car;
 
   private log = this.logger.for('CarDetailsComponent');
 
   public constructor(private title: Title, private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads all cars and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe((cars) => {
       const id = +this.activatedRoute.snapshot.params.id;
@@ -32,6 +35,7 @@ export class CarDetailsComponent implements OnInit {
     this.title.setTitle("Car Details");
   }
 
+  /** Returns to /admin/view-all-cars. */
   public backToAllCars(): void {
     this.router.navigate(["/admin/view-all-cars"]);
   }

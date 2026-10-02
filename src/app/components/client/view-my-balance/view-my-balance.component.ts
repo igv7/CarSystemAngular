@@ -12,12 +12,14 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewMyBalanceComponent implements OnInit {
 
+  /** The client's account; its balance is shown once loaded. */
   public client = new Client();
 
   private log = this.logger.for('ViewMyBalanceComponent');
 
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads the client's account to show the balance. */
   public ngOnInit(): void {
     this.clientService.getBalance().subscribe((client) => {
       this.log.debug(`Success! `,this.client = client);
@@ -32,6 +34,7 @@ export class ViewMyBalanceComponent implements OnInit {
   }
 
 
+  /** Returns to /client. */
   public backToMainPage(): void {
     this.router.navigate(["/client"]);
     this.title.setTitle("Client Page");

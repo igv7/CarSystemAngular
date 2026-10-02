@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+/** Holder for shared objects between components; nothing uses it at the moment. */
 @Injectable({
   providedIn: 'root'
 })

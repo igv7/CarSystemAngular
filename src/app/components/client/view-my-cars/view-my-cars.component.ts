@@ -12,17 +12,21 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewMyCarsComponent implements OnInit {
 
+  /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
   public car = new Car();
 
+  /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
+  /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
   private log = this.logger.for('ViewMyCarsComponent');
 
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads the client's rented cars into the table. */
   public ngOnInit(): void {
     this.clientService.getMyCars().subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
@@ -37,10 +41,12 @@ export class ViewMyCarsComponent implements OnInit {
     this.title.setTitle("My cars");
   }
 
+  /** Reloads the whole page so the table shows the current rentals. */
   public refresh(): void {
     window.location.reload();
 }
 
+  /** After confirmation, returns the rented car and reloads the page. */
   public returnCar(id: number): void {
     if(confirm(`Are You sure You want to return Your Car?`)) {
     this.clientService.returnCar(id).subscribe((c) => {
@@ -57,11 +63,13 @@ export class ViewMyCarsComponent implements OnInit {
   }
 
 
+  /** Returns to /client. */
   public backToMainPage(): void {
     this.router.navigate(["/client"]);
     this.title.setTitle("Client Page");
   }
 
+  /** Shows or hides the car pictures in the table. */
   public toggleImage() {
     this.showImage = !this.showImage;
   }

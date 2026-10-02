@@ -6,6 +6,7 @@ import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 
+/** Car details shown under the client's car lists (`details/:id`), with a Rent button. */
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -13,6 +14,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class DetailsComponent implements OnInit {
 
+  /** The car picked by the id in the URL. */
   public car: Car;
   public client = new Client();
 
@@ -20,6 +22,7 @@ export class DetailsComponent implements OnInit {
 
   public constructor(private title: Title, private activatedRoute: ActivatedRoute, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads the rentable cars and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.clientService.getCars().subscribe((cars) => {
       const id = +this.activatedRoute.snapshot.params.id;
@@ -34,6 +37,7 @@ export class DetailsComponent implements OnInit {
     this.title.setTitle("Details");
   }
 
+  /** Rents the car for the logged-in client and opens their rented cars. */
   public getCar(id: number):void {
     this.clientService.getCar(id).subscribe(car => {
       this.log.debug(`Success! `,
@@ -54,10 +58,12 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  /** Returns to /client/view-cars. */
   public backToCars(): void {
     this.router.navigate(["/client/view-cars"]);
   }
 
+  /** Returns to /client/view-my-cars. */
   public backToMyCars(): void {
     this.router.navigate(["/client/view-my-cars"]);
   }

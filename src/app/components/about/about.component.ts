@@ -11,10 +11,12 @@ export class AboutComponent implements OnInit {
 
   public constructor(private title: Title, private router: Router) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("About Us");
   }
 
+  /** Returns to /home. */
   public homePage() {
     this.router.navigate(["/home"])
   }

@@ -16,19 +16,27 @@ import { LoggerService } from 'src/app/services/logger.service';
 export class LoginComponent implements OnInit {
 
 
+  /** The sign-in form; its values are read on submit. */
   @ViewChild('f', {static: false}) userLoginForm: NgForm;
+  /** Never assigned, so ngOnDestroy has nothing to unsubscribe. */
   obsSubscription: Subscription = null;
 
   private log = this.logger.for('LoginComponent');
 
   public constructor(private title: Title, private router: Router, private loginService: LoginService, private logger: LoggerService) { }
 
+  /** Not used; the sign-in state lives in LoginService. */
   public isLoggedIn: boolean;
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("Sign In");
   }
 
+  /**
+   * Signs in with the form values. Opens /admin or /client by the chosen type, and on success stores the
+   * token and role flag.
+   */
   onSubmit() {
     let userName = this.userLoginForm.value.userName;
     let password = this.userLoginForm.value.password;
@@ -74,6 +82,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  /** Unsubscribes and clears the token if a subscription was stored. */
   ngOnDestroy(): void {
     if (this.obsSubscription != null) {
       this.obsSubscription.unsubscribe();
@@ -81,10 +90,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /** Cancel button: leaves the form and returns to /home. */
   public cancel() {
     this.router.navigate(["/home"])
   }
 
+  /** Close (×) button: leaves the form and returns to /home. */
   public close() {
     this.router.navigate(["/home"])
   }

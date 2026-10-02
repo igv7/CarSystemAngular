@@ -13,15 +13,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewMyReceiptsComponent implements OnInit {
 
+  /** Receipts shown in the table; undefined (loading picture shown) until the server responds. */
   public clientReceipts: ClientReceipt[];
+  /** The client picked by the id in the URL. */
   public client: Client;
 
+  /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
   private log = this.logger.for('ViewMyReceiptsComponent');
 
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads the client's receipts into the table. */
   public ngOnInit(): void {
     this.clientService.getMyReceipts().subscribe((clientReceipts) => {
       this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
@@ -36,6 +40,7 @@ export class ViewMyReceiptsComponent implements OnInit {
     this.title.setTitle("My Receipts");
   }
 
+  /** Returns to /client. */
   public backToMainPage(): void {
     this.router.navigate(["/client"]);
     this.title.setTitle("Client Page");

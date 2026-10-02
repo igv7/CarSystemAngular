@@ -12,16 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class SignupComponent implements OnInit {
 
+  /** Form model; the inputs bind to it. */
   public client = new Client();
 
   private log = this.logger.for('SignupComponent');
 
   public constructor(private signupService: SignupService,private title: Title, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("Sign Up");
   }
 
+  /** Creates the client account and opens the sign-in page; alerts if the name is already taken. */
   onSubmit() {
     this.signupService.signUp(this.client).subscribe(client => {
       this.log.info(`Success on sign up Client! `,this.client = client);
@@ -41,10 +44,12 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  /** Cancel button: leaves the form and returns to /home. */
   public cancel() {
     this.router.navigate(["/home"])
   }
 
+  /** Close (×) button: leaves the form and returns to /home. */
   public close() {
     this.router.navigate(["/home"])
   }

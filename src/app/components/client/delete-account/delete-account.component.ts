@@ -23,12 +23,17 @@ export class DeleteAccountComponent implements OnInit {
     this.title.setTitle("Delete Account");
    }
 
+  /** After confirmation, deletes the client's account, goes to /home and signs out. */
   public deleteAccount() {
     if(confirm(`Are You sure You want to Delete Your Account?`)) {
     this.clientService.deleteAccount().subscribe((client) => {
       this.log.info(`Success on delete Account `,this.client = client);
-      this.loginService.setClientUserF();
-      this.router.navigate(["/home"]);
+      // Sign out after leaving /client, so its canDeactivate() doesn't ask "exit?" as well.
+      this.router.navigate(["/home"]).then(left => {
+        if (left) {
+          this.loginService.logout();
+        }
+      });
     }, err => {
       this.log.error(`Failed on delete Account! `, err);
       alert(`Error on delele Account! ` + `\n` + `The reasons: ` + `\n` + 
@@ -39,6 +44,7 @@ export class DeleteAccountComponent implements OnInit {
   }
 
 
+  /** Returns to /client. */
   public backToMainPage(): void {
     this.router.navigate(["/client"]);
     this.title.setTitle("Client Page");

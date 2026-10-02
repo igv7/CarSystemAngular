@@ -10,6 +10,7 @@ export class Page404Component implements OnInit {
 
   constructor(private title: Title) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("Page Not Found");
   }

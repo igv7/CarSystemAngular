@@ -13,20 +13,26 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewAllClientCarsByTypeComponent implements OnInit {
 
+  /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
+  /** Form model; `type` holds the selected brand. */
   public car = new Car();
+  /** Form model; `id` holds the client to look up. */
   public client = new Client();
 
+  /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
   private log = this.logger.for('ViewAllClientCarsByTypeComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("All Client Cars By Type");
   }
 
+  /** Loads the given client's rented cars of the selected brand into the table. */
   public getAllClientCarsByType(id: number, type: string): void {
     this.adminService.getAllClientCarsByType(id, type).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
@@ -42,11 +48,13 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
     });
   }
 
+  /** Returns to /admin. */
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");
   }
 
+  /** Shows or hides the car pictures in the table. */
   public toggleImage() {
     this.showImage = !this.showImage;
   }

@@ -14,21 +14,26 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewReceiptsByClientComponent implements OnInit {
 
+  /** Receipts shown in the table; undefined (loading picture shown) until the server responds. */
   public clientReceipts: ClientReceipt[];
   public clientReceipt = new ClientReceipt();
+  /** Form model; `id` holds the client to look up. */
   public client = new Client();
   public car = new Car();
 
+  /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
   private log = this.logger.for('ViewReceiptsByClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("Receipts By Client");
   }
 
+  /** Loads the given client's receipts into the table. */
   public getReceiptsByClient(id: number): void {
     this.adminService.getReceiptsByClient(id).subscribe((clientReceipts) => {
       this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
@@ -43,6 +48,7 @@ export class ViewReceiptsByClientComponent implements OnInit {
     });
   }
 
+  /** Returns to /admin. */
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");

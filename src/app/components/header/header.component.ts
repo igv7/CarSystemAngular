@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  public constructor(public loginService: LoginService, private router: Router) { } 
+  public constructor(public loginService: LoginService) { }
 
+  /** Sign Out link: asks for confirmation, then signs out and goes to /home. */
   public logout(): void {
-    this.loginService.logout();
-    this.router.navigate(["/home"]);
+    this.loginService.confirmAndSignOut();
   }
 
   ngOnInit(): void {

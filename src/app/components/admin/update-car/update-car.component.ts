@@ -12,16 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class UpdateCarComponent implements OnInit {
 
+  /** Form model: the id is typed in first, then the loaded car fills the rest for editing. */
   public car = new Car();
 
   private log = this.logger.for('UpdateCarComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("Update Car");
   }
 
+  /** Loads the car with the entered id into the form and shows its details below. */
   public getCar():void {
     this.adminService.getCar(this.car.id).subscribe(car => {
       this.log.debug(`Success! `,
@@ -42,6 +45,7 @@ export class UpdateCarComponent implements OnInit {
     });
   }
 
+  /** Saves the edited car and opens the car list. */
   public updateCar(): void {
     this.adminService.updateCar(this.car).subscribe(car => {
       this.log.info(`Success on update Car! `,this.car = car);
@@ -58,11 +62,13 @@ export class UpdateCarComponent implements OnInit {
 
 
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");
   }
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");

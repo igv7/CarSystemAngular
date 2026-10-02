@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+/** Root component the app starts from: the header plus the routed page. */
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',

@@ -12,14 +12,17 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewAllClientsComponent implements OnInit {
 
+  /** Clients shown in the table; undefined (loading picture shown) until the server responds. */
   public clients: Client[];
 
+  /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
   private log = this.logger.for('ViewAllClientsComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads all clients into the table. */
   public ngOnInit(): void {
     this.adminService.getAllClients().subscribe((clients) => {
       this.log.debug(`Success! `,this.clients = clients);
@@ -34,6 +37,7 @@ export class ViewAllClientsComponent implements OnInit {
     this.title.setTitle("All Clients");
   }
 
+  /** Returns to /admin. */
   public backToAdmin(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");

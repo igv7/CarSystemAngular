@@ -30,9 +30,9 @@ Angular 9 (Angular CLI 9.1, TypeScript 3.8, RxJS 6, Bootstrap 4) front end for a
 **Services (`src/app/services/`)**, all `providedIn: 'root'`:
 - `UrlsService` — hard-coded backend base URLs (`/admin/`, `/client/`, `/car/`, `/carSystem/login/`, `/carSystem/signUp/`). Change backend addresses here.
 - `AdminService`, `ClientService`, `CarService`, `SignupService` — thin `HttpClient` wrappers. The auth token is put **in the URL path** (`<base>/<operation>/<token>/<id>`) using `loginService.token`, with `withCredentials: true`.
-- `LoginService` — the real auth state. `login()` POSTs credentials as query params and gets the token back as a text body. Token and role flags are stored in `localStorage` (`token`, `userAdmin`, `userClient`); the guards check `getAdminUser()` / `getClientUser()`.
+- `LoginService` — the real auth state. `login()` POSTs credentials as query params and gets the token back as a text body. Token and role flags are stored in `localStorage` (`token`, `userAdmin`, `userClient`); the guards check `getAdminUser()` / `getClientUser()`, and `isLoggedIn` (used by the header) is a getter over those flags. Sign-out buttons call `confirmAndSignOut()`, which navigates to `/home` before clearing state so the admin/client `canDeactivate()` doesn't prompt as well.
 - `AuthService` and `TokenInterceptorService` — an older, mostly unused token flow (posts to `localhost:4200`). The interceptor still adds an `Authorization: Bearer <authToken>, <loginToken>` header to every request.
-- `ItemsService` — loose shared `any` state (`car`, `client`, `cars`, …) used to pass objects between components.
+- `ItemsService` — loose shared `any` state (`car`, `client`, `cars`, …); currently unused.
 
 **Models** (`src/app/models/`) are plain classes/enums: `Car`, `Client`, `ClientReceipt`, `CarType`, `CarColor`, `ClientType`, `User`, and `ResponseCodes` (HTTP status enum used in response handling).
 
@@ -46,4 +46,5 @@ Angular 9 (Angular CLI 9.1, TypeScript 3.8, RxJS 6, Bootstrap 4) front end for a
 - `HttpLoggingInterceptorService` logs every HTTP call at `debug`, and `LoggingErrorHandlerService` logs uncaught errors.
 - User-facing errors are still shown with `alert()`.
 - Imports use absolute `src/app/...` paths.
+- Classes, methods and non-obvious fields carry a one-line `/** ... */` comment above them saying what they do (e.g. where `cancel()` navigates). Obvious members (`private log`, DI constructors, plain model ids) are left uncommented. `//` is used for section headers and notes inside method bodies.
 - Brand images are in `src/assets/images/CARS/<BRAND>.jpg` (upper-case brand names matching `CarType`).

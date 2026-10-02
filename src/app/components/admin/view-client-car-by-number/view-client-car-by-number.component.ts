@@ -13,17 +13,21 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewClientCarByNumberComponent implements OnInit {
 
+  /** Form model for the license plate; filled with the loaded car. */
   public car = new Car();
+  /** Form model for the client id. */
   public client = new Client();
 
   private log = this.logger.for('ViewClientCarByNumberComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("View Client Car By Number");
   }
 
+  /** Loads the given client's rented car with this license plate number and shows its details below. */
   public getClientCarByNumber(id: number, number: string):void {
     this.adminService.getClientCarByNumber(id, number).subscribe(car => {
       this.log.debug(`Success! `,
@@ -45,11 +49,13 @@ export class ViewClientCarByNumberComponent implements OnInit {
     });
   }
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");
   }
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");

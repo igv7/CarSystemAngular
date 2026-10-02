@@ -12,16 +12,21 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ReturnCarComponent implements OnInit {
 
+  /** Form model for the id lookup; filled with the loaded car. */
   public car = new Car();
 
   private log = this.logger.for('ReturnCarComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("Return Car");
   }
 
+  /**
+   * Loads the car with the entered id and shows its details below, so it can be checked before returning it.
+   */
   public getCar():void {
     this.adminService.getCar(this.car.id).subscribe(car => {
       this.log.debug(`Success! `,
@@ -42,6 +47,7 @@ export class ReturnCarComponent implements OnInit {
     });
   }
 
+  /** After confirmation, marks the car as returned and opens the car list. */
   public returnCar(): void {
     if(confirm(`Are You sure You want to return this Car? ` + `\n` + `Car ID: ${this.car.id}`)) {
     this.adminService.returnCar(this.car.id).subscribe((c) => {
@@ -59,11 +65,13 @@ export class ReturnCarComponent implements OnInit {
   }
 
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");
   }
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");

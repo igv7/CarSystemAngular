@@ -12,12 +12,14 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ReceiptDetailsComponent implements OnInit {
 
+  /** The receipt picked by the id in the URL. */
   public clientReceipt: ClientReceipt;
 
   private log = this.logger.for('ReceiptDetailsComponent');
 
   public constructor(private title: Title, private activatedRoute: ActivatedRoute, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Loads all receipts and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.adminService.getAllReceipts().subscribe((clientReceipts) => {
       const id = +this.activatedRoute.snapshot.params.id;
@@ -32,11 +34,13 @@ export class ReceiptDetailsComponent implements OnInit {
     this.title.setTitle("Receipt Details");
   }
 
+  /** Returns to /admin/view-all-receipts. */
   public backToAllReceipts(): void {
     this.router.navigate(["/admin/view-all-receipts"]);
     this.title.setTitle("All Receipts");
   }
 
+  /** Returns to /admin/view-receipts-by-client. */
   public backToReceiptsByClient() {
     this.router.navigate(["/admin/view-receipts-by-client"]);
     this.title.setTitle("Receipts By Client");

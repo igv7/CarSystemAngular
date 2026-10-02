@@ -12,16 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class DeleteCarComponent implements OnInit {
 
+  /** Form model for the id lookup; filled with the loaded car. */
   public car = new Car();
 
   private log = this.logger.for('DeleteCarComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
    this.title.setTitle("Delete Car");
   }
 
+  /** Loads the car with the entered id and shows its details below, so it can be checked before deleting. */
   public getCar():void {
     this.adminService.getCar(this.car.id).subscribe(car => {
       this.log.debug(`Success! `,
@@ -42,6 +45,7 @@ export class DeleteCarComponent implements OnInit {
     });
   }
 
+  /** After confirmation, deletes the car and opens the car list. */
   public deleteCar(): void {
     if(confirm(`Are You sure You want to remove this Car? ` + `\n` + `Car ID: ${this.car.id}`)) {
       this.adminService.deleteCar(this.car.id).subscribe((c) => {
@@ -59,11 +63,13 @@ export class DeleteCarComponent implements OnInit {
   }
 
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");
   }
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");

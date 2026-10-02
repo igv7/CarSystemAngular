@@ -1,3 +1,4 @@
+/** HTTP status codes checked in response handling. */
 export enum ResponseCodes {
     OK = 200,
     NO_CONTENT = 204,

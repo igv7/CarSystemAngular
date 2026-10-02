@@ -12,16 +12,21 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class DeleteClientComponent implements OnInit {
 
+  /** Form model for the id lookup; filled with the loaded client. */
   public client = new Client();
 
   private log = this.logger.for('DeleteClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
    this.title.setTitle("Delete Client");
   }
 
+  /**
+   * Loads the client with the entered id and shows its details below, so it can be checked before deleting.
+   */
   public getClient():void {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
@@ -42,6 +47,7 @@ export class DeleteClientComponent implements OnInit {
     });
   }
 
+  /** After confirmation, deletes the client and opens the client list. */
   public deleteClient(): void {
     if(confirm(`Are You sure You want to remove this Client? ` + `\n` + `Client ID: ${this.client.id}`)) {
     this.adminService.deleteClient(this.client.id).subscribe((c) => {
@@ -59,11 +65,13 @@ export class DeleteClientComponent implements OnInit {
   }
 
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");
   }
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel(): void {
     this.router.navigate(["/admin"]);
     this.title.setTitle("Admin Page");

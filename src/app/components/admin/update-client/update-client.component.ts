@@ -12,16 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class UpdateClientComponent implements OnInit {
 
+  /** Form model: the id is typed in first, then the loaded client fills the rest for editing. */
   public client = new Client();
 
   private log = this.logger.for('UpdateClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("Update Client");
   }
 
+  /** Loads the client with the entered id into the form and shows its details below. */
   public getClient():void {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
@@ -42,6 +45,7 @@ export class UpdateClientComponent implements OnInit {
     });
   }
 
+  /** Saves the edited client and opens the client list. */
   public updateClient(): void {
     this.adminService.updateClient(this.client).subscribe(client => {
       this.log.info(`Success on update Client! `,this.client = client);
@@ -58,11 +62,13 @@ export class UpdateClientComponent implements OnInit {
 
 
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");
   }
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");

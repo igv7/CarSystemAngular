@@ -12,16 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewClientComponent implements OnInit {
 
+  /** Form model for the id lookup; filled with the loaded client. */
   public client = new Client();
 
   private log = this.logger.for('ViewClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit():void {
     this.title.setTitle("View Client");
   }
 
+  /** Loads the client with the entered id and shows its details below. */
   public getClient():void {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
@@ -42,11 +45,13 @@ export class ViewClientComponent implements OnInit {
     });
   }
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");
   }
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");

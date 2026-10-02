@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggerService, redactUrl } from './services/logger.service';
 
+/** Logs every HTTP request with its result and duration, with the token and password masked. */
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +14,7 @@ export class HttpLoggingInterceptorService implements HttpInterceptor {
 
   constructor(private logger: LoggerService) { }
 
+  /** Logs the request, then its status and duration when it finishes; failures are logged as errors. */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const started = Date.now();
     const url = redactUrl(req.urlWithParams, localStorage.getItem('token'));

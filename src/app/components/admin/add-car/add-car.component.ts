@@ -12,16 +12,22 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class AddCarComponent implements OnInit {
 
+  /** Form model; the inputs bind to it. */
   public car = new Car();
 
   private log = this.logger.for('AddCarComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
+  /** Sets the browser tab title. */
   public ngOnInit(): void {
     this.title.setTitle("Add car");
   }
 
+  /**
+   * Adds the car and opens the car list. If a field is empty, the request is still sent so the backend's
+   * validation error is shown.
+   */
   public addCar(): void {
     if (!this.car.number || !this.car.color || !this.car.type || !this.car.amount || !this.car.price || !this.car.image) {
       this.router.navigate(["/admin/add-car"])
@@ -47,11 +53,13 @@ export class AddCarComponent implements OnInit {
 
 
 
+  /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");
   }
 
+  /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
     this.router.navigate(["/admin"])
     this.title.setTitle("Admin Page");

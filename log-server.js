@@ -13,11 +13,14 @@ const { spawn } = require('child_process');
 const PORT = Number(process.env.LOG_PORT) || 4300;
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_FILE = path.join(LOG_DIR, 'app.log');
+/** Size at which app.log is renamed to app.log.1 and a new file is started. */
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
+/** Largest request body accepted; bigger requests are dropped. */
 const MAX_BODY_BYTES = 1024 * 1024;
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
+/** Renames app.log to app.log.1 once it reaches MAX_FILE_BYTES (replacing any older app.log.1). */
 function rotateIfNeeded() {
   try {
     if (fs.statSync(LOG_FILE).size >= MAX_FILE_BYTES) {
@@ -28,6 +31,7 @@ function rotateIfNeeded() {
   }
 }
 
+/** Formats one entry as a line: `<time> <LEVEL> [source] (page) message {data}`. */
 function formatEntry(entry) {
   const level = String(entry.level || 'INFO').toUpperCase().padEnd(5);
   const source = entry.source ? ` [${entry.source}]` : '';
@@ -36,11 +40,13 @@ function formatEntry(entry) {
   return `${entry.time || new Date().toISOString()} ${level}${source}${page} ${entry.message || ''}${data}`;
 }
 
+/** Appends a batch of entries to app.log. */
 function writeEntries(entries) {
   rotateIfNeeded();
   fs.appendFileSync(LOG_FILE, entries.map(formatEntry).join('\n') + '\n');
 }
 
+/** Accepts POST /__log with one entry or an array of entries; anything else gets 404. */
 const server = http.createServer((req, res) => {
   if (req.method !== 'POST' || req.url !== '/__log') {
     res.writeHead(404).end();
