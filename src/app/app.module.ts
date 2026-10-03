@@ -73,6 +73,7 @@ import { DetailsReceiptComponent } from './components/client/details-receipt/det
 import { ClientReceiptDateFilterPipe } from './pipes/client-receipt-date-filter.pipe';
 import { ReturnCarComponent } from './components/admin/return-car/return-car.component';
 import { CarSearchComponent } from './components/car-search/car-search.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { CarSearchComponent } from './components/car-search/car-search.component
     ClientReceiptDateFilterPipe,
     ReturnCarComponent,
     CarSearchComponent,
+    SideMenuComponent,
     RangeValidatorDirective,
     MatchesValidatorDirective,
     ValidationFeedbackDirective

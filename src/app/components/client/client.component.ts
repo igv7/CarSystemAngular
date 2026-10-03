@@ -3,9 +3,9 @@ import { ComponentCanDeactivate } from 'src/app/services/exit-client-guard.servi
 import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
+import { MenuSection } from '../side-menu/side-menu.component';
 
-/** Client menu at `/client`; each page opens as a child route below the menu. */
+/** Client dashboard at `/client`: the side menu on the left, the chosen page (a child route) on the right. */
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -35,7 +35,23 @@ export class ClientComponent implements OnInit, ComponentCanDeactivate {
     }
   }
 
-  public constructor(private title: Title, private loginService: LoginService, private router: Router) { }
+  /** Whether a page is open; when false the overview text is shown instead. */
+  public hasChild = false;
+
+  /** The side menu: everything a client can do. */
+  public readonly sections: MenuSection[] = [
+    { title: 'Cars', items: [
+      { label: 'View Cars', link: '/client/view-cars' },
+      { label: 'View My Cars', link: '/client/view-my-cars' },
+    ]},
+    { title: 'My account', items: [
+      { label: 'View My Receipts', link: '/client/view-my-receipts' },
+      { label: 'View My Balance', link: '/client/view-my-balance' },
+      { label: 'Delete Account', link: '/client/delete-account', danger: true },
+    ]},
+  ];
+
+  public constructor(private title: Title, private loginService: LoginService) { }
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
@@ -45,31 +61,6 @@ export class ClientComponent implements OnInit, ComponentCanDeactivate {
   /** Sign Out button: asks for confirmation, then signs out and goes to /home. */
   public logout() {
     this.loginService.confirmAndSignOut();
-  }
-
-  /** Opens the list of cars available to rent. */
-  public viewCars() {
-    this.router.navigate(["/client/view-cars"])
-  }
-
-  /** Opens the list of the client's rented cars. */
-  public viewMyCars() {
-    this.router.navigate(["/client/view-my-cars"])
-  }
-
-  /** Opens the client's receipts. */
-  public viewMyReceipts() {
-    this.router.navigate(["/client/view-my-receipts"])
-  }
-
-  /** Opens the client's balance. */
-  public viewMyBalance() {
-    this.router.navigate(["/client/view-my-balance"])
-  }
-
-  /** Opens the Delete Account page. */
-  public deleteAccount() {
-    this.router.navigate(["/client/delete-account"])
   }
 
 }

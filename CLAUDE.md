@@ -26,6 +26,7 @@ Node 14 is required (Angular 9 fails on Node 17+ with `ERR_OSSL_EVP_UNSUPPORTED`
 - Public pages — `home`, `cars` (plus one component per brand: `audi`, `bmw`, … each routed at `/<brand>`), `car-search`, `login`, `signup`, `about`, `page404`.
 - `admin/` — routed under `/admin`, guarded by `AdminGuardService` (`canActivate`) and `ExitAdminGuardService` (`canDeactivate`, which calls the component's own `canDeactivate()` to show a confirm dialog). One component per backend operation (add/update/view/delete client or car, view receipts, return car, filtered listings).
 - `client/` — routed under `/client`, guarded by `ClientGuardService` / `ExitClientGuardService` the same way.
+- `AdminComponent` and `ClientComponent` are dashboards: `SideMenuComponent` (`components/side-menu/`) on the left, the child route's page on the right (an overview box shows when no child is open). The menu comes from each component's `sections` array (`{ title, items: [{ label, link, danger? }] }`); to add an operation, add its route and one menu item. Collapsed sections are remembered in localStorage.
 
 **List → detail via child routes.** List/lookup pages have a child route such as `car-id/:id`, `car-details/:id`, `client-id/:id` or `details/:id`, rendered into a nested `<router-outlet>` in the parent template. Several detail components are shared between parents (e.g. `CarIdComponent` under update-car, view-car, delete-car, return-car). Detail components typically re-fetch the whole list and `find()` by `+snapshot.params.id` rather than calling a single-item endpoint.
 

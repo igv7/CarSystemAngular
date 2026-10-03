@@ -1,18 +1,55 @@
-body {
-      background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("/assets/images/home-carousel-slide/2019_bugatti_divo_1_1920x1080.jpg") no-repeat center center fixed;
-      background-size: cover;
-      background-attachment: fixed;
-      position: absolute;
-      overflow: auto;
-      height: 100%;
-      width: 100%;
+/* Height of the fixed navbar in the header; the dashboard starts below it. */
+.dashboard {
+  --header-height: 56px;
+  display: flex;
+  min-height: 100vh;
+  padding-top: var(--header-height);
+  background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("/assets/images/home-carousel-slide/2019_bugatti_divo_1_1920x1080.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* The menu stays in view while the content scrolls. */
+.sidebar {
+  flex: 0 0 248px;
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.overview {
+  margin: 48px auto;
+  max-width: 560px;
+  padding: 24px 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #202124;
+}
+
+.overview h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.overview p {
+  margin: 0;
+  color: #5f6368;
+}
+
+/* Phones and small tablets: the menu goes above the content instead of beside it. */
+@media (max-width: 767px) {
+  .dashboard {
+    flex-direction: column;
   }
 
-  hr {
-    background-color:darkred;
-    height: 2px;
+  .sidebar {
+    position: static;
+    flex-basis: auto;
+    height: auto;
+    max-height: 50vh;
   }
-
-  .container {
-    margin-top: 5%;
-  }
+}

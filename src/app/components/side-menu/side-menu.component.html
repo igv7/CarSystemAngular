@@ -1,0 +1,16 @@
+<nav class="side-menu" aria-label="Operations">
+  <a class="item home" [routerLink]="homeLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ homeLabel }}</a>
+
+  <div class="section" *ngFor="let section of sections">
+    <button type="button" class="section-header" (click)="toggle(section)" [attr.aria-expanded]="!isCollapsed(section)">
+      <span>{{ section.title }}</span>
+      <span class="chevron" [class.collapsed]="isCollapsed(section)" aria-hidden="true"></span>
+    </button>
+    <div class="section-items" *ngIf="!isCollapsed(section)">
+      <a *ngFor="let item of section.items" class="item" [class.danger]="item.danger"
+         [routerLink]="item.link" routerLinkActive="active">{{ item.label }}</a>
+    </div>
+  </div>
+
+  <button type="button" class="sign-out" (click)="signOut.emit()">Sign Out</button>
+</nav>
