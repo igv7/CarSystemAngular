@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { SignupService } from 'src/app/services/signup.service';
 import { LoggerService } from 'src/app/services/logger.service';
+import { serverErrorMessage } from 'src/app/validation/sanitize';
 
 @Component({
   selector: 'app-signup',
@@ -14,6 +15,9 @@ export class SignupComponent implements OnInit {
 
   /** Form model; the inputs bind to it. */
   public client = new Client();
+
+  /** Today's date (yyyy-MM-dd), the latest allowed birthday. */
+  public today = new Date().toISOString().slice(0, 10);
 
   private log = this.logger.for('SignupComponent');
 
@@ -32,14 +36,14 @@ export class SignupComponent implements OnInit {
       "\nId: " + client.id +
       "\nName: " + client.name +
       "\nDOB: " + client.birthday +
-      "\nPassword: " + client.password +
       "\nPhone Number: " + client.phoneNumber +
       "\nEmail: " + client.email +
       "\nBalance: " + client.balance);
       this.router.navigate(["/login"])
     }, err => {
       this.log.error(`Failed on sign up Client! `, this.client.name, err);
-      alert(`Error on sign up Client! This Client name: ${this.client.name}` +` `+ 
+      const message = serverErrorMessage(err);
+      alert(message ? `Error on sign up!` + `\n\n` + message : `Error on sign up Client! This Client name: ${this.client.name}` +` `+
       `already exists in the system!` +` `+ `\n`+err.message);
     });
   }

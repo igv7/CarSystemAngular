@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { serverErrorMessage } from 'src/app/validation/sanitize';
 
 @Component({
   selector: 'app-update-car',
@@ -53,7 +54,8 @@ export class UpdateCarComponent implements OnInit {
       this.router.navigate(["/admin/view-all-cars"])
     }, err => {
       this.log.error(`Failed on update Car! `, this.car.id, err);
-      alert(`Error on update Car! ` + `\n` + `The reasons: ` + `\n` + 
+      const message = serverErrorMessage(err);
+      alert(message ? `Error on update Car!` + `\n\n` + message : `Error on update Car! ` + `\n` + `The reasons: ` + `\n` +
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
       `3. Wrong ID: ${this.car.id}`);

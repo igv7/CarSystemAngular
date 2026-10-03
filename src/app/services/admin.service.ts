@@ -4,6 +4,7 @@ import { LoginService } from './login.service';
 import { UrlsService } from './urls.service';
 import { Client } from '../models/client';
 import { Observable } from 'rxjs';
+import { trimFields, urlPart } from '../validation/sanitize';
 import { Car } from '../models/car';
 import { ClientReceipt } from '../models/clientReceipt';
 
@@ -18,13 +19,13 @@ export class AdminService {
   //Client Operations
   /** Creates a new client. */
   public addClient(client: Client): Observable<Client> {
-    return this.httpClient.post<Client>(this.urlsService.getAdminUrl()+"addClient/"+this.loginService.token, client, {withCredentials: true});
+    return this.httpClient.post<Client>(this.urlsService.getAdminUrl()+"addClient/"+this.loginService.token, trimFields(client), {withCredentials: true});
 
   }
 
   /** Saves changes to an existing client, identified by `client.id`. */
   public updateClient(client: Client): Observable<Client> {
-    return this.httpClient.put<Client>(this.urlsService.getAdminUrl()+"updateClient/"+this.loginService.token+"/"+client.id, client, {withCredentials: true});
+    return this.httpClient.put<Client>(this.urlsService.getAdminUrl()+"updateClient/"+this.loginService.token+"/"+client.id, trimFields(client), {withCredentials: true});
     
   }
 
@@ -49,13 +50,13 @@ export class AdminService {
   //Car Operations
   /** Adds a new car to the fleet. */
   public addCar(car: Car): Observable<Car> {
-    return this.httpClient.post<Car>(this.urlsService.getAdminUrl()+"addCar/"+this.loginService.token, car, {withCredentials: true});
+    return this.httpClient.post<Car>(this.urlsService.getAdminUrl()+"addCar/"+this.loginService.token, trimFields(car), {withCredentials: true});
 
   }
 
   /** Saves changes to an existing car, identified by `car.id`. */
   public updateCar(car: Car): Observable<Car> {
-    return this.httpClient.put<Car>(this.urlsService.getAdminUrl()+"updateCar/"+this.loginService.token+"/"+car.id, car, {withCredentials: true});
+    return this.httpClient.put<Car>(this.urlsService.getAdminUrl()+"updateCar/"+this.loginService.token+"/"+car.id, trimFields(car), {withCredentials: true});
     
   }
 
@@ -67,7 +68,7 @@ export class AdminService {
 
   /** Gets one car by its license plate number. */
   public getCarByNumber(number: string): Observable<Car> {
-    return this.httpClient.get<Car>(this.urlsService.getAdminUrl()+"viewCarByNumber/"+this.loginService.token+"/"+number, {withCredentials: true});
+    return this.httpClient.get<Car>(this.urlsService.getAdminUrl()+"viewCarByNumber/"+this.loginService.token+"/"+urlPart(number), {withCredentials: true});
     
   }
 
@@ -85,13 +86,13 @@ export class AdminService {
 
   /** Gets all cars of one brand (a CarType value). */
   public getAllCarsByType(type: string): Observable<Car[]> {
-    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllCarsByCarType/"+this.loginService.token+"/"+type, {withCredentials: true});
+    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllCarsByCarType/"+this.loginService.token+"/"+urlPart(type), {withCredentials: true});
 
   }
 
   /** Gets all cars of one color (a CarColor value). */
   public getAllCarsByColor(color: string): Observable<Car[]> {
-    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllCarsByCarColor/"+this.loginService.token+"/"+color, {withCredentials: true});
+    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllCarsByCarColor/"+this.loginService.token+"/"+urlPart(color), {withCredentials: true});
 
   }
 
@@ -104,7 +105,7 @@ export class AdminService {
   //ClientCar Operations
   /** Gets a car rented by the given client, by license plate number. */
   public getClientCarByNumber(id: number, number: string): Observable<Car> {
-    return this.httpClient.get<Car>(this.urlsService.getAdminUrl()+"viewClientCarByNumber/"+this.loginService.token+"/"+id+"/"+number, {withCredentials: true});
+    return this.httpClient.get<Car>(this.urlsService.getAdminUrl()+"viewClientCarByNumber/"+this.loginService.token+"/"+id+"/"+urlPart(number), {withCredentials: true});
     
   }
 
@@ -116,13 +117,13 @@ export class AdminService {
 
   /** Gets the given client's rented cars of one brand. */
   public getAllClientCarsByType(id: number, type: string): Observable<Car[]> {
-    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllClientCarsByType/"+this.loginService.token+"/"+id+"/"+type, {withCredentials: true});
+    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllClientCarsByType/"+this.loginService.token+"/"+id+"/"+urlPart(type), {withCredentials: true});
 
   }
 
   /** Gets the given client's rented cars of one color. */
   public getAllClientCarsByColor(id: number, color: string): Observable<Car[]> {
-    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllClientCarsByColor/"+this.loginService.token+"/"+id+"/"+color, {withCredentials: true});
+    return this.httpClient.get<Car[]>(this.urlsService.getAdminUrl()+"viewAllClientCarsByColor/"+this.loginService.token+"/"+id+"/"+urlPart(color), {withCredentials: true});
 
   }
 

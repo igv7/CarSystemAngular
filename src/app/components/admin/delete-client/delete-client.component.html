@@ -13,7 +13,7 @@
                     <form  #formInfo="ngForm" class="needs-validation" novalidate  action="delete-client" method=post>
                         <div class="form-group">
                             <label for="exampleInputId">Enter client ID and then click on View Client button</label>
-                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" #idInfo="ngModel" [(ngModel)]="client.id" ngModel name="id" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -21,11 +21,11 @@
                                 Please enter a client ID and then click on View Client button.
                             </div>
                         </div> 
-                        <button type="submit" class="btn btn-primary" [disabled]="!formInfo.form.valid" (click)="getClient()">View Client</button><br><br>
+                        <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getClient() : idInfo.control.markAsTouched()">View Client</button><br><br>
                         <button type="reset" class="btn btn-outline-secondary">Reset</button>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
-                            <button type="submit" class="btn btn-danger" [disabled]="!formInfo.form.valid" (click)="deleteClient()">Delete Client</button>
+                            <button type="submit" class="btn btn-danger" (click)="formInfo.valid ? deleteClient() : formInfo.form.markAllAsTouched()">Delete Client</button>
                         </div>
                     </form>
                     <div class="table-responsive mt-3">

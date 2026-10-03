@@ -13,7 +13,7 @@
                     <form  #formInfo="ngForm" class="needs-validation" novalidate  action="return-car" method=post>
                         <div class="form-group">
                             <label for="exampleInputId">Enter car ID and then click on View Car button</label>
-                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="car.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" #idInfo="ngModel" [(ngModel)]="car.id" ngModel name="id" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -21,11 +21,11 @@
                                 Please enter a car ID and then click on View Car button.
                             </div>
                         </div> 
-                        <button type="submit" class="btn btn-primary" [disabled]="!formInfo.form.valid" (click)="getCar()">View Car</button><br><br>
+                        <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getCar() : idInfo.control.markAsTouched()">View Car</button><br><br>
                         <button type="reset" class="btn btn-outline-secondary">Reset</button>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
-                            <button type="submit" class="btn btn-danger" [disabled]="!formInfo.form.valid" (click)="returnCar()">Return Car</button>
+                            <button type="submit" class="btn btn-danger" (click)="formInfo.valid ? returnCar() : formInfo.form.markAllAsTouched()">Return Car</button>
                         </div>
                     </form>
                     <div class="table-responsive mt-3">

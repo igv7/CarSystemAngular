@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UrlsService } from './urls.service';
 import { LoggerService } from './logger.service';
+import { urlPart } from '../validation/sanitize';
 
 /**
  * Sign-in state: the token and which role (admin or client) is signed in, kept in localStorage so it survives
@@ -40,7 +41,9 @@ export class LoginService {
 
   /** Sends the credentials to the backend. The response body (text) is the token. */
   login(userName, password, type): Observable<any> {
-    let url = this.urlsService.getLoginUrl() + '?userName=' + userName + "&password=" + password + "&type=" + type;
+    // Encoded so characters like & + # in a name or password reach the backend unchanged.
+    userName = String(userName).trim();
+    let url = this.urlsService.getLoginUrl() + '?userName=' + urlPart(userName) + "&password=" + urlPart(password) + "&type=" + urlPart(type);
     this.log.debug(`Sending login request for ${userName} (${type})`);
     return this.httpClient.post(url, null, { observe: 'response', responseType: 'text' });
   }

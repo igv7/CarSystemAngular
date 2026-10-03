@@ -32,6 +32,9 @@ import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpLoggingInterceptorService } from './http-logging-interceptor.service';
 import { LoggingErrorHandlerService } from './logging-error-handler.service';
+import { RangeValidatorDirective } from './validation/range-validator.directive';
+import { MatchesValidatorDirective } from './validation/matches-validator.directive';
+import { ValidationFeedbackDirective } from './validation/validation-feedback.directive';
 import { AddClientComponent } from './components/admin/add-client/add-client.component';
 import { UpdateClientComponent } from './components/admin/update-client/update-client.component';
 import { ViewClientComponent } from './components/admin/view-client/view-client.component';
@@ -129,7 +132,10 @@ import { CarSearchComponent } from './components/car-search/car-search.component
     DetailsReceiptComponent,
     ClientReceiptDateFilterPipe,
     ReturnCarComponent,
-    CarSearchComponent
+    CarSearchComponent,
+    RangeValidatorDirective,
+    MatchesValidatorDirective,
+    ValidationFeedbackDirective
   ],
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, HttpClientModule

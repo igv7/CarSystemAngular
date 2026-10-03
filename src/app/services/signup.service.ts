@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UrlsService } from './urls.service';
 import { Client } from '../models/client';
 import { Observable } from 'rxjs';
+import { trimFields } from '../validation/sanitize';
 
 /** Registers new client accounts. */
 @Injectable({
@@ -15,7 +16,7 @@ export class SignupService {
   //Sign Up
   /** Creates a client account from the sign-up form. */
   public signUp(client: Client): Observable<Client> {
-    return this.httpClient.post<Client>(this.urlsService.getSignupUrl(), client, {withCredentials: true});
+    return this.httpClient.post<Client>(this.urlsService.getSignupUrl(), trimFields(client), {withCredentials: true});
 
   }
 }

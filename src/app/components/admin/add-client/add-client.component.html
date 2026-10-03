@@ -14,32 +14,32 @@
             <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong>
             <div class="form-group">
               <label for="exampleInputName">Client Name</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" autofocus required>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" minlength="2" maxlength="30" pattern="[^<>]*" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a client name.
+                Please enter a name: 2-30 characters, without &lt; or &gt;.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputBirthday">Client birthday</label>
-              <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" max="2150-12-31" [(ngModel)]="client.birthday" name="birthday" required>
+              <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a client birthday.
+                Please enter a birthday between 1900-01-01 and today.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail">Client email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" name="email" required>
+              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" name="email" maxlength="100" pattern="[^@\s<>]+@[^@\s<>]+\.[^@\s<>]+" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter an email.
+                Please enter a valid email, e.g. name@example.com.
               </div>
             </div>
             <div class="form-group">
@@ -54,22 +54,22 @@
             </div>
             <div class="form-group">
               <label for="exampleInputPass">Client password</label>
-              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" required name="password">
+              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" required minlength="4" maxlength="100" name="password">
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a client password.
+                Please enter a password of at least 4 characters.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputBalance">Client balance. Max value: 10000</label>
-              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" name="balance" value="0" min="0" max="10000" step="0.01" required  oninput="validity.valid||(value='');">
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" name="balance" value="0" min="0" max="10000" step="0.01" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a balance. Max value: 10000
+                Please enter a balance between 0 and 10000.
               </div>
             </div>
             <div class="form-group">
@@ -87,7 +87,7 @@
             <button type="reset" class="btn btn-outline-secondary">Reset</button>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
-              <button type="submit" class="btn btn-success" (click)="addClient()">Add Client</button>
+              <button type="submit" class="btn btn-success" (click)="formInfo.valid ? addClient() : formInfo.form.markAllAsTouched()">Add Client</button>
             </div>
           </form>
         </div>

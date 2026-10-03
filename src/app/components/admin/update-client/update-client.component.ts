@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { serverErrorMessage } from 'src/app/validation/sanitize';
 
 @Component({
   selector: 'app-update-client',
@@ -14,6 +15,9 @@ export class UpdateClientComponent implements OnInit {
 
   /** Form model: the id is typed in first, then the loaded client fills the rest for editing. */
   public client = new Client();
+
+  /** Today's date (yyyy-MM-dd), the latest allowed birthday. */
+  public today = new Date().toISOString().slice(0, 10);
 
   private log = this.logger.for('UpdateClientComponent');
 
@@ -53,7 +57,8 @@ export class UpdateClientComponent implements OnInit {
       this.router.navigate(["/admin/view-all-clients"])
     }, err => {
       this.log.error(`Failed on update Client! `, this.client.name, err);
-      alert(`Error on update Client! ` + `\n` + `The reasons: ` + `\n` + 
+      const message = serverErrorMessage(err);
+      alert(message ? `Error on update Client!` + `\n\n` + message : `Error on update Client! ` + `\n` + `The reasons: ` + `\n` +
       `1. No internet connection` + `\n` + 
       `2. No connection to the server` + `\n` + 
       `3. Wrong ID: ${this.client.id}`);

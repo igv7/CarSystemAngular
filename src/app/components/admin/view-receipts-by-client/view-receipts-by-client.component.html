@@ -3,7 +3,7 @@
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
-            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getReceiptsByClient(this.client.id)">Get Receipts By Client</button>&nbsp;
+            <button type="submit" class="btn btn-primary" (click)="formInfo.valid ? getReceiptsByClient(this.client.id) : formInfo.form.markAllAsTouched()">Get Receipts By Client</button>&nbsp;
         </div>
         <div class="container-fluid">
             <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-receipts-by-client" method=post>
@@ -11,7 +11,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
                         <label for="exampleInputId"><h4>Enter client ID</h4></label>&nbsp;
                         <button type="reset" class="btn btn-outline-light">Reset</button>
-                        <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                        <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

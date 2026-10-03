@@ -26,37 +26,40 @@ export class CarSearchComponent implements OnInit {
    * part of the rest.
    */
   ngOnInit() {
-      (<HTMLInputElement>document.querySelector('#search')).oninput = function() {
-        let val = this['value'].trim().toUpperCase();
-        let searchItems = document.querySelectorAll('.search a');
-        if(val != '') {
-          searchItems.forEach(function(elem) {
-            if(elem.textContent.search(val) == -1) {
-              elem.classList.add('hide');
-              elem.innerHTML = elem.textContent;
-            }
-            else {
-              elem.classList.remove('hide');
-              let str = elem.textContent;
-              elem.innerHTML = insertMark(str, elem.textContent.search(val), val.length);
-            }
-          });
-        }
-        else {
-          searchItems.forEach(function(elem) {
-            elem.classList.remove('hide');
-            elem.innerHTML = elem.textContent;
-        });
+    (<HTMLInputElement>document.querySelector('#search')).oninput = function() {
+      // Plain substring match (not a regex), so characters like ( . * typed by the user are matched literally.
+      const val = this['value'].trim().toUpperCase();
+      document.querySelectorAll('.search a').forEach(elem => {
+        const text = elem.textContent;
+        const pos = val ? text.indexOf(val) : -1;
+        elem.classList.toggle('hide', val !== '' && pos === -1);
+        showWithMark(elem, text, pos, val.length);
+      });
+    };
+
+    /** Replaces the element's content with `text`, wrapping the match in <mark>; built as DOM nodes, never as HTML. */
+    function showWithMark(elem: Element, text: string, pos: number, len: number) {
+      elem.textContent = '';
+      if (pos < 0 || len === 0) {
+        elem.textContent = text;
+        return;
       }
-     }
-  
-     function insertMark(string, pos, len) {
-      return string.slice(0, pos)+'<mark>'+string.slice(pos, pos+len)+'</mark>'+string.slice(pos+len);
-     }
+      const mark = document.createElement('mark');
+      mark.textContent = text.slice(pos, pos + len);
+      elem.append(text.slice(0, pos), mark, text.slice(pos + len));
+    }
   }
 
-  /** Loads the cars of the typed brand and opens that brand's page; alerts if the brand has no cars. */
+  /**
+   * Loads the cars of the typed brand and opens that brand's page; alerts if the brand has no cars.
+   * Brands are letters only, so anything else (e.g. HTML or script text) is rejected before searching.
+   */
   public searchCar() {
+    if (!this.car.type || !/^[A-Za-z ]+$/.test(this.car.type.trim())) {
+      this.log.info('Search rejected: brand must contain letters only', this.car.type);
+      alert('Please enter a car brand using letters only, e.g. AUDI.');
+      return;
+    }
     this.carService.getAllCarsByType(this.car.type.toUpperCase().replace(/\s/g, "")).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);

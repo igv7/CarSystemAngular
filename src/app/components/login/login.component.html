@@ -11,15 +11,15 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form class="needs-validation" novalidate (ngSubmit)="onSubmit()" #f="ngForm" action="login" method="post"> 
+          <form class="needs-validation" novalidate (ngSubmit)="f.valid ? onSubmit() : f.form.markAllAsTouched()" #f="ngForm" action="login" method="post"> 
             <div class="form-group">
               <label for="exampleInputName">Username</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" ngModel name="userName" autofocus required>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" ngModel name="userName" maxlength="30" pattern="[^<>]*" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a username.
+                Please enter a username (without &lt; or &gt;).
               </div>
             </div>
             <div class="form-group">

@@ -3,7 +3,7 @@
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
-            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getAllClientCars(this.client.id)">Get All Client Cars</button>&nbsp;
+            <button type="submit" class="btn btn-primary" (click)="formInfo.valid ? getAllClientCars(this.client.id) : formInfo.form.markAllAsTouched()">Get All Client Cars</button>&nbsp;
             <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
                 {{showImage ? 'Hide': 'Show'}} Image
             </button>
@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="exampleInputId"><h4>Enter client ID</h4></label>&nbsp;
                 <button type="reset" class="btn btn-outline-light">Reset</button>
-                <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
             </div>
         </form>
     </div>

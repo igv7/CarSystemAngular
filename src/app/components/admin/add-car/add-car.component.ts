@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { serverErrorMessage } from 'src/app/validation/sanitize';
 
 @Component({
   selector: 'app-add-car',
@@ -24,31 +25,19 @@ export class AddCarComponent implements OnInit {
     this.title.setTitle("Add car");
   }
 
-  /**
-   * Adds the car and opens the car list. If a field is empty, the request is still sent so the backend's
-   * validation error is shown.
-   */
+  /** Adds the car and opens the car list. The template only calls this once the form is valid. */
   public addCar(): void {
-    if (!this.car.number || !this.car.color || !this.car.type || !this.car.amount || !this.car.price || !this.car.image) {
-      this.router.navigate(["/admin/add-car"])
-      this.adminService.addCar(this.car).subscribe(car => {}, err => {
-        this.log.error(`Failed on add Car! `, this.car.number, err);
-        alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server`);
-      })
-    } else {
     this.adminService.addCar(this.car).subscribe(car => {
       this.log.info(`Success on add Car! `,this.car = car);
       this.router.navigate(["/admin/view-all-cars"])
     }, err => {
       this.log.error(`Failed on add Car! `, this.car.number, err);
-      alert(`Error on add Car! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
+      const message = serverErrorMessage(err);
+      alert(message ? `Error on add Car!` + `\n\n` + message : `Error on add Car! ` + `\n` + `The reasons: ` + `\n` +
+      `1. No internet connection` + `\n` +
+      `2. No connection to the server` + `\n` +
       `3. This Car number: ${this.car.number} already exists in the system!`);
     });
-   }
   }
 
 

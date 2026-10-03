@@ -3,7 +3,7 @@
     <div class="filter mt-2 text-center position-fixed">
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
-            <button [disabled]="!formInfo.form.valid" type="submit" class="btn btn-primary"  (click)="getAllCarsByType(this.car.type)">Get All Cars By Type</button>&nbsp;
+            <button type="submit" class="btn btn-primary" (click)="formInfo.valid ? getAllCarsByType(this.car.type) : formInfo.form.markAllAsTouched()">Get All Cars By Type</button>&nbsp;
             <button [disabled]="!formInfo.form.valid" type="button" class='btn btn-light mb-2 mt-2' (click) = "toggleImage()" >
                 {{showImage ? 'Hide': 'Show'}} Image
             </button>

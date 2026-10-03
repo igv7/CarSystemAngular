@@ -13,7 +13,7 @@
                     <form  #formInfo="ngForm" class="needs-validation" novalidate  action="view-client-car-by-number" method=post>
                         <div class="form-group">
                             <label for="exampleInputId">Enter Client ID</label>
-                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required oninput="validity.valid||(value='');">
+                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -34,7 +34,7 @@
                         <button type="reset" class="btn btn-outline-secondary">Reset</button>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
-                            <button type="submit" class="btn btn-primary" (click)="getClientCarByNumber(this.client.id, this.car.number)">View Client Car By Number</button>
+                            <button type="submit" class="btn btn-primary" (click)="formInfo.valid ? getClientCarByNumber(this.client.id, this.car.number) : formInfo.form.markAllAsTouched()">View Client Car By Number</button>
                         </div>
                     </form>
                     <div class="table-responsive mt-3">
