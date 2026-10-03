@@ -8,6 +8,8 @@ Angular 9 (Angular CLI 9.1, TypeScript 3.8, RxJS 6, Bootstrap 4) front end for a
 
 ## Commands
 
+Node 14 is required (Angular 9 fails on Node 17+ with `ERR_OSSL_EVP_UNSUPPORTED`). It's pinned with Volta (`"volta": { "node": "14.17.6" }` in `package.json`), so `node`/`npm` switch to 14 automatically inside this folder while the machine default can be newer.
+
 - `npm start` — runs `log-server.js --serve`: the log server on port 4300 plus `ng serve` on http://localhost:4200. The proxy (`proxy.conf.json`) forwards `/__log` to the log server; its `/api` entry is unused because services call `http://localhost:8080` directly.
 - `npm run start:app-only` — dev server without the log server; `npm run log-server` — log server only
 - `npm run build` — build to `dist/` (`ng build --prod` for production)
