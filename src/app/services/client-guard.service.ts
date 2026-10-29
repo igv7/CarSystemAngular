@@ -25,8 +25,8 @@ export class ClientGuardService implements CanActivate {
       return true;
     }
     else {
-      this.log.info(`Access to ${s.url} denied: not logged in as client, redirecting to /login`);
-      this.router.navigate(["/login"]);
+      this.log.info(`Access to ${s.url} denied: not logged in as client, redirecting to sign in as client`);
+      this.router.navigate(["/login"], { queryParams: { as: "client" } });
       return false;
     }
 

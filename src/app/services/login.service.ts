@@ -73,6 +73,27 @@ export class LoginService {
     });
   }
 
+  /** True while the "session expired" notice is being handled, so parallel failed requests show it only once. */
+  private expiring = false;
+
+  /**
+   * Called when the backend no longer accepts the token (idle timeout or backend restart): tells the user,
+   * opens the sign-in page, then clears the sign-in state. Clearing after navigating keeps the admin/client
+   * pages' canDeactivate() from asking "exit?".
+   */
+  public sessionExpired(): void {
+    if (this.expiring || !this.isLoggedIn) {
+      return;
+    }
+    this.expiring = true;
+    this.log.info('Session expired on the server; signing out');
+    alert("Your session has expired. Please sign in again.");
+    this.router.navigate(["/login"]).then(() => {
+      this.logout();
+      this.expiring = false;
+    });
+  }
+
   // GET&SET token
   /** The current login token. */
   public getToken() {

@@ -26,7 +26,7 @@ export class AdminGuardService implements CanActivate {
     }
     else {
       this.log.info(`Access to ${s.url} denied: not logged in as admin, redirecting to /login`);
-      this.router.navigate(["/login"]);
+      this.router.navigate(["/login"], { queryParams: { as: "admin" } });
       return false;
     }
 

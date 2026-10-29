@@ -31,6 +31,7 @@ import { ExitClientGuardService } from './services/exit-client-guard.service';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpLoggingInterceptorService } from './http-logging-interceptor.service';
+import { SessionExpiredInterceptorService } from './session-expired-interceptor.service';
 import { LoggingErrorHandlerService } from './logging-error-handler.service';
 import { RangeValidatorDirective } from './validation/range-validator.directive';
 import { MatchesValidatorDirective } from './validation/matches-validator.directive';
@@ -145,6 +146,11 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
   providers: [AuthService, AdminGuardService, ExitAdminGuardService, ClientGuardService, ExitClientGuardService, LoginService, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
+    multi: true
+  }, {
+    // Before the logging interceptor, so responses pass through logging first and a 401 is still logged.
+    provide: HTTP_INTERCEPTORS,
+    useClass: SessionExpiredInterceptorService,
     multi: true
   }, {
     provide: HTTP_INTERCEPTORS,

@@ -9,7 +9,9 @@ export const environment = {
   // Proxied by the dev server to log-server.js, which writes logs/app.log.
   logServerUrl: '/__log' as string,
   // Also mirror entries to the browser console (DevTools).
-  logToConsole: true
+  logToConsole: true,
+  // The one account that may sign in as ADMIN; must match carsystem.admin.username in the backend.
+  adminUserName: 'admin'
 };
 
 /*
