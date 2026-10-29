@@ -1,4 +1,13 @@
 /** Car colors the backend accepts. */
-enum CarColor {
-    WHITE, GREEN, BLUE, YELLOW, RED, BLACK, GREY
+export enum CarColor {
+    WHITE = "WHITE",
+    GREEN = "GREEN",
+    BLUE = "BLUE",
+    YELLOW = "YELLOW",
+    RED = "RED",
+    BLACK = "BLACK",
+    GREY = "GREY"
 }
+
+/** Every color, for dropdowns. */
+export const CAR_COLORS: CarColor[] = Object.values(CarColor);

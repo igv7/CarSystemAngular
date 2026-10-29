@@ -4,6 +4,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-view-car',
@@ -11,6 +14,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-car.component.css']
 })
 export class ViewCarComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model for the id lookup; filled with the loaded car. */
   public car = new Car();
@@ -21,7 +27,7 @@ export class ViewCarComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("View Car");
+    this.title.setTitle(PageTitles.VIEW_CAR);
   }
 
   /** Loads the car with the entered id and shows its details below. */
@@ -35,7 +41,7 @@ export class ViewCarComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/view-car/car-id/"+this.car.id]);
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
       alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -47,14 +53,14 @@ export class ViewCarComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

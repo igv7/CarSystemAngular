@@ -4,6 +4,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-return-car',
@@ -11,6 +14,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./return-car.component.css']
 })
 export class ReturnCarComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model for the id lookup; filled with the loaded car. */
   public car = new Car();
@@ -21,7 +27,7 @@ export class ReturnCarComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("Return Car");
+    this.title.setTitle(PageTitles.RETURN_CAR);
   }
 
   /**
@@ -37,7 +43,7 @@ export class ReturnCarComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/return-car/car-id/"+this.car.id]);
+      this.router.navigate([AppRoutes.ADMIN_RETURN_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car! Wrong ID: `, this.car.id, err);
       alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -53,7 +59,7 @@ export class ReturnCarComponent implements OnInit {
     this.adminService.returnCar(this.car.id).subscribe((c) => {
       this.log.info(`Success on return Car Id: `,this.car.id = c.id);
         alert(`Car Id: ${c.id} Number: `+c.number+ ` has been succesfully returned!`);
-        this.router.navigate(["/admin/view-all-cars"]);
+        this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CARS]);
     }, err => {
       this.log.error(`Failed on return Car! Wrong ID: `, this.car.id, err);
       alert(`Error on return Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -67,14 +73,14 @@ export class ReturnCarComponent implements OnInit {
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

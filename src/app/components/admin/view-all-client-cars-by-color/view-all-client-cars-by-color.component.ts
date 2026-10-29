@@ -5,6 +5,10 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { CAR_COLORS } from 'src/app/models/car-color';
 
 @Component({
   selector: 'app-view-all-client-cars-by-color',
@@ -12,6 +16,12 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-client-cars-by-color.component.css']
 })
 export class ViewAllClientCarsByColorComponent implements OnInit {
+
+  /** Color options for the template. */
+  public readonly carColors = CAR_COLORS;
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -29,7 +39,7 @@ export class ViewAllClientCarsByColorComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("All Client Cars By Color");
+    this.title.setTitle(PageTitles.ALL_CLIENT_CARS_BY_COLOR);
   }
 
   /** Loads the given client's rented cars of the selected color into the table. */
@@ -50,8 +60,8 @@ export class ViewAllClientCarsByColorComponent implements OnInit {
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Shows or hides the car pictures in the table. */

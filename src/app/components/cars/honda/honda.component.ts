@@ -4,6 +4,9 @@ import { CarService } from 'src/app/services/car.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { brandTitle } from 'src/app/constants/page-titles';
+import { CarType } from 'src/app/models/car-type';
 
 @Component({
   selector: 'app-honda',
@@ -15,7 +18,7 @@ export class HondaComponent implements OnInit {
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
   /** Brand this page lists (a CarType value). */
-  type: string = "HONDA";
+  type: string = CarType.HONDA;
 
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
@@ -36,12 +39,12 @@ export class HondaComponent implements OnInit {
       `2. No connection to the server` + `\n` + 
       `3. No Cars by type: ${this.type}`);
     });
-    this.title.setTitle(`${this.type} cars`);
+    this.title.setTitle(brandTitle(this.type));
   }
 
   /** Returns to /home. */
   public backToHome(): void {
-    this.router.navigate(["/home"]);
+    this.router.navigate([AppRoutes.HOME]);
   }
 
   /** Shows or hides the car pictures in the table. */

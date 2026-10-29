@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-view-all-receipts',
@@ -12,6 +14,11 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-receipts.component.css']
 })
 export class ViewAllReceiptsComponent implements OnInit {
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+  /** Route segments used by the template's detail links. */
+  public readonly paths = RoutePaths;
 
   /** Receipts shown in the table; undefined (loading picture shown) until the server responds. */
   public clientReceipts: ClientReceipt[];
@@ -36,13 +43,13 @@ export class ViewAllReceiptsComponent implements OnInit {
       `2. No connection to the server` + `\n` + 
       `3. No Receipts`);
     });
-    this.title.setTitle("All Receipts");
+    this.title.setTitle(PageTitles.ALL_RECEIPTS);
   }
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

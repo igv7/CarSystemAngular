@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-view-client-car-by-number',
@@ -12,6 +15,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-client-car-by-number.component.css']
 })
 export class ViewClientCarByNumberComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model for the license plate; filled with the loaded car. */
   public car = new Car();
@@ -24,7 +30,7 @@ export class ViewClientCarByNumberComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("View Client Car By Number");
+    this.title.setTitle(PageTitles.VIEW_CLIENT_CAR_BY_NUMBER);
   }
 
   /** Loads the given client's rented car with this license plate number and shows its details below. */
@@ -38,7 +44,7 @@ export class ViewClientCarByNumberComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/view-client-car-by-number/car-id/"+this.car.id]);
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Client Car by number: `, this.car.number, err);
       alert(`Error on view Client Car by number! ` + `\n` + `The reasons: ` + `\n` + 
@@ -51,14 +57,14 @@ export class ViewClientCarByNumberComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

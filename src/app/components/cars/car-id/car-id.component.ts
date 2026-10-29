@@ -3,6 +3,7 @@ import { Car } from 'src/app/models/car';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { LoggerService } from 'src/app/services/logger.service';
+import { ID_PARAM } from 'src/app/constants/app-routes';
 
 /** Car details shown under the admin car lookups (`car-id/:id`): view, update, delete, return. */
 @Component({
@@ -22,7 +23,7 @@ export class CarIdComponent implements OnInit {
   /** Loads all cars and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe(cars => {
-      const id = +this.activatedRoute.snapshot.params.id;
+      const id = +this.activatedRoute.snapshot.params[ID_PARAM];
       this.car = cars.find(c => c.id == id);
       this.log.debug(`Success! `);
     }, err => {

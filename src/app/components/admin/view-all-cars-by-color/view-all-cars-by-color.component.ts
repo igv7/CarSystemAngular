@@ -4,6 +4,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { CAR_COLORS } from 'src/app/models/car-color';
 
 @Component({
   selector: 'app-view-all-cars-by-color',
@@ -11,6 +14,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-cars-by-color.component.css']
 })
 export class ViewAllCarsByColorComponent implements OnInit {
+
+  /** Color options for the template. */
+  public readonly carColors = CAR_COLORS;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -26,7 +32,7 @@ export class ViewAllCarsByColorComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("All Cars By Color")
+    this.title.setTitle(PageTitles.ALL_CARS_BY_COLOR)
   }
 
   /** Loads the cars of the selected color into the table. */
@@ -46,8 +52,8 @@ export class ViewAllCarsByColorComponent implements OnInit {
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Shows or hides the car pictures in the table. */

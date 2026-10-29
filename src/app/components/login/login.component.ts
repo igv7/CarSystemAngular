@@ -8,6 +8,11 @@ import { LoginService } from 'src/app/services/login.service';
 import { ResponseCodes } from 'src/app/models/response-codes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, LOGIN_AS_PARAM, LoginAs } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { StorageKeys } from 'src/app/constants/storage-keys';
+import { ClientType } from 'src/app/models/client-type';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +20,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
 
   /** The sign-in form; its values are read on submit. */
@@ -36,7 +44,10 @@ export class LoginComponent implements OnInit {
   public userName = '';
 
   /** The selected type, bound to the Type field. */
-  public type = 'CLIENT';
+  public type = ClientType.CLIENT;
+
+  /** The type values, for the Type field's options. */
+  public readonly clientType = ClientType;
 
   /** Only the admin account, and not from the Client page, may choose its type; everyone else is a CLIENT. */
   public get canChooseType(): boolean {
@@ -45,10 +56,10 @@ export class LoginComponent implements OnInit {
 
   /** Sets the browser tab title and reads where Sign In was opened from (it can change while on this page). */
   public ngOnInit(): void {
-    this.title.setTitle("Sign In");
+    this.title.setTitle(PageTitles.SIGN_IN);
     this.queryParams = this.route.queryParamMap.subscribe(params => {
-      this.clientOnly = params.get('as') === 'client';
-      this.applyTypeRule(params.get('as') === 'admin' ? 'ADMIN' : 'CLIENT');
+      this.clientOnly = params.get(LOGIN_AS_PARAM) === LoginAs.CLIENT;
+      this.applyTypeRule(params.get(LOGIN_AS_PARAM) === LoginAs.ADMIN ? ClientType.ADMIN : ClientType.CLIENT);
     });
   }
 
@@ -57,7 +68,7 @@ export class LoginComponent implements OnInit {
     const couldChoose = this.canChooseType;
     this.userName = value || '';
     if (this.canChooseType !== couldChoose) {
-      this.applyTypeRule('ADMIN');
+      this.applyTypeRule(ClientType.ADMIN);
     }
   }
 
@@ -65,13 +76,13 @@ export class LoginComponent implements OnInit {
   public onReset(): void {
     setTimeout(() => {
       this.userName = '';
-      this.applyTypeRule('CLIENT');
+      this.applyTypeRule(ClientType.CLIENT);
     });
   }
 
   /** Forces CLIENT when the type can't be chosen; otherwise uses `preferred`. */
-  private applyTypeRule(preferred: string): void {
-    this.type = this.canChooseType ? preferred : 'CLIENT';
+  private applyTypeRule(preferred: ClientType): void {
+    this.type = this.canChooseType ? preferred : ClientType.CLIENT;
   }
 
   private queryParams: Subscription;
@@ -84,15 +95,15 @@ export class LoginComponent implements OnInit {
     let userName = this.userLoginForm.value.userName;
     let password = this.userLoginForm.value.password;
     // Read from the field, not the form: a locked (disabled) Type field is left out of the form's values.
-    let type = this.canChooseType ? this.type : 'CLIENT';
+    let type = this.canChooseType ? this.type : ClientType.CLIENT;
     this.log.debug(`Login attempt for ${userName} (${type})`);
 
     this.loginService.login(userName, password, type).subscribe(res => {
-        if (type === "ADMIN") { 
-            this.router.navigate(["/admin"])
+        if (type === ClientType.ADMIN) { 
+            this.router.navigate([AppRoutes.ADMIN])
           if (res.status === ResponseCodes.OK) { 
               this.loginService.token = res.body; 
-              localStorage.setItem("token", res.body); 
+              localStorage.setItem(StorageKeys.TOKEN, res.body); 
               this.loginService.setAdminUser(); 
               this.log.info(`Admin ${userName} logged in`);
           }
@@ -101,11 +112,11 @@ export class LoginComponent implements OnInit {
           }
         }
         
-        if (type === "CLIENT") { 
-            this.router.navigate(["/client"])
+        if (type === ClientType.CLIENT) { 
+            this.router.navigate([AppRoutes.CLIENT])
           if (res.status === ResponseCodes.OK) { 
               this.loginService.token = res.body;  
-              localStorage.setItem("token", res.body);  
+              localStorage.setItem(StorageKeys.TOKEN, res.body);  
               this.loginService.setClientUser(); 
               this.log.info(`Client ${userName} logged in`);
             }
@@ -139,12 +150,12 @@ export class LoginComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /home. */
   public cancel() {
-    this.router.navigate(["/home"])
+    this.router.navigate([AppRoutes.HOME])
   }
 
   /** Close (×) button: leaves the form and returns to /home. */
   public close() {
-    this.router.navigate(["/home"])
+    this.router.navigate([AppRoutes.HOME])
   }
 
 }

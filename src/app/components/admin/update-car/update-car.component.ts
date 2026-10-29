@@ -5,6 +5,11 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { serverErrorMessage } from 'src/app/validation/sanitize';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { CAR_COLORS } from 'src/app/models/car-color';
+import { CAR_TYPES } from 'src/app/models/car-type';
 
 @Component({
   selector: 'app-update-car',
@@ -12,6 +17,14 @@ import { serverErrorMessage } from 'src/app/validation/sanitize';
   styleUrls: ['./update-car.component.css']
 })
 export class UpdateCarComponent implements OnInit {
+
+  /** Color options for the template. */
+  public readonly carColors = CAR_COLORS;
+  /** Brand options for the template. */
+  public readonly carTypes = CAR_TYPES;
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model: the id is typed in first, then the loaded car fills the rest for editing. */
   public car = new Car();
@@ -22,7 +35,7 @@ export class UpdateCarComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("Update Car");
+    this.title.setTitle(PageTitles.UPDATE_CAR);
   }
 
   /** Loads the car with the entered id into the form and shows its details below. */
@@ -36,7 +49,7 @@ export class UpdateCarComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/update-car/car-id/"+this.car.id]);
+      this.router.navigate([AppRoutes.ADMIN_UPDATE_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
       alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -51,7 +64,7 @@ export class UpdateCarComponent implements OnInit {
     this.adminService.updateCar(this.car).subscribe(car => {
       this.log.info(`Success on update Car! `,this.car = car);
       alert(`Car ID: ${this.car.id} has been succesfully updated!`);
-      this.router.navigate(["/admin/view-all-cars"])
+      this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CARS])
     }, err => {
       this.log.error(`Failed on update Car! `, this.car.id, err);
       const message = serverErrorMessage(err);
@@ -66,14 +79,14 @@ export class UpdateCarComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { StorageKeys } from 'src/app/constants/storage-keys';
 
 /** Log levels, from least to most severe. */
 export type LogLevel = 'debug' | 'info' | 'error';
@@ -39,7 +40,7 @@ function toLoggable(value: any): any {
       name: value.name,
       message: value.message,
       status: value.status,
-      url: value.url ? redactUrl(value.url, localStorage.getItem('token')) : undefined,
+      url: value.url ? redactUrl(value.url, localStorage.getItem(StorageKeys.TOKEN)) : undefined,
       stack: value instanceof Error ? value.stack : undefined
     };
   }

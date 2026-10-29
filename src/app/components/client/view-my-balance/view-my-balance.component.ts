@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-view-my-balance',
@@ -30,14 +32,14 @@ export class ViewMyBalanceComponent implements OnInit {
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);
     });
-    this.title.setTitle("My Balance");
+    this.title.setTitle(PageTitles.MY_BALANCE);
   }
 
 
   /** Returns to /client. */
   public backToMainPage(): void {
-    this.router.navigate(["/client"]);
-    this.title.setTitle("Client Page");
+    this.router.navigate([AppRoutes.CLIENT]);
+    this.title.setTitle(PageTitles.CLIENT);
   }
 
 

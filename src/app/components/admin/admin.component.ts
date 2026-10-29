@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { LoginService } from 'src/app/services/login.service';
 import { MenuSection } from '../side-menu/side-menu.component';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { StorageKeys } from 'src/app/constants/storage-keys';
 
 /** Admin dashboard at `/admin`: the side menu on the left, the chosen operation (a child route) on the right. */
 @Component({
@@ -38,36 +41,42 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
   /** Whether an operation is open; when false the overview text is shown instead. */
   public hasChild = false;
 
+  /** Link of the menu's Overview item. */
+  public readonly homeLink = AppRoutes.ADMIN;
+
+  /** localStorage key under which the menu remembers its collapsed sections. */
+  public readonly menuStorageKey = StorageKeys.ADMIN_MENU_COLLAPSED;
+
   /** The side menu: every admin operation, grouped by what it works on. */
   public readonly sections: MenuSection[] = [
     { title: 'Clients', items: [
-      { label: 'Add Client', link: '/admin/add-client' },
-      { label: 'Update Client', link: '/admin/update-client' },
-      { label: 'View Client', link: '/admin/view-client' },
-      { label: 'View All Clients', link: '/admin/view-all-clients' },
-      { label: 'Delete Client', link: '/admin/delete-client', danger: true },
+      { label: 'Add Client', link: AppRoutes.ADMIN_ADD_CLIENT },
+      { label: 'Update Client', link: AppRoutes.ADMIN_UPDATE_CLIENT },
+      { label: 'View Client', link: AppRoutes.ADMIN_VIEW_CLIENT },
+      { label: 'View All Clients', link: AppRoutes.ADMIN_VIEW_ALL_CLIENTS },
+      { label: 'Delete Client', link: AppRoutes.ADMIN_DELETE_CLIENT, danger: true },
     ]},
     { title: 'Cars', items: [
-      { label: 'Add Car', link: '/admin/add-car' },
-      { label: 'Update Car', link: '/admin/update-car' },
-      { label: 'View Car', link: '/admin/view-car' },
-      { label: 'View Car By Number', link: '/admin/view-car-by-number' },
-      { label: 'View All Cars', link: '/admin/view-all-cars' },
-      { label: 'View All Cars By Type', link: '/admin/view-all-cars-by-type' },
-      { label: 'View All Cars By Color', link: '/admin/view-all-cars-by-color' },
-      { label: 'Return Car', link: '/admin/return-car', danger: true },
-      { label: 'Delete Car', link: '/admin/delete-car', danger: true },
+      { label: 'Add Car', link: AppRoutes.ADMIN_ADD_CAR },
+      { label: 'Update Car', link: AppRoutes.ADMIN_UPDATE_CAR },
+      { label: 'View Car', link: AppRoutes.ADMIN_VIEW_CAR },
+      { label: 'View Car By Number', link: AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER },
+      { label: 'View All Cars', link: AppRoutes.ADMIN_VIEW_ALL_CARS },
+      { label: 'View All Cars By Type', link: AppRoutes.ADMIN_VIEW_ALL_CARS_BY_TYPE },
+      { label: 'View All Cars By Color', link: AppRoutes.ADMIN_VIEW_ALL_CARS_BY_COLOR },
+      { label: 'Return Car', link: AppRoutes.ADMIN_RETURN_CAR, danger: true },
+      { label: 'Delete Car', link: AppRoutes.ADMIN_DELETE_CAR, danger: true },
     ]},
     { title: 'Client cars', items: [
-      { label: 'View Client Car By Number', link: '/admin/view-client-car-by-number' },
-      { label: 'View All Client Cars', link: '/admin/view-all-client-cars' },
-      { label: 'Client Cars By Type', link: '/admin/view-all-client-cars-by-type' },
-      { label: 'Client Cars By Color', link: '/admin/view-all-client-cars-by-color' },
-      { label: 'Client Cars By Price', link: '/admin/view-all-client-cars-by-price-until' },
+      { label: 'View Client Car By Number', link: AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER },
+      { label: 'View All Client Cars', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS },
+      { label: 'Client Cars By Type', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_TYPE },
+      { label: 'Client Cars By Color', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_COLOR },
+      { label: 'Client Cars By Price', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_PRICE_UNTIL },
     ]},
     { title: 'Receipts', items: [
-      { label: 'View Receipts By Client', link: '/admin/view-receipts-by-client' },
-      { label: 'View All Receipts', link: '/admin/view-all-receipts' },
+      { label: 'View Receipts By Client', link: AppRoutes.ADMIN_VIEW_RECEIPTS_BY_CLIENT },
+      { label: 'View All Receipts', link: AppRoutes.ADMIN_VIEW_ALL_RECEIPTS },
     ]},
   ];
 
@@ -75,7 +84,7 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("Admin Page");
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Sign Out button: asks for confirmation, then signs out and goes to /home. */

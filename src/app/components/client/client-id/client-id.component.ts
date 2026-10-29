@@ -3,6 +3,7 @@ import { Client } from 'src/app/models/client';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { LoggerService } from 'src/app/services/logger.service';
+import { ID_PARAM } from 'src/app/constants/app-routes';
 
 /** Client details shown under the admin client lookups (`client-id/:id`): view, update, delete. */
 @Component({
@@ -22,7 +23,7 @@ export class ClientIdComponent implements OnInit {
   /** Loads all clients and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.adminService.getAllClients().subscribe(clients => {
-      const id = +this.activatedRoute.snapshot.params.id;
+      const id = +this.activatedRoute.snapshot.params[ID_PARAM];
       this.client = clients.find(c => c.id == id);
       this.log.debug(`Success! `);
     }, err => {

@@ -4,6 +4,8 @@ import { CarService } from 'src/app/services/car.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-cars',
@@ -37,12 +39,12 @@ export class CarsComponent implements OnInit {
       `2. No connection to the server` + `\n` + 
       `3. No Cars`);
     });
-    this.title.setTitle("All cars");
+    this.title.setTitle(PageTitles.ALL_CARS);
   }
 
   /** Returns to /home. */
   public backToHome(): void {
-    this.router.navigate(["/home"]);
+    this.router.navigate([AppRoutes.HOME]);
   }
 
   /** Shows or hides the car pictures in the table. */

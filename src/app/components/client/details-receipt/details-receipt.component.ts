@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, ID_PARAM } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-details-receipt',
@@ -22,7 +24,7 @@ export class DetailsReceiptComponent implements OnInit {
   /** Loads the client's receipts and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.clientService.getMyReceipts().subscribe((clientReceipts) => {
-      const id = +this.activatedRoute.snapshot.params.id;
+      const id = +this.activatedRoute.snapshot.params[ID_PARAM];
       this.clientReceipt = clientReceipts.find(cr => cr.receiptId == id);
       this.log.debug(`Success on get Receipt details! `);
     }, err => {
@@ -31,13 +33,13 @@ export class DetailsReceiptComponent implements OnInit {
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);
     });
-    this.title.setTitle("Receipt Details");
+    this.title.setTitle(PageTitles.RECEIPT_DETAILS);
   }
 
   /** Returns to /client/view-my-receipts. */
   public backToMyReceipts(): void {
-    this.router.navigate(["/client/view-my-receipts"]);
-    this.title.setTitle("My Receipts");
+    this.router.navigate([AppRoutes.CLIENT_VIEW_MY_RECEIPTS]);
+    this.title.setTitle(PageTitles.MY_RECEIPTS);
   }
 
 }

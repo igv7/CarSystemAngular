@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { ApiPaths } from 'src/app/constants/api-endpoints';
 
-/** Base URLs of the backend APIs; change the backend address here. */
+/** Base URLs of the backend APIs; the backend address is `apiBaseUrl` in src/environments. */
 @Injectable({
   providedIn: 'root'
 })
@@ -8,11 +10,11 @@ export class UrlsService {
 
   constructor() { }
 
-  private adminMenuUrl = "http://localhost:8080/admin/";
-  private clientMenuUrl = "http://localhost:8080/client/";
-  private loginUrl = "http://localhost:8080/carSystem/login/";
-  private signupUrl = "http://localhost:8080/carSystem/signUp/";
-  private carMenuUrl = "http://localhost:8080/car/";
+  private adminMenuUrl = environment.apiBaseUrl + ApiPaths.ADMIN;
+  private clientMenuUrl = environment.apiBaseUrl + ApiPaths.CLIENT;
+  private loginUrl = environment.apiBaseUrl + ApiPaths.LOGIN;
+  private signupUrl = environment.apiBaseUrl + ApiPaths.SIGNUP;
+  private carMenuUrl = environment.apiBaseUrl + ApiPaths.CAR;
 
 
   /** Base URL for admin operations. */

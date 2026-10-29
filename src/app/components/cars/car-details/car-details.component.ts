@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, ID_PARAM } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 /** Car details shown under the admin's car list (`car-details/:id`). */
 @Component({
@@ -23,7 +25,7 @@ export class CarDetailsComponent implements OnInit {
   /** Loads all cars and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe((cars) => {
-      const id = +this.activatedRoute.snapshot.params.id;
+      const id = +this.activatedRoute.snapshot.params[ID_PARAM];
       this.car = cars.find(c => c.id == id);
       this.log.debug(`Success on get Car details! `);
     }, err => {
@@ -32,12 +34,12 @@ export class CarDetailsComponent implements OnInit {
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);
     });
-    this.title.setTitle("Car Details");
+    this.title.setTitle(PageTitles.CAR_DETAILS);
   }
 
   /** Returns to /admin/view-all-cars. */
   public backToAllCars(): void {
-    this.router.navigate(["/admin/view-all-cars"]);
+    this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CARS]);
   }
 
 }

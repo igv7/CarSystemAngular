@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { LoginService } from './login.service';
 import { LoggerService } from './logger.service';
+import { AppRoutes, LOGIN_AS_PARAM, LoginAs } from 'src/app/constants/app-routes';
 
 /** Lets only a signed-in client into `/client`. */
 @Injectable({
@@ -26,7 +27,7 @@ export class ClientGuardService implements CanActivate {
     }
     else {
       this.log.info(`Access to ${s.url} denied: not logged in as client, redirecting to sign in as client`);
-      this.router.navigate(["/login"], { queryParams: { as: "client" } });
+      this.router.navigate([AppRoutes.LOGIN], { queryParams: { [LOGIN_AS_PARAM]: LoginAs.CLIENT } });
       return false;
     }
 

@@ -5,6 +5,10 @@ import { Client } from 'src/app/models/client';
 import { SignupService } from 'src/app/services/signup.service';
 import { LoggerService } from 'src/app/services/logger.service';
 import { serverErrorMessage } from 'src/app/validation/sanitize';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ClientType } from 'src/app/models/client-type';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +16,12 @@ import { serverErrorMessage } from 'src/app/validation/sanitize';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
+
+  /** The type values; the Type field always shows CLIENT. */
+  public readonly clientType = ClientType;
 
   /** Form model; the inputs bind to it. */
   public client = new Client();
@@ -25,7 +35,7 @@ export class SignupComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("Sign Up");
+    this.title.setTitle(PageTitles.SIGN_UP);
   }
 
   /** Creates the client account and opens the sign-in page; alerts if the name is already taken. */
@@ -39,7 +49,7 @@ export class SignupComponent implements OnInit {
       "\nPhone Number: " + client.phoneNumber +
       "\nEmail: " + client.email +
       "\nBalance: " + client.balance);
-      this.router.navigate(["/login"])
+      this.router.navigate([AppRoutes.LOGIN])
     }, err => {
       this.log.error(`Failed on sign up Client! `, this.client.name, err);
       const message = serverErrorMessage(err);
@@ -50,12 +60,12 @@ export class SignupComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /home. */
   public cancel() {
-    this.router.navigate(["/home"])
+    this.router.navigate([AppRoutes.HOME])
   }
 
   /** Close (×) button: leaves the form and returns to /home. */
   public close() {
-    this.router.navigate(["/home"])
+    this.router.navigate([AppRoutes.HOME])
   }
 
 }

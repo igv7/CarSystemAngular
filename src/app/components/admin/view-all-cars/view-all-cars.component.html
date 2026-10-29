@@ -32,7 +32,7 @@
                             <tr *ngFor="let c of cars | carTypeFilter: listFilter">
                                 <td class="table-dark">{{c.id}}</td>
                                 <td class="table-secondary">
-                                    <a routerLink="../view-all-cars/car-details/{{c.id}}" routerLinkActive="active-link">
+                                    <a [routerLink]="[routes.ADMIN_VIEW_ALL_CARS, paths.CAR_DETAILS, c.id]" routerLinkActive="active-link">
                                         {{c.number}}
                                     </a>
                                 </td>

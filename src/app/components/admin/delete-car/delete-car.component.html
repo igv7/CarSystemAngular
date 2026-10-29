@@ -13,7 +13,7 @@
                     <form  #formInfo="ngForm" class="needs-validation" novalidate  action="delete-car" method=post>
                         <div class="form-group">
                             <label for="exampleInputId">Enter car ID and then click on View Car button</label>
-                            <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" #idInfo="ngModel" [(ngModel)]="car.id" ngModel name="id" autofocus required>
+                            <input type="number" class="form-control" id="exampleInputId" [min]="rules.ID.min" placeholder="ID" #idInfo="ngModel" [(ngModel)]="car.id" ngModel name="id" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>

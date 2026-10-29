@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { CAR_TYPES } from 'src/app/models/car-type';
 
 @Component({
   selector: 'app-view-all-client-cars-by-type',
@@ -12,6 +16,12 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-client-cars-by-type.component.css']
 })
 export class ViewAllClientCarsByTypeComponent implements OnInit {
+
+  /** Brand options for the template. */
+  public readonly carTypes = CAR_TYPES;
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -29,7 +39,7 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("All Client Cars By Type");
+    this.title.setTitle(PageTitles.ALL_CLIENT_CARS_BY_TYPE);
   }
 
   /** Loads the given client's rented cars of the selected brand into the table. */
@@ -50,8 +60,8 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Shows or hides the car pictures in the table. */

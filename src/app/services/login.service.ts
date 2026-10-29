@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { UrlsService } from './urls.service';
 import { LoggerService } from './logger.service';
 import { urlPart } from '../validation/sanitize';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { StorageKeys } from 'src/app/constants/storage-keys';
 
 /**
  * Sign-in state: the token and which role (admin or client) is signed in, kept in localStorage so it survives
@@ -31,13 +33,13 @@ export class LoginService {
 
 
   /** Token returned by the backend at sign-in; added to every API URL. */
-  public token: string = localStorage.getItem("token");
+  public token: string = localStorage.getItem(StorageKeys.TOKEN);
   /** Whether an admin is signed in; checked by AdminGuardService. */
-  private userAdmin = JSON.parse(localStorage.getItem("userAdmin") || 'false');
+  private userAdmin = JSON.parse(localStorage.getItem(StorageKeys.USER_ADMIN) || 'false');
   /** Whether a client is signed in; checked by ClientGuardService. */
-  private userClient = JSON.parse(localStorage.getItem("userClient") || 'false');
+  private userClient = JSON.parse(localStorage.getItem(StorageKeys.USER_CLIENT) || 'false');
   /** Read from localStorage, but nothing stores it there at the moment. */
-  private userName: string = JSON.parse(localStorage.getItem("userName"));
+  private userName: string = JSON.parse(localStorage.getItem(StorageKeys.USER_NAME));
 
   /** Sends the credentials to the backend. The response body (text) is the token. */
   login(userName, password, type): Observable<any> {
@@ -50,7 +52,7 @@ export class LoginService {
 
   /** Clears the token (in memory and in localStorage) and both role flags. */
   public logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem(StorageKeys.TOKEN);
     this.token = null;
     this.setAdminUserF();
     this.setClientUserF();
@@ -66,7 +68,7 @@ export class LoginService {
       this.log.debug('Sign out cancelled');
       return;
     }
-    this.router.navigate(["/home"]).then(left => {
+    this.router.navigate([AppRoutes.HOME]).then(left => {
       if (left) {
         this.logout();
       }
@@ -88,7 +90,7 @@ export class LoginService {
     this.expiring = true;
     this.log.info('Session expired on the server; signing out');
     alert("Your session has expired. Please sign in again.");
-    this.router.navigate(["/login"]).then(() => {
+    this.router.navigate([AppRoutes.LOGIN]).then(() => {
       this.logout();
       this.expiring = false;
     });
@@ -112,12 +114,12 @@ export class LoginService {
   }
   /** Marks an admin as signed in. */
   setAdminUser() {
-    localStorage.setItem("userAdmin", "true");
+    localStorage.setItem(StorageKeys.USER_ADMIN, "true");
     this.userAdmin = true;
   }
   /** Marks the admin as signed out. */
   setAdminUserF() {
-    localStorage.setItem("userAdmin", "false");
+    localStorage.setItem(StorageKeys.USER_ADMIN, "false");
     this.userAdmin = false;
   }
 
@@ -129,12 +131,12 @@ export class LoginService {
   }
   /** Marks a client as signed in. */
   setClientUser() {
-    localStorage.setItem("userClient", "true");
+    localStorage.setItem(StorageKeys.USER_CLIENT, "true");
     this.userClient = true;
   }
   /** Marks the client as signed out. */
   setClientUserF() {
-    localStorage.setItem("userClient", "false");
+    localStorage.setItem(StorageKeys.USER_CLIENT, "false");
     this.userClient = false;
   }
 
@@ -145,28 +147,4 @@ export class LoginService {
     return this.userName;
   }
 
-
-
-
-  /** Old sign-up URL, only used by signupUser(). */
-  private _signUpUrl = "http://localhost:4200/signup";
-  /** Old sign-in URL, only used by loginUser(). */
-  private _loginUrl = "http://localhost:4200/login";
-
-
-  /** Posts a new user to the old sign-up URL (not used). */
-  signupUser(user) {
-    return this.httpClient.post<any>(this._signUpUrl, user)
-  }
-
-  /** Posts credentials to the old sign-in URL (not used). */
-  loginUser(user) {
-    return this.httpClient.post<any>(this._loginUrl, user)
-  }
-
-  /** Whether a token is stored in localStorage. */
-  loggedin() {
-    return !!localStorage.getItem('token')
-  }
-  
 }

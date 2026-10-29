@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="exampleInputId"><h4>Enter client ID</h4></label>&nbsp;
                 <button type="reset" class="btn btn-outline-light">Reset</button>
-                <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
+                <input type="number" class="form-control" id="exampleInputId" [min]="rules.ID.min" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
             </div>
         </form>
     </div>

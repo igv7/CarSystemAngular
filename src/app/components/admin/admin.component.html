@@ -1,6 +1,6 @@
 <div class="dashboard">
-    <app-side-menu class="sidebar" homeLabel="Overview" homeLink="/admin" [sections]="sections"
-                   storageKey="adminMenuCollapsed" (signOut)="logout()"></app-side-menu>
+    <app-side-menu class="sidebar" homeLabel="Overview" [homeLink]="homeLink" [sections]="sections"
+                   [storageKey]="menuStorageKey" (signOut)="logout()"></app-side-menu>
     <div class="content">
         <router-outlet (activate)="hasChild = true" (deactivate)="hasChild = false"></router-outlet>
         <div class="overview" *ngIf="!hasChild">

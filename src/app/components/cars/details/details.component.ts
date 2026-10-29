@@ -5,6 +5,8 @@ import { ClientService } from 'src/app/services/client.service';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, ID_PARAM } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 /** Car details shown under the client's car lists (`details/:id`), with a Rent button. */
 @Component({
@@ -25,7 +27,7 @@ export class DetailsComponent implements OnInit {
   /** Loads the rentable cars and shows the one whose id is in the URL. */
   public ngOnInit(): void {
     this.clientService.getCars().subscribe((cars) => {
-      const id = +this.activatedRoute.snapshot.params.id;
+      const id = +this.activatedRoute.snapshot.params[ID_PARAM];
       this.car = cars.find(c => c.id == id);
       this.log.debug(`Success on get Car details! `);
     }, err => {
@@ -34,7 +36,7 @@ export class DetailsComponent implements OnInit {
       `1. No internet connection` + `\n` + 
       `2. No connection to the server`);
     });
-    this.title.setTitle("Details");
+    this.title.setTitle(PageTitles.DETAILS);
   }
 
   /** Rents the car for the logged-in client and opens their rented cars. */
@@ -48,7 +50,7 @@ export class DetailsComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/client/view-my-cars"]);
+      this.router.navigate([AppRoutes.CLIENT_VIEW_MY_CARS]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
       alert(`Error on get Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -60,12 +62,12 @@ export class DetailsComponent implements OnInit {
 
   /** Returns to /client/view-cars. */
   public backToCars(): void {
-    this.router.navigate(["/client/view-cars"]);
+    this.router.navigate([AppRoutes.CLIENT_VIEW_CARS]);
   }
 
   /** Returns to /client/view-my-cars. */
   public backToMyCars(): void {
-    this.router.navigate(["/client/view-my-cars"]);
+    this.router.navigate([AppRoutes.CLIENT_VIEW_MY_CARS]);
   }
 
 }

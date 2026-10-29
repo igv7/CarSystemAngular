@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { serverErrorMessage } from 'src/app/validation/sanitize';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-update-client',
@@ -12,6 +15,9 @@ import { serverErrorMessage } from 'src/app/validation/sanitize';
   styleUrls: ['./update-client.component.css']
 })
 export class UpdateClientComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model: the id is typed in first, then the loaded client fills the rest for editing. */
   public client = new Client();
@@ -25,7 +31,7 @@ export class UpdateClientComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("Update Client");
+    this.title.setTitle(PageTitles.UPDATE_CLIENT);
   }
 
   /** Loads the client with the entered id into the form and shows its details below. */
@@ -39,7 +45,7 @@ export class UpdateClientComponent implements OnInit {
         this.client.email = client.email, 
         this.client.password = client.password, 
         this.client.balance = client.balance);
-      this.router.navigate(["/admin/update-client/client-id/"+this.client.id]);
+      this.router.navigate([AppRoutes.ADMIN_UPDATE_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client ID: `, this.client.id, err);
       alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
@@ -54,7 +60,7 @@ export class UpdateClientComponent implements OnInit {
     this.adminService.updateClient(this.client).subscribe(client => {
       this.log.info(`Success on update Client! `,this.client = client);
       alert(`Client Name: ${this.client.name} has been succesfully updated!`);
-      this.router.navigate(["/admin/view-all-clients"])
+      this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS])
     }, err => {
       this.log.error(`Failed on update Client! `, this.client.name, err);
       const message = serverErrorMessage(err);
@@ -69,14 +75,14 @@ export class UpdateClientComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

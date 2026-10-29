@@ -5,6 +5,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-view-all-client-cars-by-price-until',
@@ -12,6 +15,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-client-cars-by-price-until.component.css']
 })
 export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -29,7 +35,7 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("All Client Cars By Price");
+    this.title.setTitle(PageTitles.ALL_CLIENT_CARS_BY_PRICE);
   }
 
   /** Loads the given client's rented cars priced up to `price` into the table. */
@@ -50,8 +56,8 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Shows or hides the car pictures in the table. */

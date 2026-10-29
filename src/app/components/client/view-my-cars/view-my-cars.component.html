@@ -30,7 +30,7 @@
                             <tr *ngFor="let c of cars | carTypeFilter: listFilter">
                                 <td class="table-dark">
                                     <button *ngIf="!c.amount" type="submit" class="btn btn-danger" (click)="returnCar(c.id)">Return Car</button>&nbsp;&nbsp;
-                                    <a routerLink="../view-my-cars/details/{{c.id}}" routerLinkActive="active-link">
+                                    <a [routerLink]="[routes.CLIENT_VIEW_MY_CARS, paths.DETAILS, c.id]" routerLinkActive="active-link">
                                         {{c.number}}
                                     </a>
                                 </td>

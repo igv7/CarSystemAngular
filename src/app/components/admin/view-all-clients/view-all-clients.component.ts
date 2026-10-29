@@ -4,6 +4,8 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-view-all-clients',
@@ -11,6 +13,11 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-all-clients.component.css']
 })
 export class ViewAllClientsComponent implements OnInit {
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+  /** Route segments used by the template's detail links. */
+  public readonly paths = RoutePaths;
 
   /** Clients shown in the table; undefined (loading picture shown) until the server responds. */
   public clients: Client[];
@@ -34,13 +41,13 @@ export class ViewAllClientsComponent implements OnInit {
       `2. No connection to the server` + `\n` + 
       `3. No Clients`);
     });
-    this.title.setTitle("All Clients");
+    this.title.setTitle(PageTitles.ALL_CLIENTS);
   }
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

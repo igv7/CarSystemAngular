@@ -14,7 +14,7 @@
           <form class="needs-validation" novalidate (ngSubmit)="f.valid ? onSubmit() : f.form.markAllAsTouched()" (reset)="onReset()" #f="ngForm" action="login" method="post"> 
             <div class="form-group">
               <label for="exampleInputName">Username</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" [ngModel]="userName" (ngModelChange)="onUserNameChange($event)" name="userName" maxlength="30" pattern="[^<>]*" autofocus required>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" [ngModel]="userName" (ngModelChange)="onUserNameChange($event)" name="userName" [maxlength]="rules.USER_NAME.maxLength" [pattern]="rules.USER_NAME.pattern" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
@@ -35,8 +35,8 @@
             <div class="form-group">
               <label for="examplInputType">Select Your type</label>
               <select id="examplInputType" class="form-control" name="type" [(ngModel)]="type" [disabled]="!canChooseType" required>
-                <option value="ADMIN">ADMIN</option>
-                <option value="CLIENT">CLIENT</option>
+                <option [value]="clientType.ADMIN">{{ clientType.ADMIN }}</option>
+                <option [value]="clientType.CLIENT">{{ clientType.CLIENT }}</option>
               </select>
               <div class="valid-feedback">
                 Looks good!

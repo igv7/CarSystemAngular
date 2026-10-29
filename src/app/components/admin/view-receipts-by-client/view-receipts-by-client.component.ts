@@ -6,6 +6,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-view-receipts-by-client',
@@ -13,6 +16,14 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-receipts-by-client.component.css']
 })
 export class ViewReceiptsByClientComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+  /** Route segments used by the template's detail links. */
+  public readonly paths = RoutePaths;
 
   /** Receipts shown in the table; undefined (loading picture shown) until the server responds. */
   public clientReceipts: ClientReceipt[];
@@ -30,7 +41,7 @@ export class ViewReceiptsByClientComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("Receipts By Client");
+    this.title.setTitle(PageTitles.RECEIPTS_BY_CLIENT);
   }
 
   /** Loads the given client's receipts into the table. */
@@ -50,8 +61,8 @@ export class ViewReceiptsByClientComponent implements OnInit {
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

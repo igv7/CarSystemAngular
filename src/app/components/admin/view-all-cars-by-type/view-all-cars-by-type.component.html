@@ -14,15 +14,7 @@
                 <button type="reset" class="btn btn-outline-light">Reset</button>
                 <select id="examplInputType" class="form-control" type="text" name="type" [(ngModel)]="car.type" ngModel required>
                   <option selected disabled></option>
-                  <option value="AUDI">AUDI</option>
-                  <option value="BMW">BMW</option>
-                  <option value="HONDA">HONDA</option>
-                  <option value="MAZDA">MAZDA</option>
-                  <option value="MERCEDES">MERCEDES</option>
-                  <option value="MITSUBISHI">MITSUBISHI</option>
-                  <option value="SUBARU">SUBARU</option>
-                  <option value="TOYOTA">TOYOTA</option>
-                  <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                  <option *ngFor="let brand of carTypes" [value]="brand">{{ brand }}</option>
                 </select>
             </div>
         </form>

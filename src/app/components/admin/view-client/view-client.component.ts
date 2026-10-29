@@ -4,6 +4,9 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
 
 @Component({
   selector: 'app-view-client',
@@ -11,6 +14,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-client.component.css']
 })
 export class ViewClientComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
 
   /** Form model for the id lookup; filled with the loaded client. */
   public client = new Client();
@@ -21,7 +27,7 @@ export class ViewClientComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("View Client");
+    this.title.setTitle(PageTitles.VIEW_CLIENT);
   }
 
   /** Loads the client with the entered id and shows its details below. */
@@ -35,7 +41,7 @@ export class ViewClientComponent implements OnInit {
         this.client.email = client.email, 
         this.client.password = client.password, 
         this.client.balance = client.balance);
-      this.router.navigate(["/admin/view-client/client-id/"+this.client.id]);
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client ID: `, this.client.id, err);
       alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
@@ -47,14 +53,14 @@ export class ViewClientComponent implements OnInit {
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
 }

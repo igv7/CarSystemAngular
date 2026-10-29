@@ -12,13 +12,13 @@
                 <div class="container-fluid">
                     <form  #formInfo="ngForm" class="needs-validation" novalidate  action="view-car-by-number" method=post>
                         <div class="form-group">
-                            <label for="exampleInputNumber">Enter Car Number "format: 123-45-678" and then click on View Car By Number button</label>
-                            <input type="text" class="form-control" id="exampleInputNumber" placeholder="123-45-678" [(ngModel)]="car.number" ngModel name="number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" autofocus required>
+                            <label for="exampleInputNumber">Enter Car Number "format: {{ rules.CAR_NUMBER.example }}" and then click on View Car By Number button</label>
+                            <input type="text" class="form-control" id="exampleInputNumber" [placeholder]="rules.CAR_NUMBER.example" [(ngModel)]="car.number" ngModel name="number" [pattern]="rules.CAR_NUMBER.pattern" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                             <div class="invalid-feedback">
-                                Please enter a car number "format: 123-45-678" and then click on View Car By Number button.
+                                Please enter a car number "format: {{ rules.CAR_NUMBER.example }}" and then click on View Car By Number button.
                             </div>
                         </div> 
                         <button type="reset" class="btn btn-outline-secondary">Reset</button>
