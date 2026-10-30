@@ -4,8 +4,8 @@
     <div class="content">
         <router-outlet (activate)="hasChild = true" (deactivate)="hasChild = false"></router-outlet>
         <div class="overview" *ngIf="!hasChild">
-            <h2>Admin Page</h2>
-            <p>Choose an operation from the menu: clients, cars, client cars or receipts.</p>
+            <h2>Hi{{ userName ? ', ' + userName : '' }}!</h2>
+            <p>This is the Admin Page. Choose an operation from the menu: clients, cars, client cars or receipts.</p>
         </div>
     </div>
 </div>

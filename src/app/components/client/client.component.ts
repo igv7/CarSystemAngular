@@ -60,6 +60,11 @@ export class ClientComponent implements OnInit, ComponentCanDeactivate {
     ]},
   ];
 
+  /** Name shown in the overview's greeting; null for a session signed in before names were stored. */
+  public get userName(): string {
+    return this.loginService.getUserName();
+  }
+
   public constructor(private title: Title, private loginService: LoginService) { }
 
   /** Sets the browser tab title. */

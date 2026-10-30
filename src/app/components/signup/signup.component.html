@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputBirthday">Date of Birth</label>
-              <input type="date" class="form-control" id="exampleInputBirthday" value="" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
+              <input type="date" class="form-control" id="exampleInputBirthday" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputBalance">Balance. <span><strong>Gift from administration $100!</strong></span> Enter "100".</label>
-              <input type="number" class="form-control" id="exampleInputBalance" placeholder="Balance" value="0" [min]="rules.SIGN_UP_BALANCE.min" [max]="rules.SIGN_UP_BALANCE.max" [step]="rules.SIGN_UP_BALANCE.step" [(ngModel)]="client.balance" name="balance" required>
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="Balance" [min]="rules.SIGN_UP_BALANCE.min" [max]="rules.SIGN_UP_BALANCE.max" [step]="rules.SIGN_UP_BALANCE.step" [(ngModel)]="client.balance" name="balance" required>
               <div class="valid-feedback">
                 Looks good!
               </div>

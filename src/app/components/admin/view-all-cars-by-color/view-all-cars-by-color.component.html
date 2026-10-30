@@ -11,7 +11,7 @@
         <form  #formInfo="ngForm" class="needs-validation" novalidate  #f="ngForm"  action="view-all-cars-by-color" method=post>
             <div class="form-group">
                 <label for="examplInputColor" id="examplInputColor"><h4>Select Car Color</h4></label>&nbsp;
-                <button type="reset" class="btn btn-outline-light">Reset</button>
+                <button type="reset" (click)="reset()" class="btn btn-outline-light">Reset</button>
                 <select id="examplInputColor" class="form-control" type="text" name="color" [(ngModel)]="car.color" ngModel required>
                   <option selected disabled></option>
                   <option *ngFor="let color of carColors" [value]="color">{{ color }}</option>
@@ -22,8 +22,8 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <h1 *ngIf="!cars" class="text-center">No Cars</h1>
-                <div *ngIf="cars">
+                <app-page-message [text]="message"></app-page-message>
+                <div *ngIf="cars?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">

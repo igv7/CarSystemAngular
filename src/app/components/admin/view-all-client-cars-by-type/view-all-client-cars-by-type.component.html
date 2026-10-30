@@ -21,7 +21,7 @@
                             Please enter a client ID.
                         </div>
                     </div>
-                    <button type="reset" class="btn btn-outline-light" style="height: 40px;">Reset</button>
+                    <button type="reset" (click)="reset()" class="btn btn-outline-light" style="height: 40px;">Reset</button>
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
                         <label for="examplInputType" id="examplInputType"><h4>Select Car Type</h4></label>
                         <select id="examplInputType" class="form-control" type="text" name="type" [(ngModel)]="car.type" ngModel required>
@@ -36,7 +36,8 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <div *ngIf="cars">
+                <app-page-message [text]="message"></app-page-message>
+                <div *ngIf="cars?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">

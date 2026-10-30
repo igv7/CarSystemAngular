@@ -22,6 +22,7 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getCar() : idInfo.control.markAsTouched()">View Car</button><br><br>
+              <app-page-message [text]="message" [light]="true"></app-page-message>
               <div class="form-group">
                 <label for="exampleInputNumber">Update car number</label>
                 <input type="text" class="form-control" id="exampleInputNumber" [placeholder]="rules.CAR_NUMBER.example" [(ngModel)]="car.number" autocomplete="on" name="number" [pattern]="rules.CAR_NUMBER.pattern" required>
@@ -60,7 +61,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputAmount">Update car amount. Must be only one "1"</label>
-                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" value="1" [min]="rules.CAR_AMOUNT.min" [max]="rules.CAR_AMOUNT.max" [(ngModel)]="car.amount" ngModel name="amount" required>
+                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" [min]="rules.CAR_AMOUNT.min" [max]="rules.CAR_AMOUNT.max" [(ngModel)]="car.amount" ngModel name="amount" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -70,7 +71,7 @@
               </div> 
               <div class="form-group">
                 <label for="exampleInputPrice">Update car price. Max value: {{ rules.CAR_PRICE.max }}</label>
-                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" value="0" [min]="rules.CAR_PRICE.min" [max]="rules.CAR_PRICE.max" [step]="rules.CAR_PRICE.step" required>
+                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" [min]="rules.CAR_PRICE.min" [max]="rules.CAR_PRICE.max" [step]="rules.CAR_PRICE.step" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -89,7 +90,7 @@
                 </div>
               </div>
               <br><br>
-              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+              <button type="reset" (click)="reset()" class="btn btn-outline-secondary">Reset</button>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
                 <button type="submit" class="btn btn-warning" (click)="formInfo.valid ? updateCar() : formInfo.form.markAllAsTouched()">Update Car</button>

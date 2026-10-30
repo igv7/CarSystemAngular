@@ -9,7 +9,8 @@
     <div class="container-fluid">
         <div class="container text-center">
             <div class="table-responsive mt-3">
-                <table class="table table-bordered table-hover text-center">
+                <app-page-message [text]="message"></app-page-message>
+                <table *ngIf="!message" class="table table-bordered table-hover text-center">
                     <tbody>
                         <tr>
                             <th>Number</th>

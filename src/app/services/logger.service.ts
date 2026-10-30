@@ -36,11 +36,13 @@ function toLoggable(value: any): any {
     return undefined;
   }
   if (value instanceof Error || (value && value.name === 'HttpErrorResponse')) {
+    // An HttpErrorResponse message repeats the request URL, so it is masked as well.
+    const token = localStorage.getItem(StorageKeys.TOKEN);
     return {
       name: value.name,
-      message: value.message,
+      message: value.message ? redactUrl(value.message, token) : value.message,
       status: value.status,
-      url: value.url ? redactUrl(value.url, localStorage.getItem(StorageKeys.TOKEN)) : undefined,
+      url: value.url ? redactUrl(value.url, token) : undefined,
       stack: value instanceof Error ? value.stack : undefined
     };
   }

@@ -7,6 +7,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-car-by-number',
@@ -20,6 +21,9 @@ export class ViewCarByNumberComponent implements OnInit {
 
   /** Form model for the license plate lookup; filled with the loaded car. */
   public car = new Car();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('ViewCarByNumberComponent');
 
@@ -41,13 +45,13 @@ export class ViewCarByNumberComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
+      this.message = null;
       this.router.navigate([AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car by number: `, this.car.number, err);
-      alert(`Error on view Car by number! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Car by number: ${this.car.number}`);
+      this.message = loadErrorMessage(err, Messages.wrongCarNumber(this.car.number));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER]);
     });
   }
 
@@ -61,6 +65,13 @@ export class ViewCarByNumberComponent implements OnInit {
   public close() {
     this.router.navigate([AppRoutes.ADMIN])
     this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.car = new Car();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER]);
   }
 
 }

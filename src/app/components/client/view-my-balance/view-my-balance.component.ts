@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-my-balance',
@@ -17,6 +18,9 @@ export class ViewMyBalanceComponent implements OnInit {
   /** The client's account; its balance is shown once loaded. */
   public client = new Client();
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewMyBalanceComponent');
 
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
@@ -25,12 +29,11 @@ export class ViewMyBalanceComponent implements OnInit {
   public ngOnInit(): void {
     this.clientService.getBalance().subscribe((client) => {
       this.log.debug(`Success! `,this.client = client);
+      this.message = null;
       setTimeout(() => this.client = client, 1000);
     }, err => {
       this.log.error(`Failed on get My Balance! `, err);
-      alert(`Error on get My Balance! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server`);
+      this.message = loadErrorMessage(err);
     });
     this.title.setTitle(PageTitles.MY_BALANCE);
   }

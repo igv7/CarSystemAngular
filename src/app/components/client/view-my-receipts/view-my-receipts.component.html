@@ -10,9 +10,9 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <h1 *ngIf="!clientReceipts" class="text-center">No Receipts</h1>
-                <img *ngIf="!clientReceipts" src="/assets/images/loadingGifTransparant1.gif">
-                <div *ngIf="clientReceipts">
+                <app-page-message [text]="message"></app-page-message>
+                <img *ngIf="!clientReceipts && !message" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="clientReceipts?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">

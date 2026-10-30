@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-all-clients',
@@ -25,6 +26,9 @@ export class ViewAllClientsComponent implements OnInit {
   /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewAllClientsComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -33,13 +37,12 @@ export class ViewAllClientsComponent implements OnInit {
   public ngOnInit(): void {
     this.adminService.getAllClients().subscribe((clients) => {
       this.log.debug(`Success! `,this.clients = clients);
+      this.message = clients.length ? null : Messages.NO_CLIENTS;
       setTimeout(() => this.clients = clients, 1000);
     }, err => {
       this.log.error(`Failed on get all Clients! `, err);
-      alert(`Error on view all Clients! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Clients`);
+      this.clients = null;
+      this.message = loadErrorMessage(err);
     });
     this.title.setTitle(PageTitles.ALL_CLIENTS);
   }

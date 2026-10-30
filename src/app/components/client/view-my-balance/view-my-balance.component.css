@@ -17,6 +17,7 @@ body {
   }
 
   .container {
+    background: dimgrey;
     margin-top: 3%;
     border: 1px solid white;
     height: 20%;
@@ -54,4 +55,8 @@ a {
 .active-link {
     color: indigo;
     font-weight: bold;
+}
+
+tbody {
+    background: dimgrey;
 }

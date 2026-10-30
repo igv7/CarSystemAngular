@@ -9,6 +9,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-receipts-by-client',
@@ -35,6 +36,9 @@ export class ViewReceiptsByClientComponent implements OnInit {
   /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewReceiptsByClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -48,14 +52,12 @@ export class ViewReceiptsByClientComponent implements OnInit {
   public getReceiptsByClient(id: number): void {
     this.adminService.getReceiptsByClient(id).subscribe((clientReceipts) => {
       this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
+      this.message = clientReceipts.length ? null : Messages.clientHasNoReceipts(id);
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
       this.log.error(`Failed on get all Client Receipts! `, err);
-      alert(`Error on view all Client Receipts! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Receipts by this Client` + `\n` + 
-      `4. Wrong Client ID: ${this.client.id}`);
+      this.clientReceipts = null;
+      this.message = loadErrorMessage(err, Messages.wrongClientId(id));
     });
   }
 
@@ -63,6 +65,16 @@ export class ViewReceiptsByClientComponent implements OnInit {
   public backToAdmin(): void {
     this.router.navigate([AppRoutes.ADMIN]);
     this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the receipts table and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.car = new Car();
+    this.clientReceipt = new ClientReceipt();
+    this.clientReceipts = null;
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_RECEIPTS_BY_CLIENT]);
   }
 
 }

@@ -105,6 +105,7 @@ export class LoginComponent implements OnInit {
               this.loginService.token = res.body; 
               localStorage.setItem(StorageKeys.TOKEN, res.body); 
               this.loginService.setAdminUser(); 
+              this.loginService.setUserName(String(userName).trim());
               this.log.info(`Admin ${userName} logged in`);
           }
           else { 
@@ -118,6 +119,7 @@ export class LoginComponent implements OnInit {
               this.loginService.token = res.body;  
               localStorage.setItem(StorageKeys.TOKEN, res.body);  
               this.loginService.setClientUser(); 
+              this.loginService.setUserName(String(userName).trim());
               this.log.info(`Client ${userName} logged in`);
             }
           else { 

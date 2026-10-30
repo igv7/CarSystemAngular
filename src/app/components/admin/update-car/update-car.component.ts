@@ -10,6 +10,7 @@ import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
 import { CAR_COLORS } from 'src/app/models/car-color';
 import { CAR_TYPES } from 'src/app/models/car-type';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-update-car',
@@ -28,6 +29,9 @@ export class UpdateCarComponent implements OnInit {
 
   /** Form model: the id is typed in first, then the loaded car fills the rest for editing. */
   public car = new Car();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('UpdateCarComponent');
 
@@ -49,13 +53,13 @@ export class UpdateCarComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
+      this.message = null;
       this.router.navigate([AppRoutes.ADMIN_UPDATE_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
-      alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. Wrong ID: ${this.car.id}`);
+      this.message = loadErrorMessage(err, Messages.wrongCarId(this.car.id));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_UPDATE_CAR]);
     });
   }
 
@@ -87,6 +91,13 @@ export class UpdateCarComponent implements OnInit {
   public close() {
     this.router.navigate([AppRoutes.ADMIN])
     this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.car = new Car();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_UPDATE_CAR]);
   }
 
 }

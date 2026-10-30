@@ -22,6 +22,7 @@
               </div>
             </div>
             <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getClient() : idInfo.control.markAsTouched()">View Client</button><br><br>
+            <app-page-message [text]="message" [light]="true"></app-page-message>
             <div class="form-group">
               <label for="exampleInputName">Update client name</label>
               <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" autocomplete="on" name="userName" [minlength]="rules.NAME.minLength" [maxlength]="rules.NAME.maxLength" [pattern]="rules.NAME.pattern" required>
@@ -34,7 +35,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputBirthday">Update client birthday</label>
-              <input type="date" class="form-control" id="exampleInputBirthday" value="" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" autocomplete="on" name="birthday" required>
+              <input type="date" class="form-control" id="exampleInputBirthday" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" autocomplete="on" name="birthday" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
@@ -74,7 +75,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputBalance">Update client balance. Max value: {{ rules.BALANCE.max }}</label>
-              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" autocomplete="on" name="balance" value="0" [min]="rules.BALANCE.min" [max]="rules.BALANCE.max" [step]="rules.BALANCE.step" required>
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" autocomplete="on" name="balance" [min]="rules.BALANCE.min" [max]="rules.BALANCE.max" [step]="rules.BALANCE.step" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
@@ -83,7 +84,7 @@
               </div>
             </div>
             <br><br>
-            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <button type="reset" (click)="reset()" class="btn btn-outline-secondary">Reset</button>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
               <button type="submit" class="btn btn-warning" (click)="formInfo.valid ? updateClient() : formInfo.form.markAllAsTouched()">Update Client</button>

@@ -7,6 +7,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { CAR_COLORS } from 'src/app/models/car-color';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-all-cars-by-color',
@@ -26,6 +27,9 @@ export class ViewAllCarsByColorComponent implements OnInit {
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewAllCarsByColorComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -39,14 +43,12 @@ export class ViewAllCarsByColorComponent implements OnInit {
   public getAllCarsByColor(color: string): void {
     this.adminService.getAllCarsByColor(color).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
+      this.message = cars.length ? null : Messages.noCarsOfColor(color);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       this.log.error(`Failed on get all Cars By Color! `, err);
-      alert(`Error on view all Cars by color! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No cars` + `\n` + 
-      `4. No cars by color: ${this.car.color}`);
+      this.cars = null;
+      this.message = loadErrorMessage(err);
     });
   }
 
@@ -59,6 +61,14 @@ export class ViewAllCarsByColorComponent implements OnInit {
   /** Shows or hides the car pictures in the table. */
   public toggleImage() {
     this.showImage = !this.showImage;
+  }
+
+  /** Reset button: clears the form, the cars table and the message, and closes details opened from here. */
+  public reset(): void {
+    this.car = new Car();
+    this.cars = null;
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CARS_BY_COLOR]);
   }
 
 }

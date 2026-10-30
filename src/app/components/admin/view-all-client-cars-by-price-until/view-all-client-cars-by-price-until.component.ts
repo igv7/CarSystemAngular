@@ -8,6 +8,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-all-client-cars-by-price-until',
@@ -29,6 +30,9 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewAllClientCarsByPriceUntilComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -42,15 +46,12 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
   public getAllClientCarsByPrice(id: number, price: number): void {
     this.adminService.getAllClientCarsByPrice(id, price).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
+      this.message = cars.length ? null : Messages.clientHasNoCarsUpTo(id, price);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       this.log.error(`Failed on get all Client Cars By Price! `, err);
-      alert(`Error on view all Client Cars by price! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. This Client has no cars` + `\n` + 
-      `4. No cars by price until $${this.car.price}` + `\n` + 
-      `5. Wrong Client ID: ${this.client.id}`);
+      this.cars = null;
+      this.message = loadErrorMessage(err, Messages.wrongClientId(id));
     });
   }
 
@@ -63,6 +64,15 @@ export class ViewAllClientCarsByPriceUntilComponent implements OnInit {
   /** Shows or hides the car pictures in the table. */
   public toggleImage() {
     this.showImage = !this.showImage;
+  }
+
+  /** Reset button: clears the form, the cars table and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.car = new Car();
+    this.cars = null;
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_PRICE_UNTIL]);
   }
 
 }

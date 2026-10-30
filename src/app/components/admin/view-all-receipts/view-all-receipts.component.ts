@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-all-receipts',
@@ -27,6 +28,9 @@ export class ViewAllReceiptsComponent implements OnInit {
   /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewAllReceiptsComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -35,13 +39,12 @@ export class ViewAllReceiptsComponent implements OnInit {
   public ngOnInit(): void {
     this.adminService.getAllReceipts().subscribe((clientReceipts) => {
       this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
+      this.message = clientReceipts.length ? null : Messages.NO_RECEIPTS;
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
       this.log.error(`Failed on get all Receipts! `, err);
-      alert(`Error on view all Receipts! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Receipts`);
+      this.clientReceipts = null;
+      this.message = loadErrorMessage(err);
     });
     this.title.setTitle(PageTitles.ALL_RECEIPTS);
   }

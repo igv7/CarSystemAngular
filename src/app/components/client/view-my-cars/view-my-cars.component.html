@@ -13,9 +13,9 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <h1 *ngIf="!cars" class="text-center">No cars</h1>
-                <img *ngIf="!cars" src="/assets/images/loadingGifTransparant1.gif">
-                <div *ngIf="cars">
+                <app-page-message [text]="message"></app-page-message>
+                <img *ngIf="!cars && !message" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="cars?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">

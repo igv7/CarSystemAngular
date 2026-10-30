@@ -50,7 +50,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputAmount">Car Amount. Must be only one "1"</label>
-                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" value="1" [min]="rules.CAR_AMOUNT.min" [max]="rules.CAR_AMOUNT.max" [(ngModel)]="car.amount" ngModel name="amount" required>
+                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" [min]="rules.CAR_AMOUNT.min" [max]="rules.CAR_AMOUNT.max" [(ngModel)]="car.amount" ngModel name="amount" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -60,7 +60,7 @@
               </div> 
               <div class="form-group">
                 <label for="exampleInputPrice">Car Price. Max value: {{ rules.CAR_PRICE.max }}</label>
-                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" value="0" [min]="rules.CAR_PRICE.min" [max]="rules.CAR_PRICE.max" [step]="rules.CAR_PRICE.step" required>
+                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" [min]="rules.CAR_PRICE.min" [max]="rules.CAR_PRICE.max" [step]="rules.CAR_PRICE.step" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>

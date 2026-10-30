@@ -16,9 +16,16 @@
   height: calc(100vh - var(--header-height));
 }
 
+/*
+ * The pages place their filter, table and background with position fixed/absolute and width 100%.
+ * The transform makes this area (not the whole window) their containing block, so they are centered
+ * beside the menu and never wider than it.
+ */
 .content {
   flex: 1 1 auto;
   min-width: 0;
+  position: relative;
+  transform: translateZ(0);
 }
 
 .overview {

@@ -38,8 +38,8 @@ export class LoginService {
   private userAdmin = JSON.parse(localStorage.getItem(StorageKeys.USER_ADMIN) || 'false');
   /** Whether a client is signed in; checked by ClientGuardService. */
   private userClient = JSON.parse(localStorage.getItem(StorageKeys.USER_CLIENT) || 'false');
-  /** Read from localStorage, but nothing stores it there at the moment. */
-  private userName: string = JSON.parse(localStorage.getItem(StorageKeys.USER_NAME));
+  /** Name the user signed in with, shown in the dashboards' greeting; null when signed out. */
+  private userName: string = localStorage.getItem(StorageKeys.USER_NAME);
 
   /** Sends the credentials to the backend. The response body (text) is the token. */
   login(userName, password, type): Observable<any> {
@@ -54,6 +54,8 @@ export class LoginService {
   public logout() {
     localStorage.removeItem(StorageKeys.TOKEN);
     this.token = null;
+    localStorage.removeItem(StorageKeys.USER_NAME);
+    this.userName = null;
     this.setAdminUserF();
     this.setClientUserF();
     this.log.info('User logged out');
@@ -142,9 +144,15 @@ export class LoginService {
 
 
   // GET user name
-  /** The stored user name (currently always null). */
-  getUserName() {
+  /** The name the user signed in with, or null if it is not known. */
+  getUserName(): string {
     return this.userName;
+  }
+
+  /** Remembers the name the user signed in with (in memory and in localStorage). */
+  setUserName(userName: string): void {
+    this.userName = userName;
+    localStorage.setItem(StorageKeys.USER_NAME, userName);
   }
 
 }

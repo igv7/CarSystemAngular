@@ -7,10 +7,10 @@
   flex-direction: column;
   height: 100%;
   padding: 12px 8px;
-  background: #ffffff;
   border-right: 1px solid #dadce0;
   overflow-y: auto;
   font-size: 14px;
+  background: darkgrey;
 }
 
 /* Keep every entry at full height; a long menu scrolls instead of squeezing its items. */

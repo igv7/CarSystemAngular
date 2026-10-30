@@ -22,13 +22,14 @@
                             </div>
                         </div> 
                         <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getClient() : idInfo.control.markAsTouched()">View Client</button><br><br>
-                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        <button type="reset" (click)="reset()" class="btn btn-outline-secondary">Reset</button>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
                             <button type="submit" class="btn btn-danger" (click)="formInfo.valid ? deleteClient() : formInfo.form.markAllAsTouched()">Delete Client</button>
                         </div>
                     </form>
-                    <div class="table-responsive mt-3">
+                    <app-page-message [text]="message" [light]="true"></app-page-message>
+                    <div *ngIf="!message" class="table-responsive mt-3">
                         <table class="table table-bordered table-hover text-center">
                             <tbody>
                                 <tr>

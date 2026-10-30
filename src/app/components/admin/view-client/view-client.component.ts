@@ -7,6 +7,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-client',
@@ -20,6 +21,9 @@ export class ViewClientComponent implements OnInit {
 
   /** Form model for the id lookup; filled with the loaded client. */
   public client = new Client();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('ViewClientComponent');
 
@@ -41,13 +45,13 @@ export class ViewClientComponent implements OnInit {
         this.client.email = client.email, 
         this.client.password = client.password, 
         this.client.balance = client.balance);
+      this.message = null;
       this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client ID: `, this.client.id, err);
-      alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. Wrong ID: ${this.client.id}`);
+      this.message = loadErrorMessage(err, Messages.wrongClientId(this.client.id));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT]);
     });
   }
 
@@ -61,6 +65,13 @@ export class ViewClientComponent implements OnInit {
   public close() {
     this.router.navigate([AppRoutes.ADMIN])
     this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the client shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT]);
   }
 
 }

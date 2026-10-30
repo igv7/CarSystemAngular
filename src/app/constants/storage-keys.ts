@@ -6,7 +6,7 @@ export const StorageKeys = {
   USER_ADMIN: 'userAdmin',
   /** "true" while a client is signed in. */
   USER_CLIENT: 'userClient',
-  /** Read by LoginService, but nothing stores it at the moment. */
+  /** Name the user signed in with, for the dashboards' "Hi, <name>!" greeting. */
   USER_NAME: 'userName',
   /** Collapsed sections of the admin side menu. */
   ADMIN_MENU_COLLAPSED: 'adminMenuCollapsed',

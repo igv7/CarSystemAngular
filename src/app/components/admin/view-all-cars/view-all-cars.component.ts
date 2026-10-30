@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-all-cars',
@@ -28,6 +29,9 @@ export class ViewAllCarsComponent implements OnInit {
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewAllCarsComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
@@ -36,13 +40,12 @@ export class ViewAllCarsComponent implements OnInit {
   public ngOnInit(): void {
     this.adminService.getAllCars().subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
+      this.message = cars.length ? null : Messages.NO_CARS;
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       this.log.error(`Failed on get all Cars! `, err);
-      alert(`Error on view all Cars! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Cars`);
+      this.cars = null;
+      this.message = loadErrorMessage(err);
     });
     this.title.setTitle(PageTitles.ALL_CARS);
   }

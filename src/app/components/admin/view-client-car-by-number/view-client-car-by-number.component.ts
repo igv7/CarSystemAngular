@@ -8,6 +8,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-client-car-by-number',
@@ -23,6 +24,9 @@ export class ViewClientCarByNumberComponent implements OnInit {
   public car = new Car();
   /** Form model for the client id. */
   public client = new Client();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('ViewClientCarByNumberComponent');
 
@@ -44,14 +48,13 @@ export class ViewClientCarByNumberComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
+      this.message = null;
       this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Client Car by number: `, this.car.number, err);
-      alert(`Error on view Client Car by number! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. This Client has no car number: ${this.car.number}` + `\n` + 
-      `4. Wrong Client ID: ${this.client.id}`);
+      this.message = loadErrorMessage(err, Messages.wrongClientCarNumber(id, number));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER]);
     });
   }
 
@@ -65,6 +68,14 @@ export class ViewClientCarByNumberComponent implements OnInit {
   public close() {
     this.router.navigate([AppRoutes.ADMIN])
     this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.car = new Car();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER]);
   }
 
 }

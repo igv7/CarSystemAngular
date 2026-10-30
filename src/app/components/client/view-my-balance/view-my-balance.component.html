@@ -8,7 +8,8 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <img *ngIf="!client" src="/assets/images/loadingGifTransparant1.gif">
+                <app-page-message [text]="message"></app-page-message>
+                <img *ngIf="!client && !message" src="/assets/images/loadingGifTransparant1.gif">
                 <div *ngIf="client">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
