@@ -44,6 +44,7 @@ export class UpdateClientComponent implements OnInit {
       this.log.debug(`Success! `,
         this.client.id = client.id, 
         this.client.name = client.name,
+        this.client.clientID = client.clientID,
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
         this.client.email = client.email, 

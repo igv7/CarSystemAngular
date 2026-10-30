@@ -14,6 +14,7 @@ export const AdminApi = {
   ADD_CLIENT: 'addClient',
   UPDATE_CLIENT: 'updateClient',
   VIEW_CLIENT: 'viewClient',
+  VIEW_CLIENT_BY_CLIENT_ID: 'viewClientByClientID',
   VIEW_ALL_CLIENTS: 'viewAllClients',
   DELETE_CLIENT: 'deleteClient',
   ADD_CAR: 'addCar',

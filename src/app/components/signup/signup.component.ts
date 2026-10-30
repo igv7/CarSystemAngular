@@ -45,6 +45,7 @@ export class SignupComponent implements OnInit {
       alert(`Client Name: ${this.client.name} has been succesfully added! ` + 
       "\nId: " + client.id +
       "\nName: " + client.name +
+      "\nIdentity Number: " + client.clientID +
       "\nDOB: " + client.birthday +
       "\nPhone Number: " + client.phoneNumber +
       "\nEmail: " + client.email +

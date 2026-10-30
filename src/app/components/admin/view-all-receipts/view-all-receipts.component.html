@@ -4,7 +4,7 @@
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>&nbsp;
         </div>
-        <input type='text' [(ngModel)] = 'listFilter' id="type" placeholder="Filter by Client Name">
+        <input type='text' [(ngModel)] = 'listFilter' id="type" placeholder="Filter by Client Name or Identity Number">
         <h4>Filtered by: {{listFilter}}</h4>
     </div>
     <div class="container-fluid">
@@ -19,6 +19,7 @@
                                 <th>Client ID</th>
                                 <th>Receipt ID</th>
                                 <th>Client Name</th>
+                                <th>Identity Number</th>
                                 <th>Client Phone Number</th>
                                 <th>Client Email</th>
                                 <th>Client Balance</th>
@@ -39,6 +40,7 @@
                                     </a>
                                 </td>
                                 <td>{{cr.clientName}}</td>
+                                <td>{{cr.clientIdentityNumber}}</td>
                                 <td>{{cr.clientPhoneNumber}}</td>
                                 <td>{{cr.clientEmail}}</td>
                                 <td>&#36;{{cr.clientBalance}}</td>

@@ -38,6 +38,12 @@ tbody {
     width: 100%;
 }
 
+/* Wide enough for the whole "Filter by name or identity number" placeholder. */
+.filter input {
+    width: 30ch;
+    max-width: 90%;
+}
+
 table {
     margin-top: 0%;
 }

@@ -25,6 +25,7 @@ import { AddClientComponent } from './components/admin/add-client/add-client.com
 import { DeleteClientComponent } from './components/admin/delete-client/delete-client.component';
 import { UpdateClientComponent } from './components/admin/update-client/update-client.component';
 import { ViewClientComponent } from './components/admin/view-client/view-client.component';
+import { ViewClientByClientIdComponent } from './components/admin/view-client-by-client-id/view-client-by-client-id.component';
 import { ViewAllClientsComponent } from './components/admin/view-all-clients/view-all-clients.component';
 import { AddCarComponent } from './components/admin/add-car/add-car.component';
 import { UpdateCarComponent } from './components/admin/update-car/update-car.component';
@@ -88,6 +89,9 @@ const routes: Routes = [
       { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
     ]},
     { path: RoutePaths.VIEW_CLIENT, component: ViewClientComponent, children: [
+      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
+    ]},
+    { path: RoutePaths.VIEW_CLIENT_BY_CLIENT_ID, component: ViewClientByClientIdComponent, children: [
       { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
     ]},
     { path: RoutePaths.VIEW_ALL_CLIENTS, component: ViewAllClientsComponent, children: [

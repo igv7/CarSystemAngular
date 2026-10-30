@@ -36,6 +36,12 @@ export class AdminService {
     
   }
 
+  /** Gets one client by clientID (the 9-digit personal identity number, not the database id). */
+  public getClientByClientID(clientID: string): Observable<Client> {
+    return this.httpClient.get<Client>(this.urlsService.getAdminUrl()+AdminApi.VIEW_CLIENT_BY_CLIENT_ID+"/"+this.loginService.token+"/"+urlPart(clientID), {withCredentials: true});
+
+  }
+
   /** Gets all clients. */
   public getAllClients(): Observable<Client[]> {
     return this.httpClient.get<Client[]>(this.urlsService.getAdminUrl()+AdminApi.VIEW_ALL_CLIENTS+"/"+this.loginService.token, {withCredentials: true});

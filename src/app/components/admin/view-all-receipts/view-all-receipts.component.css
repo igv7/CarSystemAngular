@@ -34,6 +34,12 @@ body {
     width: 100%;
 }
 
+/* Wide enough for the whole "Filter by Client Name or Identity Number" placeholder. */
+.filter input {
+    width: 35ch;
+    max-width: 90%;
+}
+
 table {
     margin-top: 0%;
 }

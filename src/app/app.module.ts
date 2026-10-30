@@ -39,6 +39,7 @@ import { ValidationFeedbackDirective } from './validation/validation-feedback.di
 import { AddClientComponent } from './components/admin/add-client/add-client.component';
 import { UpdateClientComponent } from './components/admin/update-client/update-client.component';
 import { ViewClientComponent } from './components/admin/view-client/view-client.component';
+import { ViewClientByClientIdComponent } from './components/admin/view-client-by-client-id/view-client-by-client-id.component';
 import { ViewAllClientsComponent } from './components/admin/view-all-clients/view-all-clients.component';
 import { DeleteClientComponent } from './components/admin/delete-client/delete-client.component';
 import { AddCarComponent } from './components/admin/add-car/add-car.component';
@@ -101,6 +102,7 @@ import { PageMessageComponent } from './components/page-message/page-message.com
     AddClientComponent,
     UpdateClientComponent,
     ViewClientComponent,
+    ViewClientByClientIdComponent,
     ViewAllClientsComponent,
     DeleteClientComponent,
     AddCarComponent,

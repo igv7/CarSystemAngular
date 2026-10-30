@@ -4,6 +4,8 @@ export class ClientReceipt {
         public receiptId?: number,
         public clientId?: number,
         public clientName?: string,
+        /** The client's ClientID (9-digit personal identity number); `clientId` is the database id. */
+        public clientIdentityNumber?: string,
         public clientPhoneNumber?: string,
         public clientEmail?: string,
         public clientBalance?: number,

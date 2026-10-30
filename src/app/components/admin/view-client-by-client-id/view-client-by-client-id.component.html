@@ -1,0 +1,73 @@
+
+<body>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">View Client By Identity Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form  #formInfo="ngForm" class="needs-validation" novalidate  action="view-client-by-client-id" method=post>
+                        <div class="form-group">
+                            <label for="exampleInputClientID">Enter client identity number and then click on View Client button</label>
+                            <input type="text" inputmode="numeric" class="form-control" id="exampleInputClientID" [placeholder]="rules.CLIENT_ID.example" [(ngModel)]="client.clientID" name="clientID" [minlength]="rules.CLIENT_ID.length" [maxlength]="rules.CLIENT_ID.length" [pattern]="rules.CLIENT_ID.pattern" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter an identity number: exactly {{ rules.CLIENT_ID.length }} digits, without letters, symbols or spaces.
+                            </div>
+                        </div>
+                        <button type="reset" (click)="reset()" class="btn btn-outline-secondary">Reset</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" (click)="formInfo.valid ? getClient() : formInfo.form.markAllAsTouched()">View Client</button>
+                        </div>
+                    </form>
+                    <app-page-message [text]="message" [light]="true"></app-page-message>
+                    <div *ngIf="!message" class="table-responsive mt-3">
+                        <table class="table table-bordered table-hover text-center">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{client.id}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{client.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Identity Number</th>
+                                    <td>{{client.clientID}}</td>
+                                </tr>
+                                <tr>
+                                    <th>DOB</th>
+                                    <td>{{client.birthday}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone number</th>
+                                    <td>{{client.phoneNumber}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{client.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Password</th>
+                                    <td>{{client.password}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Balance</th>
+                                    <td>&#36;{{client.balance}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

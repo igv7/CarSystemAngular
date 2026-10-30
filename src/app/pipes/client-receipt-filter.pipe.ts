@@ -8,12 +8,15 @@ import { ClientReceipt } from '../models/clientReceipt';
 export class ClientReceiptFilterPipe implements PipeTransform {
 
   /**
-   * Keeps the receipts whose client name contains `filterBy` (case-insensitive); returns all receipts when
-   * the filter is empty.
+   * Keeps the receipts whose client name (case-insensitive) or client identity number contains `filterBy`;
+   * returns all receipts when the filter is empty. Receipts saved before identity numbers existed are matched
+   * by name only.
    */
   transform(value: ClientReceipt[], filterBy: string) : ClientReceipt[] {
-   filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
-   return filterBy ? value.filter((clientReceipt : ClientReceipt) => clientReceipt.clientName.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
+   filterBy = filterBy ? filterBy.trim().toLocaleLowerCase() : null;
+   return filterBy ? value.filter((clientReceipt : ClientReceipt) =>
+     (clientReceipt.clientName || '').toLocaleLowerCase().indexOf(filterBy) !== -1
+     || (clientReceipt.clientIdentityNumber || '').indexOf(filterBy) !== -1) : value;
   }
 
 }

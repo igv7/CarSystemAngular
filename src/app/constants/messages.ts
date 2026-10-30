@@ -7,6 +7,7 @@ export const Messages = {
   SERVER_ERROR: 'The server could not complete the request. Please try again later.',
   LOAD_FAILED: 'The data could not be loaded. Please try again later.',
   wrongClientId: (id: number) => `Wrong client ID: ${id}. There is no such client!`,
+  wrongClientClientId: (clientID: string) => `Wrong identity number: ${clientID}. There is no such client!`,
   wrongCarId: (id: number) => `Wrong car ID: ${id}. There is no such car!`,
   wrongCarNumber: (num: string) => `Wrong car number: ${num}. There is no such car!`,
   wrongClientCarNumber: (id: number, num: string) =>

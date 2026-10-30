@@ -52,7 +52,8 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
     { title: 'Clients', items: [
       { label: 'Add Client', link: AppRoutes.ADMIN_ADD_CLIENT },
       { label: 'Update Client', link: AppRoutes.ADMIN_UPDATE_CLIENT },
-      { label: 'View Client', link: AppRoutes.ADMIN_VIEW_CLIENT },
+      { label: 'View Client By ID', link: AppRoutes.ADMIN_VIEW_CLIENT },
+      { label: 'View Client By Identity Number', link: AppRoutes.ADMIN_VIEW_CLIENT_BY_CLIENT_ID },
       { label: 'View All Clients', link: AppRoutes.ADMIN_VIEW_ALL_CLIENTS },
       { label: 'Delete Client', link: AppRoutes.ADMIN_DELETE_CLIENT, danger: true },
     ]},

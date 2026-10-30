@@ -25,6 +25,8 @@ export const ValidationRules = {
   CAR_PRICE: { min: 0.01, max: 1000, step: 0.01 },
   /** "Price until" filter: any price from 0. */
   PRICE_FILTER: { min: 0, step: 0.01 },
+  /** Client's personal identity number (the backend's Constants.CLIENT_ID_REGEX): exactly 9 digits. */
+  CLIENT_ID: { length: 9, pattern: '[0-9]{9}', example: '123456789' },
   /** Client and car ids. */
   ID: { min: 1 },
   /** Brand typed into the car search: letters and spaces only. */

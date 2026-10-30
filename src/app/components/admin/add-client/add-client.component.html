@@ -23,6 +23,16 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="exampleInputClientID">Client identity number</label>
+              <input type="text" inputmode="numeric" class="form-control" id="exampleInputClientID" [placeholder]="rules.CLIENT_ID.example" [(ngModel)]="client.clientID" name="clientID" [minlength]="rules.CLIENT_ID.length" [maxlength]="rules.CLIENT_ID.length" [pattern]="rules.CLIENT_ID.pattern" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter an identity number: exactly {{ rules.CLIENT_ID.length }} digits, without letters, symbols or spaces.
+              </div>
+            </div>
+            <div class="form-group">
               <label for="exampleInputBirthday">Client birthday</label>
               <input type="date" class="form-control" id="exampleInputBirthday" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
               <div class="valid-feedback">

@@ -31,7 +31,7 @@ export class ViewClientComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle(PageTitles.VIEW_CLIENT);
+    this.title.setTitle(PageTitles.VIEW_CLIENT_BY_ID);
   }
 
   /** Loads the client with the entered id and shows its details below. */
@@ -40,6 +40,7 @@ export class ViewClientComponent implements OnInit {
       this.log.debug(`Success! `,
         this.client.id = client.id, 
         this.client.name = client.name,
+        this.client.clientID = client.clientID,
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
         this.client.email = client.email, 
