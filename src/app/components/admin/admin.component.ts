@@ -3,16 +3,19 @@ import { ComponentCanDeactivate } from 'src/app/services/exit-admin-guard.servic
 import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
+import { MenuSection } from '../side-menu/side-menu.component';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { StorageKeys } from 'src/app/constants/storage-keys';
 
-/** Admin menu at `/admin`; each operation opens as a child route below the menu. */
+/** Admin dashboard at `/admin`: the side menu on the left, the chosen operation (a child route) on the right. */
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, ComponentCanDeactivate {
-  
+
   /** Set by save(); while false and nobody is signed in, leaving the page asks for confirmation. */
   saved: boolean = false;
   /**
@@ -35,11 +38,58 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
     }
   }
 
-  public constructor(private title: Title, private loginService: LoginService, private router: Router) { }
+  /** Whether an operation is open; when false the overview text is shown instead. */
+  public hasChild = false;
+
+  /** Link of the menu's Overview item. */
+  public readonly homeLink = AppRoutes.ADMIN;
+
+  /** localStorage key under which the menu remembers its collapsed sections. */
+  public readonly menuStorageKey = StorageKeys.ADMIN_MENU_COLLAPSED;
+
+  /** The side menu: every admin operation, grouped by what it works on. */
+  public readonly sections: MenuSection[] = [
+    { title: 'Clients', items: [
+      { label: 'Add Client', link: AppRoutes.ADMIN_ADD_CLIENT },
+      { label: 'Update Client', link: AppRoutes.ADMIN_UPDATE_CLIENT },
+      { label: 'View Client', link: AppRoutes.ADMIN_VIEW_CLIENT },
+      { label: 'View All Clients', link: AppRoutes.ADMIN_VIEW_ALL_CLIENTS },
+      { label: 'Delete Client', link: AppRoutes.ADMIN_DELETE_CLIENT, danger: true },
+    ]},
+    { title: 'Cars', items: [
+      { label: 'Add Car', link: AppRoutes.ADMIN_ADD_CAR },
+      { label: 'Update Car', link: AppRoutes.ADMIN_UPDATE_CAR },
+      { label: 'View Car', link: AppRoutes.ADMIN_VIEW_CAR },
+      { label: 'View Car By Number', link: AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER },
+      { label: 'View All Cars', link: AppRoutes.ADMIN_VIEW_ALL_CARS },
+      { label: 'View All Cars By Type', link: AppRoutes.ADMIN_VIEW_ALL_CARS_BY_TYPE },
+      { label: 'View All Cars By Color', link: AppRoutes.ADMIN_VIEW_ALL_CARS_BY_COLOR },
+      { label: 'Return Car', link: AppRoutes.ADMIN_RETURN_CAR, danger: true },
+      { label: 'Delete Car', link: AppRoutes.ADMIN_DELETE_CAR, danger: true },
+    ]},
+    { title: 'Client cars', items: [
+      { label: 'View Client Car By Number', link: AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER },
+      { label: 'View All Client Cars', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS },
+      { label: 'Client Cars By Type', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_TYPE },
+      { label: 'Client Cars By Color', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_COLOR },
+      { label: 'Client Cars By Price', link: AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_PRICE_UNTIL },
+    ]},
+    { title: 'Receipts', items: [
+      { label: 'View Receipts By Client', link: AppRoutes.ADMIN_VIEW_RECEIPTS_BY_CLIENT },
+      { label: 'View All Receipts', link: AppRoutes.ADMIN_VIEW_ALL_RECEIPTS },
+    ]},
+  ];
+
+  /** Name shown in the overview's greeting; null for a session signed in before names were stored. */
+  public get userName(): string {
+    return this.loginService.getUserName();
+  }
+
+  public constructor(private title: Title, private loginService: LoginService) { }
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-    this.title.setTitle("Admin Page");
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Sign Out button: asks for confirmation, then signs out and goes to /home. */
@@ -47,110 +97,4 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
     this.loginService.confirmAndSignOut();
   }
 
-  /** Opens the Add Client form. */
-  public addClient() {
-    this.router.navigate(["/admin/add-client"])
-  }
-  
-  /** Opens the Update Client form. */
-  public updateClient() {
-    this.router.navigate(["/admin/update-client"])
-  }
-
-  /** Opens the View Client lookup. */
-  public viewClient() {
-    this.router.navigate(["/admin/view-client"])
-  }
-
-  /** Opens the list of all clients. */
-  public viewAllClients() {
-    this.router.navigate(["/admin/view-all-clients"])
-  }
-
-  /** Opens the Delete Client form. */
-  public deleteClient() {
-    this.router.navigate(["/admin/delete-client"])
-  }
-
-  /** Opens the Add Car form. */
-  public addCar() {
-    this.router.navigate(["/admin/add-car"])
-  }
-
-  /** Opens the Update Car form. */
-  public updateCar() {
-    this.router.navigate(["/admin/update-car"])
-  }
-
-  /** Opens the View Car lookup (by id). */
-  public viewCar() {
-    this.router.navigate(["/admin/view-car"])
-  }
-
-  /** Opens the View Car lookup by license plate number. */
-  public viewCarByNumber() {
-    this.router.navigate(["/admin/view-car-by-number"])
-  }
-
-  /** Opens the list of all cars. */
-  public viewAllCars() {
-    this.router.navigate(["/admin/view-all-cars"])
-  }
-
-  /** Opens the Delete Car form. */
-  public deleteCar() {
-    this.router.navigate(["/admin/delete-car"])
-  }
-
-  /** Opens the list of cars filtered by brand. */
-  public viewAllCarsByType() {
-    this.router.navigate(["/admin/view-all-cars-by-type"])
-  }
-
-  /** Opens the list of cars filtered by color. */
-  public viewAllCarsByColor() {
-    this.router.navigate(["/admin/view-all-cars-by-color"])
-  }
-
-  /** Opens the Return Car form. */
-  public returnCar() {
-    this.router.navigate(["/admin/return-car"])
-  }
-
-  /** Opens the lookup of a client's rented car by license plate number. */
-  public viewClientCarByNumber() {
-    this.router.navigate(["/admin/view-client-car-by-number"])
-  }
-
-  /** Opens the list of a client's rented cars. */
-  public viewAllClientCars() {
-    this.router.navigate(["/admin/view-all-client-cars"])
-  }
-
-  /** Opens the list of a client's rented cars filtered by brand. */
-  public viewAllClientCarsByType() {
-    this.router.navigate(["/admin/view-all-client-cars-by-type"])
-  }
-
-  /** Opens the list of a client's rented cars filtered by color. */
-  public viewAllClientCarsByColor() {
-    this.router.navigate(["/admin/view-all-client-cars-by-color"])
-  }
-
-  /** Opens the list of a client's rented cars up to a maximum price. */
-  public viewAllClientCarsByPriceUntil() {
-    this.router.navigate(["/admin/view-all-client-cars-by-price-until"])
-  }
-
-  /** Opens the list of one client's receipts. */
-  public viewReceiptsByClient() {
-    this.router.navigate(["/admin/view-receipts-by-client"])
-  }
-
-  /** Opens the list of all receipts. */
-  public viewAllReceipts() {
-    this.router.navigate(["/admin/view-all-receipts"])
-  }
-
 }
-

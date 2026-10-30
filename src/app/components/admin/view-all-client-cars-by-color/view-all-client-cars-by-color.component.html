@@ -13,7 +13,7 @@
                 <div class="form-row text-center justify-content-center">
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
                         <label for="exampleInputId"><h4>Enter client ID</h4></label>
-                        <input type="number" class="form-control" id="exampleInputId" min="1" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
+                        <input type="number" class="form-control" id="exampleInputId" [min]="rules.ID.min" placeholder="ID" [(ngModel)]="client.id" ngModel name="id" autofocus required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -21,18 +21,12 @@
                             Please enter a client ID.
                         </div>
                     </div>
-                    <button type="reset" class="btn btn-outline-light" style="height: 40px;">Reset</button>
+                    <button type="reset" (click)="reset()" class="btn btn-outline-light" style="height: 40px;">Reset</button>
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
                         <label for="examplInputColor" id="examplInputColor"><h4>Select Car Color</h4></label>
                         <select id="examplInputColor" class="form-control" type="text" name="color" [(ngModel)]="car.color" ngModel required>
                             <option selected disabled></option>
-                            <option value="WHITE">WHITE</option>
-                    <option value="GREEN">GREEN</option>
-                    <option value="BLUE">BLUE</option>
-                    <option value="YELLOW">YELLOW</option>
-                    <option value="RED">RED</option>
-                    <option value="BLACK">BLACK</option>
-                    <option value="GREY">GREY</option>
+                            <option *ngFor="let color of carColors" [value]="color">{{ color }}</option>
                         </select>
                     </div>
                 </div>
@@ -42,7 +36,8 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <div *ngIf="cars">
+                <app-page-message [text]="message"></app-page-message>
+                <div *ngIf="cars?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">

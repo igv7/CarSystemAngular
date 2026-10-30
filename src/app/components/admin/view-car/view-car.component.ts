@@ -4,6 +4,10 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-car',
@@ -12,8 +16,14 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class ViewCarComponent implements OnInit {
 
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
+
   /** Form model for the id lookup; filled with the loaded car. */
   public car = new Car();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('ViewCarComponent');
 
@@ -21,7 +31,7 @@ export class ViewCarComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("View Car");
+    this.title.setTitle(PageTitles.VIEW_CAR);
   }
 
   /** Loads the car with the entered id and shows its details below. */
@@ -35,26 +45,33 @@ export class ViewCarComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/admin/view-car/car-id/"+this.car.id]);
+      this.message = null;
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
-      alert(`Error on view Car! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. Wrong ID: ${this.car.id}`);
+      this.message = loadErrorMessage(err, Messages.wrongCarId(this.car.id));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_VIEW_CAR]);
     });
   }
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close() {
-    this.router.navigate(["/admin"])
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN])
+    this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.car = new Car();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_CAR]);
   }
 
 }

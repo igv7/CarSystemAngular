@@ -10,9 +10,9 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <h1 *ngIf="!clientReceipts" class="text-center">No Receipts</h1>
-                <img *ngIf="!clientReceipts" src="/assets/images/loadingGifTransparant1.gif">
-                <div *ngIf="clientReceipts">
+                <app-page-message [text]="message"></app-page-message>
+                <img *ngIf="!clientReceipts && !message" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="clientReceipts?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
@@ -32,7 +32,7 @@
                                 <td>{{cr.clientPhoneNumber}}</td>
                                 <td>{{cr.clientEmail}}</td>
                                 <td class="table-secondary">
-                                    <a routerLink="../view-my-receipts/details-receipt/{{cr.receiptId}}" routerLinkActive="active-link">
+                                    <a [routerLink]="[routes.CLIENT_VIEW_MY_RECEIPTS, paths.DETAILS_RECEIPT, cr.receiptId]" routerLinkActive="active-link">
                                         {{cr.receiptDate}}
                                     </a>
                                 </td>

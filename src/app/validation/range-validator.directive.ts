@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 
 /**
@@ -13,6 +13,11 @@ export class RangeValidatorDirective implements Validator {
 
   @Input() min: string | number;
   @Input() max: string | number;
+
+  /** Puts `min` back on the input, so the browser's spinner and date picker use it even when it's bound. */
+  @HostBinding('attr.min') get minAttr() { return this.min !== undefined && this.min !== '' ? this.min : null; }
+  /** Same for `max`. */
+  @HostBinding('attr.max') get maxAttr() { return this.max !== undefined && this.max !== '' ? this.max : null; }
 
   constructor(private el: ElementRef<HTMLInputElement>) { }
 

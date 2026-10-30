@@ -4,6 +4,9 @@ import { ClientService } from 'src/app/services/client.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-cars',
@@ -11,6 +14,11 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-cars.component.css']
 })
 export class ViewCarsComponent implements OnInit {
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+  /** Route segments used by the template's detail links. */
+  public readonly paths = RoutePaths;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -22,6 +30,9 @@ export class ViewCarsComponent implements OnInit {
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewCarsComponent');
 
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private logger: LoggerService) { }
@@ -30,15 +41,14 @@ export class ViewCarsComponent implements OnInit {
   public ngOnInit(): void {
     this.clientService.getCars().subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
+      this.message = cars.length ? null : Messages.NO_CARS;
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       this.log.error(`Failed on get all Cars! `, err);
-      alert(`Error on view all Cars! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Cars`);
+      this.cars = null;
+      this.message = loadErrorMessage(err);
     });
-    this.title.setTitle("All cars");
+    this.title.setTitle(PageTitles.ALL_CARS);
   }
 
   /** Rents the car with the given id and opens the client's rented cars. */
@@ -52,7 +62,7 @@ export class ViewCarsComponent implements OnInit {
         this.car.amount = car.amount, 
         this.car.price = car.price, 
         this.car.image = car.image);
-      this.router.navigate(["/client/view-my-cars"]);
+      this.router.navigate([AppRoutes.CLIENT_VIEW_MY_CARS]);
     }, err => {
       this.log.error(`Failed on get Car ID: `, this.car.id, err);
       alert(`Error on get Car! ` + `\n` + `The reasons: ` + `\n` + 
@@ -63,8 +73,8 @@ export class ViewCarsComponent implements OnInit {
 
   /** Returns to /client. */
   public backToMainPage(): void {
-    this.router.navigate(["/client"]);
-    this.title.setTitle("Client Page");
+    this.router.navigate([AppRoutes.CLIENT]);
+    this.title.setTitle(PageTitles.CLIENT);
   }
 
   /** Shows or hides the car pictures in the table. */

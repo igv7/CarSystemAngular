@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
 
 @Component({
   selector: 'app-delete-account',
@@ -13,6 +15,9 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class DeleteAccountComponent implements OnInit {
 
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+
   public client = new Client();
 
   private log = this.logger.for('DeleteAccountComponent');
@@ -20,7 +25,7 @@ export class DeleteAccountComponent implements OnInit {
   public constructor(private title: Title, private clientService: ClientService, private router: Router, private loginService: LoginService, private logger: LoggerService) { }
 
   public ngOnInit(): void {
-    this.title.setTitle("Delete Account");
+    this.title.setTitle(PageTitles.DELETE_ACCOUNT);
    }
 
   /** After confirmation, deletes the client's account, goes to /home and signs out. */
@@ -29,7 +34,7 @@ export class DeleteAccountComponent implements OnInit {
     this.clientService.deleteAccount().subscribe((client) => {
       this.log.info(`Success on delete Account `,this.client = client);
       // Sign out after leaving /client, so its canDeactivate() doesn't ask "exit?" as well.
-      this.router.navigate(["/home"]).then(left => {
+      this.router.navigate([AppRoutes.HOME]).then(left => {
         if (left) {
           this.loginService.logout();
         }
@@ -46,8 +51,8 @@ export class DeleteAccountComponent implements OnInit {
 
   /** Returns to /client. */
   public backToMainPage(): void {
-    this.router.navigate(["/client"]);
-    this.title.setTitle("Client Page");
+    this.router.navigate([AppRoutes.CLIENT]);
+    this.title.setTitle(PageTitles.CLIENT);
   }
 
 }

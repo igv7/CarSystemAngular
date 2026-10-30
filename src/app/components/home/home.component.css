@@ -28,4 +28,5 @@ blockquote {
     text-align: center;
     mix-blend-mode: lighten;
     color: yellow;
+    margin-top: 1rem;
 }

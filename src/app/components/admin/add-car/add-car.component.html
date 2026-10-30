@@ -14,25 +14,19 @@
               <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong>
               <div class="form-group">
                 <label for="exampleInputNumber">Car Number</label>
-                <input #numberInfo="ngModel" type="text" class="form-control" id="exampleInputNumber" placeholder="123-45-678" [(ngModel)]="car.number" name="number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" autofocus required>
+                <input #numberInfo="ngModel" type="text" class="form-control" id="exampleInputNumber" [placeholder]="rules.CAR_NUMBER.example" [(ngModel)]="car.number" name="number" [pattern]="rules.CAR_NUMBER.pattern" autofocus required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a car number. Format: 123-45-678
+                  Please enter a car number. Format: {{ rules.CAR_NUMBER.example }}
                 </div>
               </div>
               <div class="form-group">
                 <label for="examplInputColor" id="examplInputColor">Select Car Color</label>
                 <select id="examplInputColor" class="form-control" type="text" name="color" [(ngModel)]="car.color" ngModel required>
                   <option selected disabled></option>
-                  <option value="WHITE">WHITE</option>
-                  <option value="GREEN">GREEN</option>
-                  <option value="BLUE">BLUE</option>
-                  <option value="YELLOW">YELLOW</option>
-                  <option value="RED">RED</option>
-                  <option value="BLACK">BLACK</option>
-                  <option value="GREY">GREY</option>
+                  <option *ngFor="let color of carColors" [value]="color">{{ color }}</option>
                 </select>
                 <div class="valid-feedback">
                   Looks good!
@@ -45,15 +39,7 @@
                 <label for="examplInputType" id="examplInputType">Select Car Type</label>
                 <select id="examplInputType" class="form-control" type="text" name="type" [(ngModel)]="car.type" ngModel required>
                   <option selected disabled></option>
-                  <option value="AUDI">AUDI</option>
-                  <option value="BMW">BMW</option>
-                  <option value="HONDA">HONDA</option>
-                  <option value="MAZDA">MAZDA</option>
-                  <option value="MERCEDES">MERCEDES</option>
-                  <option value="MITSUBISHI">MITSUBISHI</option>
-                  <option value="SUBARU">SUBARU</option>
-                  <option value="TOYOTA">TOYOTA</option>
-                  <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                  <option *ngFor="let brand of carTypes" [value]="brand">{{ brand }}</option>
                 </select>
                 <div class="valid-feedback">
                   Looks good!
@@ -64,7 +50,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputAmount">Car Amount. Must be only one "1"</label>
-                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" value="1" min="1" max="1" [(ngModel)]="car.amount" ngModel name="amount" required>
+                <input type="number" class="form-control" id="exampleInputAmount" placeholder="amount" [min]="rules.CAR_AMOUNT.min" [max]="rules.CAR_AMOUNT.max" [(ngModel)]="car.amount" ngModel name="amount" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -73,13 +59,13 @@
                 </div>
               </div> 
               <div class="form-group">
-                <label for="exampleInputPrice">Car Price. Max value: 1000</label>
-                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" value="0" min="0.01" max="1000" step="0.01" required>
+                <label for="exampleInputPrice">Car Price. Max value: {{ rules.CAR_PRICE.max }}</label>
+                <input type="number" class="form-control" id="exampleInputPrice" placeholder="price" [(ngModel)]="car.price" name="price" [min]="rules.CAR_PRICE.min" [max]="rules.CAR_PRICE.max" [step]="rules.CAR_PRICE.step" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
                 <div class="invalid-feedback">
-                  Please enter a car price between 0.01 and 1000.
+                  Please enter a car price between {{ rules.CAR_PRICE.min }} and {{ rules.CAR_PRICE.max }}.
                 </div>
               </div>
               <div class="form-group">

@@ -6,6 +6,10 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-view-receipts-by-client',
@@ -13,6 +17,14 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./view-receipts-by-client.component.css']
 })
 export class ViewReceiptsByClientComponent implements OnInit {
+
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
+  /** Route segments used by the template's detail links. */
+  public readonly paths = RoutePaths;
 
   /** Receipts shown in the table; undefined (loading picture shown) until the server responds. */
   public clientReceipts: ClientReceipt[];
@@ -24,34 +36,45 @@ export class ViewReceiptsByClientComponent implements OnInit {
   /** Text typed into the filter box; the table is filtered by it through a pipe. */
   listFilter: string = "";
 
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
+
   private log = this.logger.for('ViewReceiptsByClientComponent');
 
   public constructor(private title: Title, private adminService: AdminService, private router: Router, private logger: LoggerService) { }
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle("Receipts By Client");
+    this.title.setTitle(PageTitles.RECEIPTS_BY_CLIENT);
   }
 
   /** Loads the given client's receipts into the table. */
   public getReceiptsByClient(id: number): void {
     this.adminService.getReceiptsByClient(id).subscribe((clientReceipts) => {
       this.log.debug(`Success! `,this.clientReceipts = clientReceipts);
+      this.message = clientReceipts.length ? null : Messages.clientHasNoReceipts(id);
       setTimeout(() => this.clientReceipts = clientReceipts, 1000);
     }, err => {
       this.log.error(`Failed on get all Client Receipts! `, err);
-      alert(`Error on view all Client Receipts! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Receipts by this Client` + `\n` + 
-      `4. Wrong Client ID: ${this.client.id}`);
+      this.clientReceipts = null;
+      this.message = loadErrorMessage(err, Messages.wrongClientId(id));
     });
   }
 
   /** Returns to /admin. */
   public backToAdmin(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the receipts table and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.car = new Car();
+    this.clientReceipt = new ClientReceipt();
+    this.clientReceipts = null;
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_VIEW_RECEIPTS_BY_CLIENT]);
   }
 
 }

@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Buttons: no focus border (Bootstrap's glow and the browser's outline) on any button, incl. the side menu and header ones.
+   !important because Bootstrap is loaded after this file and its :active:focus selectors are more specific. */
+button:focus,
+button:active,
+button:active:focus,
+.btn:focus,
+.btn:active,
+.btn:active:focus,
+.btn.active {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Dropdown menus (header, car search). !important because Bootstrap is loaded after this file. */
+.dropdown-menu {
+  background: darkgrey !important;
+}

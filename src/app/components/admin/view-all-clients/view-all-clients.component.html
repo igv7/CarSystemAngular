@@ -10,9 +10,9 @@
     <div class="container-fluid">
         <div class="container">
             <div class="table-responsive mt-3">
-                <h1 *ngIf="!clients" class="text-center">No Clients</h1>
-                <img *ngIf="!clients" src="/assets/images/loadingGifTransparant1.gif">
-                <div *ngIf="clients">
+                <app-page-message [text]="message"></app-page-message>
+                <img *ngIf="!clients && !message" src="/assets/images/loadingGifTransparant1.gif">
+                <div *ngIf="clients?.length">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
@@ -29,7 +29,7 @@
                             <tr *ngFor="let c of clients | clientFilter: listFilter">
                                 <td class="table-dark">{{c.id}}</td>
                                 <td class="table-secondary">
-                                    <a routerLink="../view-all-clients/client-details/{{c.id}}" routerLinkActive="active-link">
+                                    <a [routerLink]="[routes.ADMIN_VIEW_ALL_CLIENTS, paths.CLIENT_DETAILS, c.id]" routerLinkActive="active-link">
                                         {{c.name}}
                                     </a>
                                 </td>

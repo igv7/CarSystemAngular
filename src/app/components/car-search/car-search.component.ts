@@ -3,6 +3,8 @@ import { Car } from 'src/app/models/car';
 import { CarService } from 'src/app/services/car.service';
 import { Router } from '@angular/router';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, brandLink } from 'src/app/constants/app-routes';
+import { ValidationRules } from 'src/app/validation/rules';
 
 /** Brand search box in the header, with a dropdown of brand suggestions. */
 @Component({
@@ -11,6 +13,9 @@ import { LoggerService } from 'src/app/services/logger.service';
   styleUrls: ['./car-search.component.css']
 })
 export class CarSearchComponent implements OnInit {
+
+  /** Route links used by the template. */
+  public readonly routes = AppRoutes;
 
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
@@ -55,7 +60,7 @@ export class CarSearchComponent implements OnInit {
    * Brands are letters only, so anything else (e.g. HTML or script text) is rejected before searching.
    */
   public searchCar() {
-    if (!this.car.type || !/^[A-Za-z ]+$/.test(this.car.type.trim())) {
+    if (!this.car.type || !ValidationRules.BRAND_SEARCH.test(this.car.type.trim())) {
       this.log.info('Search rejected: brand must contain letters only', this.car.type);
       alert('Please enter a car brand using letters only, e.g. AUDI.');
       return;
@@ -63,7 +68,7 @@ export class CarSearchComponent implements OnInit {
     this.carService.getAllCarsByType(this.car.type.toUpperCase().replace(/\s/g, "")).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
       setTimeout(() => this.cars = cars, 1000);
-      this.router.navigate([`/${this.car.type.toLowerCase().replace(/\s/g, "")}`]);
+      this.router.navigate([brandLink(this.car.type)]);
       let inputSearch = (<HTMLInputElement>document.querySelector('#search'));
       inputSearch.value = `${this.car.type.toUpperCase()}`;
     }, err => {

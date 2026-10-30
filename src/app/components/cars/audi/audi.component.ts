@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes } from 'src/app/constants/app-routes';
+import { brandTitle } from 'src/app/constants/page-titles';
+import { CarType } from 'src/app/models/car-type';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-audi',
@@ -15,10 +19,13 @@ export class AudiComponent implements OnInit {
   /** Cars shown in the table; undefined (loading picture shown) until the server responds. */
   public cars: Car[];
   /** Brand this page lists (a CarType value). */
-  type: string = "AUDI";
+  type: string = CarType.AUDI;
 
   /** Whether the table shows car pictures; switched by toggleImage(). */
   showImage: boolean = false;
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('AudiComponent');
 
@@ -28,20 +35,19 @@ export class AudiComponent implements OnInit {
   public ngOnInit(): void {
     this.carService.getAllCarsByType(this.type).subscribe((cars) => {
       this.log.debug(`Success! `,this.cars = cars);
+      this.message = cars.length ? null : Messages.noCarsOfType(this.type);
       setTimeout(() => this.cars = cars, 1000);
     }, err => {
       this.log.error(`Failed on get all Cars By Type ${this.type}! `, err);
-      alert(`Error on view all Cars By Type! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. No Cars by type: ${this.type}`);
+      this.cars = null;
+      this.message = loadErrorMessage(err);
     });
-    this.title.setTitle(`${this.type} cars`);
+    this.title.setTitle(brandTitle(this.type));
   }
 
   /** Returns to /home. */
   public backToHome(): void {
-    this.router.navigate(["/home"]);
+    this.router.navigate([AppRoutes.HOME]);
   }
 
   /** Shows or hides the car pictures in the table. */

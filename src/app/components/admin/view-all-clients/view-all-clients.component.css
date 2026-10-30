@@ -26,7 +26,12 @@ body {
     left: 0;
     right: 0;
     width: 100%;
+    background: dimgrey;
   }
+
+tbody {
+    background: dimgrey;
+}
 
 .filter {
     position: sticky;

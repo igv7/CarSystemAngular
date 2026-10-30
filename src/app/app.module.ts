@@ -31,6 +31,7 @@ import { ExitClientGuardService } from './services/exit-client-guard.service';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpLoggingInterceptorService } from './http-logging-interceptor.service';
+import { SessionExpiredInterceptorService } from './session-expired-interceptor.service';
 import { LoggingErrorHandlerService } from './logging-error-handler.service';
 import { RangeValidatorDirective } from './validation/range-validator.directive';
 import { MatchesValidatorDirective } from './validation/matches-validator.directive';
@@ -73,6 +74,8 @@ import { DetailsReceiptComponent } from './components/client/details-receipt/det
 import { ClientReceiptDateFilterPipe } from './pipes/client-receipt-date-filter.pipe';
 import { ReturnCarComponent } from './components/admin/return-car/return-car.component';
 import { CarSearchComponent } from './components/car-search/car-search.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { PageMessageComponent } from './components/page-message/page-message.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +136,8 @@ import { CarSearchComponent } from './components/car-search/car-search.component
     ClientReceiptDateFilterPipe,
     ReturnCarComponent,
     CarSearchComponent,
+    SideMenuComponent,
+    PageMessageComponent,
     RangeValidatorDirective,
     MatchesValidatorDirective,
     ValidationFeedbackDirective
@@ -143,6 +148,11 @@ import { CarSearchComponent } from './components/car-search/car-search.component
   providers: [AuthService, AdminGuardService, ExitAdminGuardService, ClientGuardService, ExitClientGuardService, LoginService, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
+    multi: true
+  }, {
+    // Before the logging interceptor, so responses pass through logging first and a 401 is still logged.
+    provide: HTTP_INTERCEPTORS,
+    useClass: SessionExpiredInterceptorService,
     multi: true
   }, {
     provide: HTTP_INTERCEPTORS,

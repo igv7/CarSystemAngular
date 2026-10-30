@@ -1,5 +1,6 @@
+<app-page-message [text]="message"></app-page-message>
 
-<div>
+<div *ngIf="!message">
     <h3>ID: {{car.id}}</h3>
     <h3>Number: {{car.number}}</h3>
     <h3>Color: {{car.color}}</h3>

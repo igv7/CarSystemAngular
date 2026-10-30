@@ -31,13 +31,20 @@ function rotateIfNeeded() {
   }
 }
 
+/** Local time as `yyyy-MM-dd HH:mm:ss.SSS`, matching the Spring backend's log; used when an entry has no time. */
+function localTimestamp(d) {
+  const pad = (n, width = 2) => String(n).padStart(width, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} `
+    + `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`;
+}
+
 /** Formats one entry as a line: `<time> <LEVEL> [source] (page) message {data}`. */
 function formatEntry(entry) {
   const level = String(entry.level || 'INFO').toUpperCase().padEnd(5);
   const source = entry.source ? ` [${entry.source}]` : '';
   const page = entry.page ? ` (${entry.page})` : '';
   const data = entry.data !== undefined ? ' ' + JSON.stringify(entry.data) : '';
-  return `${entry.time || new Date().toISOString()} ${level}${source}${page} ${entry.message || ''}${data}`;
+  return `${entry.time || localTimestamp(new Date())} ${level}${source}${page} ${entry.message || ''}${data}`;
 }
 
 /** Appends a batch of entries to app.log. */

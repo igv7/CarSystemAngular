@@ -14,67 +14,67 @@
             <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong>
             <div class="form-group">
               <label for="exampleInputName">Client Name</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" minlength="2" maxlength="30" pattern="[^<>]*" autofocus required>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" [minlength]="rules.NAME.minLength" [maxlength]="rules.NAME.maxLength" [pattern]="rules.NAME.pattern" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a name: 2-30 characters, without &lt; or &gt;.
+                Please enter a name: {{ rules.NAME.minLength }}-{{ rules.NAME.maxLength }} characters, without &lt; or &gt;.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputBirthday">Client birthday</label>
-              <input type="date" class="form-control" id="exampleInputBirthday" value="" min="1900-01-01" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
+              <input type="date" class="form-control" id="exampleInputBirthday" [min]="rules.BIRTHDAY.min" [max]="today" [(ngModel)]="client.birthday" name="birthday" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a birthday between 1900-01-01 and today.
+                Please enter a birthday between {{ rules.BIRTHDAY.min }} and today.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail">Client email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" name="email" maxlength="100" pattern="[^@\s<>]+@[^@\s<>]+\.[^@\s<>]+" required>
+              <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="email@address.com" [(ngModel)]="client.email" name="email" [maxlength]="rules.EMAIL.maxLength" [pattern]="rules.EMAIL.pattern" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a valid email, e.g. name@example.com.
+                Please enter a valid email, e.g. {{ rules.EMAIL.example }}.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputPhoneNumber">Client phone number</label>
-              <input type="tel" class="form-control" id="exampleInputPhoneNumber" placeholder="050-1234567" [(ngModel)]="client.phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{7}" required>
+              <input type="tel" class="form-control" id="exampleInputPhoneNumber" [placeholder]="rules.PHONE.example" [(ngModel)]="client.phoneNumber" name="phoneNumber" [pattern]="rules.PHONE.pattern" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a client phone number. Format: 050-1234567
+                Please enter a client phone number. Format: {{ rules.PHONE.example }}
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputPass">Client password</label>
-              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" required minlength="4" maxlength="100" name="password">
+              <input type="password" class="form-control" id="exampleInputPass" placeholder="password" [(ngModel)]="client.password" required [minlength]="rules.PASSWORD.minLength" [maxlength]="rules.PASSWORD.maxLength" name="password">
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a password of at least 4 characters.
+                Please enter a password of at least {{ rules.PASSWORD.minLength }} characters.
               </div>
             </div>
             <div class="form-group">
-              <label for="exampleInputBalance">Client balance. Max value: 10000</label>
-              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" name="balance" value="0" min="0" max="10000" step="0.01" required>
+              <label for="exampleInputBalance">Client balance. Max value: {{ rules.BALANCE.max }}</label>
+              <input type="number" class="form-control" id="exampleInputBalance" placeholder="balance" [(ngModel)]="client.balance" name="balance" [min]="rules.BALANCE.min" [max]="rules.BALANCE.max" [step]="rules.BALANCE.step" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a balance between 0 and 10000.
+                Please enter a balance between {{ rules.BALANCE.min }} and {{ rules.BALANCE.max }}.
               </div>
             </div>
             <div class="form-group">
               <label for="exampleInputType">Type</label>
-              <input type="text" class="form-control" id="exampleInputType" placeholder="Type" value="CLIENT" disabled required>
+              <input type="text" class="form-control" id="exampleInputType" placeholder="Type" [value]="clientType.CLIENT" disabled required>
               <div class="valid-feedback">
                 Looks good!
               </div>

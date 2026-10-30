@@ -4,6 +4,10 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
+import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { PageTitles } from 'src/app/constants/page-titles';
+import { ValidationRules } from 'src/app/validation/rules';
+import { Messages, loadErrorMessage } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-delete-client',
@@ -12,8 +16,14 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class DeleteClientComponent implements OnInit {
 
+  /** Field rules (patterns, lengths, ranges) used by the template. */
+  public readonly rules = ValidationRules;
+
   /** Form model for the id lookup; filled with the loaded client. */
   public client = new Client();
+
+  /** Shown in the message box in place of the table: an error or a "nothing found" text; null when all is well. */
+  public message: string;
 
   private log = this.logger.for('DeleteClientComponent');
 
@@ -21,7 +31,7 @@ export class DeleteClientComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit(): void {
-   this.title.setTitle("Delete Client");
+   this.title.setTitle(PageTitles.DELETE_CLIENT);
   }
 
   /**
@@ -37,13 +47,13 @@ export class DeleteClientComponent implements OnInit {
         this.client.email = client.email, 
         this.client.password = client.password, 
         this.client.balance = client.balance);
-      this.router.navigate(["/admin/delete-client/client-id/"+this.client.id]);
+      this.message = null;
+      this.router.navigate([AppRoutes.ADMIN_DELETE_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client ID: `, this.client.id, err);
-      alert(`Error on view Client! ` + `\n` + `The reasons: ` + `\n` + 
-      `1. No internet connection` + `\n` + 
-      `2. No connection to the server` + `\n` + 
-      `3. Wrong ID: ${this.client.id}`);
+      this.message = loadErrorMessage(err, Messages.wrongClientId(this.client.id));
+      // Close the details of a car or client looked up before.
+      this.router.navigate([AppRoutes.ADMIN_DELETE_CLIENT]);
     });
   }
 
@@ -53,7 +63,7 @@ export class DeleteClientComponent implements OnInit {
     this.adminService.deleteClient(this.client.id).subscribe((c) => {
       this.log.info(`Success on delete Client Id: `,this.client.id = c.id);
         alert(`Client Id: ${c.id} Name: `+c.name+ ` has been succesfully deleted!`);
-        this.router.navigate(["/admin/view-all-clients"]);
+        this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS]);
     }, err => {
       this.log.error(`Failed on delete Client Id: `, this.client.id, err);
       alert(`Error on delele Client! ` + `\n` + `The reasons: ` + `\n` + 
@@ -67,14 +77,21 @@ export class DeleteClientComponent implements OnInit {
 
   /** Close (×) button: leaves the form and returns to /admin. */
   public close(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
   }
 
   /** Cancel button: leaves the form and returns to /admin. */
   public cancel(): void {
-    this.router.navigate(["/admin"]);
-    this.title.setTitle("Admin Page");
+    this.router.navigate([AppRoutes.ADMIN]);
+    this.title.setTitle(PageTitles.ADMIN);
+  }
+
+  /** Reset button: clears the form, the client shown below the form and the message, and closes details opened from here. */
+  public reset(): void {
+    this.client = new Client();
+    this.message = null;
+    this.router.navigate([AppRoutes.ADMIN_DELETE_CLIENT]);
   }
 
 }

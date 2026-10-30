@@ -1,5 +1,6 @@
+<app-page-message [text]="message"></app-page-message>
 
-<div>
+<div *ngIf="!message">
     <h3>ID: {{client.id}}</h3>
     <h3>Name: {{client.name}}</h3>
     <h3>DOB: {{client.birthday}}</h3>

@@ -4,12 +4,16 @@
 
 export const environment = {
   production: false,
+  // Address of the Car System backend (no trailing slash); UrlsService builds every API URL from it.
+  apiBaseUrl: 'http://localhost:8080',
   // Lowest level that gets logged: 'debug' | 'info' | 'error'.
   logLevel: 'debug',
   // Proxied by the dev server to log-server.js, which writes logs/app.log.
   logServerUrl: '/__log' as string,
   // Also mirror entries to the browser console (DevTools).
-  logToConsole: true
+  logToConsole: true,
+  // The one account that may sign in as ADMIN; must match carsystem.admin.username in the backend.
+  adminUserName: 'admin'
 };
 
 /*

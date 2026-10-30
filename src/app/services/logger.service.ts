@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { StorageKeys } from 'src/app/constants/storage-keys';
 
 /** Log levels, from least to most severe. */
 export type LogLevel = 'debug' | 'info' | 'error';
@@ -35,11 +36,13 @@ function toLoggable(value: any): any {
     return undefined;
   }
   if (value instanceof Error || (value && value.name === 'HttpErrorResponse')) {
+    // An HttpErrorResponse message repeats the request URL, so it is masked as well.
+    const token = localStorage.getItem(StorageKeys.TOKEN);
     return {
       name: value.name,
-      message: value.message,
+      message: value.message ? redactUrl(value.message, token) : value.message,
       status: value.status,
-      url: value.url ? redactUrl(value.url, localStorage.getItem('token')) : undefined,
+      url: value.url ? redactUrl(value.url, token) : undefined,
       stack: value instanceof Error ? value.stack : undefined
     };
   }
@@ -118,13 +121,23 @@ export const logTransport = new LogTransport();
  * Records one entry if `level` is at or above environment.logLevel. Works without Angular DI (used by
  * main.ts).
  */
+/**
+ * Local time as `yyyy-MM-dd HH:mm:ss.SSS`, the same format and time zone as the Spring backend's log,
+ * so lines from both logs can be matched by time.
+ */
+export function localTimestamp(d: Date): string {
+  const pad = (n: number, width = 2) => String(n).padStart(width, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} `
+    + `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`;
+}
+
 export function writeLog(level: LogLevel, source: string, message: string, data: any[], schedule?: (fn: () => void) => void): void {
   if (LEVEL_ORDER[level] < LEVEL_ORDER[environment.logLevel]) {
     return;
   }
   const loggable = data.filter(d => d !== undefined).map(toLoggable);
   logTransport.add({
-    time: new Date().toISOString(),
+    time: localTimestamp(new Date()),
     level,
     source,
     page: window.location.pathname,

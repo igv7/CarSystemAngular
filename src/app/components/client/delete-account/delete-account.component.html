@@ -6,7 +6,7 @@
             <button type="button" class="btn btn-danger mb-2 mt-2" (click)="deleteAccount()">Delete Account</button>&nbsp;
         </div>
         <p style="font-size: 50px;">😢
-            <a routerLink="/home" routerLinkActive="active-link">
+            <a [routerLink]="routes.HOME" routerLinkActive="active-link">
                 <span style="font-size: 50px;">Please stay with us</span>
             </a>&nbsp;&#10084;
         </p>

@@ -54,84 +54,85 @@ import { DetailsComponent } from './components/cars/details/details.component';
 import { ViewMyReceiptsComponent } from './components/client/view-my-receipts/view-my-receipts.component';
 import { DetailsReceiptComponent } from './components/client/details-receipt/details-receipt.component';
 import { ReturnCarComponent } from './components/admin/return-car/return-car.component';
+import { AppRoutes, ID_PARAM, RoutePaths } from 'src/app/constants/app-routes';
 
 
 const routes: Routes = [
-  { path: "home", component: HomeComponent },
-  { path: "cars", component: CarsComponent },
-  { path: "audi", component: AudiComponent },
-  { path: "bmw", component: BmwComponent },
-  { path: "honda", component: HondaComponent },
-  { path: "mazda", component: MazdaComponent },
-  { path: "mercedes", component: MercedesComponent },
-  { path: "mitsubishi", component: MitsubishiComponent },
-  { path: "subaru", component: SubaruComponent },
-  { path: "toyota", component: ToyotaComponent },
-  { path: "volkswagen", component: VolkswagenComponent },
-  { path: "client", canActivate: [ClientGuardService], canDeactivate: [ExitClientGuardService], component: ClientComponent, children: [
-    { path: "view-cars", component: ViewCarsComponent, children: [
-      { path: "details/:id", component: DetailsComponent }
+  { path: RoutePaths.HOME, component: HomeComponent },
+  { path: RoutePaths.CARS, component: CarsComponent },
+  { path: RoutePaths.AUDI, component: AudiComponent },
+  { path: RoutePaths.BMW, component: BmwComponent },
+  { path: RoutePaths.HONDA, component: HondaComponent },
+  { path: RoutePaths.MAZDA, component: MazdaComponent },
+  { path: RoutePaths.MERCEDES, component: MercedesComponent },
+  { path: RoutePaths.MITSUBISHI, component: MitsubishiComponent },
+  { path: RoutePaths.SUBARU, component: SubaruComponent },
+  { path: RoutePaths.TOYOTA, component: ToyotaComponent },
+  { path: RoutePaths.VOLKSWAGEN, component: VolkswagenComponent },
+  { path: RoutePaths.CLIENT, canActivate: [ClientGuardService], canDeactivate: [ExitClientGuardService], component: ClientComponent, children: [
+    { path: RoutePaths.VIEW_CARS, component: ViewCarsComponent, children: [
+      { path: `${RoutePaths.DETAILS}/:${ID_PARAM}`, component: DetailsComponent }
     ]},
-    { path: "view-my-cars", component: ViewMyCarsComponent, children: [
-      { path: "details/:id", component: DetailsComponent }
+    { path: RoutePaths.VIEW_MY_CARS, component: ViewMyCarsComponent, children: [
+      { path: `${RoutePaths.DETAILS}/:${ID_PARAM}`, component: DetailsComponent }
     ]},
-    { path: "view-my-receipts", component: ViewMyReceiptsComponent, children: [
-      { path: "details-receipt/:id", component: DetailsReceiptComponent }
+    { path: RoutePaths.VIEW_MY_RECEIPTS, component: ViewMyReceiptsComponent, children: [
+      { path: `${RoutePaths.DETAILS_RECEIPT}/:${ID_PARAM}`, component: DetailsReceiptComponent }
     ]},
-    { path: "view-my-balance", component: ViewMyBalanceComponent },
-    { path: "delete-account", component: DeleteAccountComponent }
+    { path: RoutePaths.VIEW_MY_BALANCE, component: ViewMyBalanceComponent },
+    { path: RoutePaths.DELETE_ACCOUNT, component: DeleteAccountComponent }
   ]},
-  { path: "admin", canActivate: [AdminGuardService], canDeactivate: [ExitAdminGuardService], component: AdminComponent, children: [
-    { path: "add-client", component: AddClientComponent },
-    { path: "update-client", component: UpdateClientComponent, children: [
-      { path: "client-id/:id", component: ClientIdComponent }
+  { path: RoutePaths.ADMIN, canActivate: [AdminGuardService], canDeactivate: [ExitAdminGuardService], component: AdminComponent, children: [
+    { path: RoutePaths.ADD_CLIENT, component: AddClientComponent },
+    { path: RoutePaths.UPDATE_CLIENT, component: UpdateClientComponent, children: [
+      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
     ]},
-    { path: "view-client", component: ViewClientComponent, children: [
-      { path: "client-id/:id", component: ClientIdComponent }
+    { path: RoutePaths.VIEW_CLIENT, component: ViewClientComponent, children: [
+      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
     ]},
-    { path: "view-all-clients", component: ViewAllClientsComponent, children: [
-      { path: "client-details/:id", component: ClientDetailsComponent }
+    { path: RoutePaths.VIEW_ALL_CLIENTS, component: ViewAllClientsComponent, children: [
+      { path: `${RoutePaths.CLIENT_DETAILS}/:${ID_PARAM}`, component: ClientDetailsComponent }
     ]},
-    { path: "delete-client", component: DeleteClientComponent, children: [
-      { path: "client-id/:id", component: ClientIdComponent }
+    { path: RoutePaths.DELETE_CLIENT, component: DeleteClientComponent, children: [
+      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
     ]},
-    { path: "add-car", component: AddCarComponent },
-    { path: "update-car", component: UpdateCarComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.ADD_CAR, component: AddCarComponent },
+    { path: RoutePaths.UPDATE_CAR, component: UpdateCarComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-car", component: ViewCarComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.VIEW_CAR, component: ViewCarComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-car-by-number", component: ViewCarByNumberComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.VIEW_CAR_BY_NUMBER, component: ViewCarByNumberComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-all-cars", component: ViewAllCarsComponent, children: [
-      { path: "car-details/:id", component: CarDetailsComponent }
+    { path: RoutePaths.VIEW_ALL_CARS, component: ViewAllCarsComponent, children: [
+      { path: `${RoutePaths.CAR_DETAILS}/:${ID_PARAM}`, component: CarDetailsComponent }
     ]},
-    { path: "delete-car", component: DeleteCarComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.DELETE_CAR, component: DeleteCarComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-all-cars-by-type", component: ViewAllCarsByTypeComponent },
-    { path: "view-all-cars-by-color", component: ViewAllCarsByColorComponent },
-    { path: "return-car", component: ReturnCarComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.VIEW_ALL_CARS_BY_TYPE, component: ViewAllCarsByTypeComponent },
+    { path: RoutePaths.VIEW_ALL_CARS_BY_COLOR, component: ViewAllCarsByColorComponent },
+    { path: RoutePaths.RETURN_CAR, component: ReturnCarComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-client-car-by-number", component: ViewClientCarByNumberComponent, children: [
-      { path: "car-id/:id", component: CarIdComponent }
+    { path: RoutePaths.VIEW_CLIENT_CAR_BY_NUMBER, component: ViewClientCarByNumberComponent, children: [
+      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
     ]},
-    { path: "view-all-client-cars", component: ViewAllClientCarsComponent },
-    { path: "view-all-client-cars-by-type", component: ViewAllClientCarsByTypeComponent },
-    { path: "view-all-client-cars-by-color", component: ViewAllClientCarsByColorComponent },
-    { path: "view-all-client-cars-by-price-until", component: ViewAllClientCarsByPriceUntilComponent },
-    { path: "view-receipts-by-client", component: ViewReceiptsByClientComponent },
-    { path: "view-all-receipts", component: ViewAllReceiptsComponent, children: [
-      { path: "receipt-details/:id", component: ReceiptDetailsComponent }
+    { path: RoutePaths.VIEW_ALL_CLIENT_CARS, component: ViewAllClientCarsComponent },
+    { path: RoutePaths.VIEW_ALL_CLIENT_CARS_BY_TYPE, component: ViewAllClientCarsByTypeComponent },
+    { path: RoutePaths.VIEW_ALL_CLIENT_CARS_BY_COLOR, component: ViewAllClientCarsByColorComponent },
+    { path: RoutePaths.VIEW_ALL_CLIENT_CARS_BY_PRICE_UNTIL, component: ViewAllClientCarsByPriceUntilComponent },
+    { path: RoutePaths.VIEW_RECEIPTS_BY_CLIENT, component: ViewReceiptsByClientComponent },
+    { path: RoutePaths.VIEW_ALL_RECEIPTS, component: ViewAllReceiptsComponent, children: [
+      { path: `${RoutePaths.RECEIPT_DETAILS}/:${ID_PARAM}`, component: ReceiptDetailsComponent }
     ]},
   ]},
-  { path: "login", component: LoginComponent },
-  { path: "signup", component: SignupComponent },
-  { path: "about", component: AboutComponent },
-  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: RoutePaths.LOGIN, component: LoginComponent },
+  { path: RoutePaths.SIGNUP, component: SignupComponent },
+  { path: RoutePaths.ABOUT, component: AboutComponent },
+  { path: "", redirectTo: AppRoutes.HOME, pathMatch: "full" },
   { path: "**", component: Page404Component },
 ];
 
