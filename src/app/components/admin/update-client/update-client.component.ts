@@ -48,7 +48,6 @@ export class UpdateClientComponent implements OnInit {
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
         this.client.email = client.email, 
-        this.client.password = client.password, 
         this.client.balance = client.balance);
       this.message = null;
       this.router.navigate([AppRoutes.ADMIN_UPDATE_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
@@ -60,9 +59,11 @@ export class UpdateClientComponent implements OnInit {
     });
   }
 
-  /** Saves the edited client and opens the client list. */
+  /** Saves the edited client and opens the client list. An empty password field keeps the current password. */
   public updateClient(): void {
-    this.adminService.updateClient(this.client).subscribe(client => {
+    // Left out of the body when empty: the backend keeps the stored password then.
+    const changes = { ...this.client, password: this.client.password || undefined };
+    this.adminService.updateClient(changes).subscribe(client => {
       this.log.info(`Success on update Client! `,this.client = client);
       alert(`Client Name: ${this.client.name} has been succesfully updated!`);
       this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS])

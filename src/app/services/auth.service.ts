@@ -10,9 +10,9 @@ import { StorageKeys } from 'src/app/constants/storage-keys';
 })
 export class AuthService {
 
-  /** The token stored in localStorage. */
+  /** The token stored in sessionStorage. */
   getToken() {
-    return localStorage.getItem(StorageKeys.TOKEN)
+    return sessionStorage.getItem(StorageKeys.TOKEN)
   }
 
 }

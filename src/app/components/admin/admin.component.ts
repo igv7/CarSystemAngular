@@ -60,7 +60,7 @@ export class AdminComponent implements OnInit, ComponentCanDeactivate {
     { title: 'Cars', items: [
       { label: 'Add Car', link: AppRoutes.ADMIN_ADD_CAR },
       { label: 'Update Car', link: AppRoutes.ADMIN_UPDATE_CAR },
-      { label: 'View Car', link: AppRoutes.ADMIN_VIEW_CAR },
+      { label: 'View Car By ID', link: AppRoutes.ADMIN_VIEW_CAR },
       { label: 'View Car By Number', link: AppRoutes.ADMIN_VIEW_CAR_BY_NUMBER },
       { label: 'View All Cars', link: AppRoutes.ADMIN_VIEW_ALL_CARS },
       { label: 'View All Cars By Type', link: AppRoutes.ADMIN_VIEW_ALL_CARS_BY_TYPE },

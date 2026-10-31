@@ -18,7 +18,7 @@ export class HttpLoggingInterceptorService implements HttpInterceptor {
   /** Logs the request, then its status and duration when it finishes; failures are logged as errors. */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const started = Date.now();
-    const url = redactUrl(req.urlWithParams, localStorage.getItem(StorageKeys.TOKEN));
+    const url = redactUrl(req.urlWithParams, sessionStorage.getItem(StorageKeys.TOKEN));
     this.log.debug(`${req.method} ${url}`);
     return next.handle(req).pipe(tap(
       event => {

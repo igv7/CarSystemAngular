@@ -20,7 +20,7 @@ export const PageTitles = {
   DELETE_CLIENT: 'Delete Client',
   ADD_CAR: 'Add car',
   UPDATE_CAR: 'Update Car',
-  VIEW_CAR: 'View Car',
+  VIEW_CAR_BY_ID: 'View Car By ID',
   VIEW_CAR_BY_NUMBER: 'View Car By Number',
   ALL_CARS_BY_TYPE: 'All Cars By Type',
   ALL_CARS_BY_COLOR: 'All Cars By Color',

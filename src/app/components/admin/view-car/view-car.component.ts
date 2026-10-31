@@ -31,7 +31,7 @@ export class ViewCarComponent implements OnInit {
 
   /** Sets the browser tab title. */
   public ngOnInit():void {
-    this.title.setTitle(PageTitles.VIEW_CAR);
+    this.title.setTitle(PageTitles.VIEW_CAR_BY_ID);
   }
 
   /** Loads the car with the entered id and shows its details below. */

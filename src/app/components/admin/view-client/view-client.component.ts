@@ -44,7 +44,6 @@ export class ViewClientComponent implements OnInit {
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
         this.client.email = client.email, 
-        this.client.password = client.password, 
         this.client.balance = client.balance);
       this.message = null;
       this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);

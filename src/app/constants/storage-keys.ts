@@ -1,4 +1,7 @@
-/** Keys of the values kept in localStorage. */
+/**
+ * Keys of the values kept in browser storage: the sign-in values (TOKEN, USER_*) in sessionStorage, so closing
+ * the tab signs out; the menu state in localStorage.
+ */
 export const StorageKeys = {
   /** Sign-in token returned by the backend. */
   TOKEN: 'token',

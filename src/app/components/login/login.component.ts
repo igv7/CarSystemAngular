@@ -10,7 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoggerService } from 'src/app/services/logger.service';
 import { AppRoutes, LOGIN_AS_PARAM, LoginAs } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
-import { StorageKeys } from 'src/app/constants/storage-keys';
 import { ClientType } from 'src/app/models/client-type';
 import { ValidationRules } from 'src/app/validation/rules';
 
@@ -102,8 +101,7 @@ export class LoginComponent implements OnInit {
         if (type === ClientType.ADMIN) { 
             this.router.navigate([AppRoutes.ADMIN])
           if (res.status === ResponseCodes.OK) { 
-              this.loginService.token = res.body; 
-              localStorage.setItem(StorageKeys.TOKEN, res.body); 
+              this.loginService.setToken(res.body);
               this.loginService.setAdminUser(); 
               this.loginService.setUserName(String(userName).trim());
               this.log.info(`Admin ${userName} logged in`);
@@ -116,8 +114,7 @@ export class LoginComponent implements OnInit {
         if (type === ClientType.CLIENT) { 
             this.router.navigate([AppRoutes.CLIENT])
           if (res.status === ResponseCodes.OK) { 
-              this.loginService.token = res.body;  
-              localStorage.setItem(StorageKeys.TOKEN, res.body);  
+              this.loginService.setToken(res.body);
               this.loginService.setClientUser(); 
               this.loginService.setUserName(String(userName).trim());
               this.log.info(`Client ${userName} logged in`);

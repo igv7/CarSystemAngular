@@ -9,8 +9,8 @@ import { AppRoutes } from 'src/app/constants/app-routes';
 import { StorageKeys } from 'src/app/constants/storage-keys';
 
 /**
- * Sign-in state: the token and which role (admin or client) is signed in, kept in localStorage so it survives
- * page reloads.
+ * Sign-in state: the token and which role (admin or client) is signed in, kept in sessionStorage. It survives
+ * page reloads, and the browser drops it when the tab or the browser is closed, which signs the user out.
  */
 @Injectable({
   providedIn: 'root'
@@ -29,17 +29,21 @@ export class LoginService {
 
   private log = this.logger.for('LoginService');
 
-  public constructor(private httpClient: HttpClient, private urlsService: UrlsService, private logger: LoggerService, private router: Router) { }
+  public constructor(private httpClient: HttpClient, private urlsService: UrlsService, private logger: LoggerService, private router: Router) {
+    // Older versions kept the sign-in in localStorage, where it never expired; remove what they left there.
+    [StorageKeys.TOKEN, StorageKeys.USER_ADMIN, StorageKeys.USER_CLIENT, StorageKeys.USER_NAME]
+      .forEach(key => localStorage.removeItem(key));
+  }
 
 
   /** Token returned by the backend at sign-in; added to every API URL. */
-  public token: string = localStorage.getItem(StorageKeys.TOKEN);
+  public token: string = sessionStorage.getItem(StorageKeys.TOKEN);
   /** Whether an admin is signed in; checked by AdminGuardService. */
-  private userAdmin = JSON.parse(localStorage.getItem(StorageKeys.USER_ADMIN) || 'false');
+  private userAdmin = JSON.parse(sessionStorage.getItem(StorageKeys.USER_ADMIN) || 'false');
   /** Whether a client is signed in; checked by ClientGuardService. */
-  private userClient = JSON.parse(localStorage.getItem(StorageKeys.USER_CLIENT) || 'false');
+  private userClient = JSON.parse(sessionStorage.getItem(StorageKeys.USER_CLIENT) || 'false');
   /** Name the user signed in with, shown in the dashboards' greeting; null when signed out. */
-  private userName: string = localStorage.getItem(StorageKeys.USER_NAME);
+  private userName: string = sessionStorage.getItem(StorageKeys.USER_NAME);
 
   /** Sends the credentials to the backend. The response body (text) is the token. */
   login(userName, password, type): Observable<any> {
@@ -50,11 +54,11 @@ export class LoginService {
     return this.httpClient.post(url, null, { observe: 'response', responseType: 'text' });
   }
 
-  /** Clears the token (in memory and in localStorage) and both role flags. */
+  /** Clears the token (in memory and in sessionStorage) and both role flags. */
   public logout() {
-    localStorage.removeItem(StorageKeys.TOKEN);
+    sessionStorage.removeItem(StorageKeys.TOKEN);
     this.token = null;
-    localStorage.removeItem(StorageKeys.USER_NAME);
+    sessionStorage.removeItem(StorageKeys.USER_NAME);
     this.userName = null;
     this.setAdminUserF();
     this.setClientUserF();
@@ -103,9 +107,10 @@ export class LoginService {
   public getToken() {
     return this.token;
   }
-  /** Replaces the current login token (in memory only). */
+  /** Stores the token returned at sign-in (in memory and in sessionStorage). */
   public setToken(token: string) {
     this.token = token;
+    sessionStorage.setItem(StorageKeys.TOKEN, token);
   }
 
 
@@ -116,12 +121,12 @@ export class LoginService {
   }
   /** Marks an admin as signed in. */
   setAdminUser() {
-    localStorage.setItem(StorageKeys.USER_ADMIN, "true");
+    sessionStorage.setItem(StorageKeys.USER_ADMIN, "true");
     this.userAdmin = true;
   }
   /** Marks the admin as signed out. */
   setAdminUserF() {
-    localStorage.setItem(StorageKeys.USER_ADMIN, "false");
+    sessionStorage.setItem(StorageKeys.USER_ADMIN, "false");
     this.userAdmin = false;
   }
 
@@ -133,12 +138,12 @@ export class LoginService {
   }
   /** Marks a client as signed in. */
   setClientUser() {
-    localStorage.setItem(StorageKeys.USER_CLIENT, "true");
+    sessionStorage.setItem(StorageKeys.USER_CLIENT, "true");
     this.userClient = true;
   }
   /** Marks the client as signed out. */
   setClientUserF() {
-    localStorage.setItem(StorageKeys.USER_CLIENT, "false");
+    sessionStorage.setItem(StorageKeys.USER_CLIENT, "false");
     this.userClient = false;
   }
 
@@ -149,10 +154,10 @@ export class LoginService {
     return this.userName;
   }
 
-  /** Remembers the name the user signed in with (in memory and in localStorage). */
+  /** Remembers the name the user signed in with (in memory and in sessionStorage). */
   setUserName(userName: string): void {
     this.userName = userName;
-    localStorage.setItem(StorageKeys.USER_NAME, userName);
+    sessionStorage.setItem(StorageKeys.USER_NAME, userName);
   }
 
 }

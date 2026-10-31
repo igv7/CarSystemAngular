@@ -37,7 +37,7 @@ function toLoggable(value: any): any {
   }
   if (value instanceof Error || (value && value.name === 'HttpErrorResponse')) {
     // An HttpErrorResponse message repeats the request URL, so it is masked as well.
-    const token = localStorage.getItem(StorageKeys.TOKEN);
+    const token = sessionStorage.getItem(StorageKeys.TOKEN);
     return {
       name: value.name,
       message: value.message ? redactUrl(value.message, token) : value.message,
