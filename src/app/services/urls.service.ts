@@ -14,6 +14,7 @@ export class UrlsService {
   private clientMenuUrl = environment.apiBaseUrl + ApiPaths.CLIENT;
   private loginUrl = environment.apiBaseUrl + ApiPaths.LOGIN;
   private signupUrl = environment.apiBaseUrl + ApiPaths.SIGNUP;
+  private checkSessionUrl = environment.apiBaseUrl + ApiPaths.CHECK_SESSION;
   private carMenuUrl = environment.apiBaseUrl + ApiPaths.CAR;
 
 
@@ -35,6 +36,11 @@ export class UrlsService {
   /** URL for signing up. */
   public getSignupUrl() {
     return this.signupUrl;
+  }
+
+  /** Base URL for checking whether a sign-in token is still valid; the token and type follow. */
+  public getCheckSessionUrl() {
+    return this.checkSessionUrl;
   }
 
   /** Base URL for the public car catalog. */

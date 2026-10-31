@@ -4,6 +4,7 @@ export const ApiPaths = {
   CLIENT: '/client/',
   LOGIN: '/carSystem/login/',
   SIGNUP: '/carSystem/signUp/',
+  CHECK_SESSION: '/carSystem/checkSession/',
   CAR: '/car/',
 };
 

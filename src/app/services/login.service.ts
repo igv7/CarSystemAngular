@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UrlsService } from './urls.service';
 import { LoggerService } from './logger.service';
 import { urlPart } from '../validation/sanitize';
 import { AppRoutes } from 'src/app/constants/app-routes';
 import { StorageKeys } from 'src/app/constants/storage-keys';
+import { ClientType } from 'src/app/models/client-type';
+import { ResponseCodes } from 'src/app/models/response-codes';
 
 /**
  * Sign-in state: the token and which role (admin or client) is signed in, kept in sessionStorage. It survives
@@ -52,6 +55,23 @@ export class LoginService {
     let url = this.urlsService.getLoginUrl() + '?userName=' + urlPart(userName) + "&password=" + urlPart(password) + "&type=" + urlPart(type);
     this.log.debug(`Sending login request for ${userName} (${type})`);
     return this.httpClient.post(url, null, { observe: 'response', responseType: 'text' });
+  }
+
+  /**
+   * Asks the backend whether the saved token is still an active session of this type. Emits false when the
+   * backend answers 401 (the session timed out or was lost in a backend restart) or there is no token.
+   * Any other failure, such as the backend being down, emits true: the session may still be valid, and the
+   * page's own requests will report the problem.
+   */
+  public checkSession(type: ClientType): Observable<boolean> {
+    if (!this.token) {
+      return of(false);
+    }
+    const url = this.urlsService.getCheckSessionUrl() + urlPart(this.token) + '/' + type;
+    return this.httpClient.get(url, { responseType: 'text' }).pipe(
+      map(() => true),
+      catchError((err: HttpErrorResponse) => of(err.status !== ResponseCodes.UNAUTHORIZED))
+    );
   }
 
   /** Clears the token (in memory and in sessionStorage) and both role flags. */
