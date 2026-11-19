@@ -12,6 +12,8 @@ import { AppRoutes, LOGIN_AS_PARAM, LoginAs } from 'src/app/constants/app-routes
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ClientType } from 'src/app/models/client-type';
 import { ValidationRules } from 'src/app/validation/rules';
+import { serverErrorMessage } from 'src/app/validation/sanitize';
+import { Messages } from 'src/app/constants/messages';
 
 @Component({
   selector: 'app-login',
@@ -39,8 +41,8 @@ export class LoginComponent implements OnInit {
   /** Opened from the Client page (`/login?as=client`): only the CLIENT type is allowed. */
   public clientOnly = false;
 
-  /** The typed username; decides whether the type can be chosen. */
-  public userName = '';
+  /** The typed nickname; decides whether the type can be chosen. */
+  public nickname = '';
 
   /** The selected type, bound to the Type field. */
   public type = ClientType.CLIENT;
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
 
   /** Only the admin account, and not from the Client page, may choose its type; everyone else is a CLIENT. */
   public get canChooseType(): boolean {
-    return !this.clientOnly && this.userName.trim() === environment.adminUserName;
+    return !this.clientOnly && this.nickname.trim() === environment.adminUserName;
   }
 
   /** Sets the browser tab title and reads where Sign In was opened from (it can change while on this page). */
@@ -62,10 +64,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /** Username input changed: unlock the type for the admin account (preselecting ADMIN), lock it otherwise. */
-  public onUserNameChange(value: string): void {
+  /** Nickname input changed: unlock the type for the admin account (preselecting ADMIN), lock it otherwise. */
+  public onNicknameChange(value: string): void {
     const couldChoose = this.canChooseType;
-    this.userName = value || '';
+    this.nickname = value || '';
     if (this.canChooseType !== couldChoose) {
       this.applyTypeRule(ClientType.ADMIN);
     }
@@ -74,7 +76,7 @@ export class LoginComponent implements OnInit {
   /** Reset button: the form clears its fields first, then this puts back the matching type. */
   public onReset(): void {
     setTimeout(() => {
-      this.userName = '';
+      this.nickname = '';
       this.applyTypeRule(ClientType.CLIENT);
     });
   }
@@ -88,10 +90,11 @@ export class LoginComponent implements OnInit {
 
   /**
    * Signs in with the form values. Opens /admin or /client by the chosen type, and on success stores the
-   * token and role flag.
+   * token and role flag. A wrong nickname or password shows the backend's message, which doesn't say which
+   * of the two was wrong.
    */
   onSubmit() {
-    let userName = this.userLoginForm.value.userName;
+    let userName = this.userLoginForm.value.nickname;
     let password = this.userLoginForm.value.password;
     // Read from the field, not the form: a locked (disabled) Type field is left out of the form's values.
     let type = this.canChooseType ? this.type : ClientType.CLIENT;
@@ -126,12 +129,13 @@ export class LoginComponent implements OnInit {
       },
       err => {
         let error: HttpErrorResponse = err;
-        if (error.error === ResponseCodes.UNAUTHORIZED) { 
-            this.log.error(`Login unauthorized for ${userName} (${type})`, error);
-          }
-        else { 
-              this.log.error(`Login failed for ${userName} (${type})`, error);
-              alert(`Wrong details! Check Your Sign In form!`);
+        if (error.status === ResponseCodes.UNAUTHORIZED) {
+          this.log.info(`Login refused for ${userName} (${type})`);
+          alert(serverErrorMessage(error) || Messages.WRONG_CREDENTIALS);
+        }
+        else {
+          this.log.error(`Login failed for ${userName} (${type})`, error);
+          alert(error.status === 0 ? Messages.NO_CONNECTION : Messages.SERVER_ERROR);
         }
       });
   }

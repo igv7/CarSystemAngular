@@ -38,13 +38,15 @@ export class SignupComponent implements OnInit {
     this.title.setTitle(PageTitles.SIGN_UP);
   }
 
-  /** Creates the client account and opens the sign-in page; alerts if the name is already taken. */
+  /** Creates the client account and opens the sign-in page; alerts with the reason if the backend refuses it. */
   onSubmit() {
     this.signupService.signUp(this.client).subscribe(client => {
       this.log.info(`Success on sign up Client! `,this.client = client);
-      alert(`Client Name: ${this.client.name} has been succesfully added! ` + 
+      alert(`Client ${this.client.nickname} has been succesfully added! You can sign in with this nickname now.` +
       "\nId: " + client.id +
-      "\nName: " + client.name +
+      "\nFirst name: " + client.firstName +
+      "\nLast name: " + client.lastName +
+      "\nNickname: " + client.nickname +
       "\nIdentity Number: " + client.clientID +
       "\nDOB: " + client.birthday +
       "\nPhone Number: " + client.phoneNumber +
@@ -52,10 +54,11 @@ export class SignupComponent implements OnInit {
       "\nBalance: " + client.balance);
       this.router.navigate([AppRoutes.LOGIN])
     }, err => {
-      this.log.error(`Failed on sign up Client! `, this.client.name, err);
+      this.log.error(`Failed on sign up Client! `, this.client.nickname, err);
       const message = serverErrorMessage(err);
-      alert(message ? `Error on sign up!` + `\n\n` + message : `Error on sign up Client! This Client name: ${this.client.name}` +` `+
-      `already exists in the system!` +` `+ `\n`+err.message);
+      alert(message ? `Error on sign up!` + `\n\n` + message : `Error on sign up Client! ` + `\n` + `The reasons: ` + `\n` +
+      `1. No internet connection` + `\n` +
+      `2. No connection to the server` + `\n` + err.message);
     });
   }
 

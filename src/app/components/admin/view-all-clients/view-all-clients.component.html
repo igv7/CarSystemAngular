@@ -4,7 +4,7 @@
         <div class="button">
             <button type="button" class="btn btn-dark mb-2 mt-2" (click)="backToAdmin()">Back to admin page</button>
         </div>
-        <input type='text' [(ngModel)] = 'listFilter' id="name" placeholder="Filter by name or identity number">
+        <input type='text' [(ngModel)] = 'listFilter' id="name" placeholder="Filter by nickname, first or last name, or identity number">
         <h4>Filtered by: {{listFilter}}</h4>
     </div>
     <div class="container-fluid">
@@ -17,7 +17,9 @@
                         <thead>
                             <tr class="table-primary">
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Nickname</th>
+                                <th>First name</th>
+                                <th>Last name</th>
                                 <th>Identity Number</th>
                                 <th>DOB</th>
                                 <th>Phone number</th>
@@ -30,9 +32,11 @@
                                 <td class="table-dark">{{c.id}}</td>
                                 <td class="table-secondary">
                                     <a [routerLink]="[routes.ADMIN_VIEW_ALL_CLIENTS, paths.CLIENT_DETAILS, c.id]" routerLinkActive="active-link">
-                                        {{c.name}}
+                                        {{c.nickname}}
                                     </a>
                                 </td>
+                                <td>{{c.firstName}}</td>
+                                <td>{{c.lastName}}</td>
                                 <td>{{c.clientID}}</td>
                                 <td>{{c.birthday}}</td>
                                 <td>{{c.phoneNumber}}</td>

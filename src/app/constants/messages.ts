@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-/** Texts shown in a page's message box (`<app-page-message>`) when data cannot be shown. */
+/** Texts shown in a page's message box (`<app-page-message>`) when data cannot be shown, and sign-in alerts. */
 export const Messages = {
   // Errors
   NO_CONNECTION: 'No connection to the server. Check your internet connection and try again.',
@@ -13,6 +13,10 @@ export const Messages = {
   wrongClientCarNumber: (id: number, num: string) =>
     `Client ID: ${id} has no car with number ${num}, or there is no such client!`,
   wrongReceiptId: (id: number) => `Wrong receipt ID: ${id}. There is no such receipt!`,
+
+  // Sign in (shown with alert())
+  /** Wrong nickname or password, if the backend's 401 carries no message of its own. */
+  WRONG_CREDENTIALS: 'Wrong nickname or password. Please check your details and try again.',
 
   // Empty lists
   NO_CLIENTS: 'There are no clients yet.',

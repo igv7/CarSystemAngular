@@ -14,14 +14,35 @@
           <form #formInfo="ngForm" class="needs-validation" novalidate (ngSubmit)="formInfo.valid ? onSubmit() : formInfo.form.markAllAsTouched()" #f="ngForm"  action="signup" method=post> 
             <strong id="fieldsHelp" class="form-text text-muted text-center">Fill in the following fields</strong>
             <div class="form-group">
-              <label for="exampleInputName">Username</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" name="userName" [minlength]="rules.NAME.minLength" [maxlength]="rules.NAME.maxLength" [pattern]="rules.NAME.pattern" autofocus required>
+              <label for="exampleInputFirstName">First name</label>
+              <input type="text" class="form-control" id="exampleInputFirstName" placeholder="first name" [(ngModel)]="client.firstName" name="firstName" [minlength]="rules.PERSON_NAME.minLength" [maxlength]="rules.PERSON_NAME.maxLength" [pattern]="rules.PERSON_NAME.pattern" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a username: {{ rules.NAME.minLength }}-{{ rules.NAME.maxLength }} characters, without &lt; or &gt;.
+                Please enter a first name: {{ rules.PERSON_NAME.minLength }}-{{ rules.PERSON_NAME.maxLength }} letters, starting with a letter; spaces, - and ' are allowed.
               </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputLastName">Last name</label>
+              <input type="text" class="form-control" id="exampleInputLastName" placeholder="last name" [(ngModel)]="client.lastName" name="lastName" [minlength]="rules.PERSON_NAME.minLength" [maxlength]="rules.PERSON_NAME.maxLength" [pattern]="rules.PERSON_NAME.pattern" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a last name: {{ rules.PERSON_NAME.minLength }}-{{ rules.PERSON_NAME.maxLength }} letters, starting with a letter; spaces, - and ' are allowed.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputNickname">Nickname</label>
+              <input type="text" class="form-control" id="exampleInputNickname" placeholder="nickname" [(ngModel)]="client.nickname" name="nickname" [minlength]="rules.NICKNAME.minLength" [maxlength]="rules.NICKNAME.maxLength" [pattern]="rules.NICKNAME.pattern" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a nickname: {{ rules.NICKNAME.minLength }}-{{ rules.NICKNAME.maxLength }} characters: letters, digits, '.', '_' or '-', no spaces.
+              </div>
+              <small id="nicknameHelp" class="form-text text-muted">You sign in with your nickname. It must be unique; first and last names may repeat.</small>
             </div>
             <div class="form-group">
               <label for="exampleInputClientID">Identity Number</label>

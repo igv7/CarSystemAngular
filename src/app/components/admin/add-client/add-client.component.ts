@@ -44,12 +44,11 @@ export class AddClientComponent implements OnInit {
       this.log.info(`Success on add Client! `,this.client = client);
       this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS])
     }, err => {
-      this.log.error(`Failed on add Client! `, this.client.name, err);
+      this.log.error(`Failed on add Client! `, this.client.nickname, err);
       const message = serverErrorMessage(err);
       alert(message ? `Error on add Client!` + `\n\n` + message : `Error on add Client! ` + `\n` + `The reasons: ` + `\n` +
       `1. No internet connection` + `\n` +
-      `2. No connection to the server` + `\n` +
-      `3. This Client name: ${this.client.name} already exists in the system!`);
+      `2. No connection to the server`);
     });
   }
 

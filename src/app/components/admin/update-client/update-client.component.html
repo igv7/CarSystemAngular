@@ -24,14 +24,35 @@
             <button type="submit" class="btn btn-primary" (click)="idInfo.valid ? getClient() : idInfo.control.markAsTouched()">View Client</button><br><br>
             <app-page-message [text]="message" [light]="true"></app-page-message>
             <div class="form-group">
-              <label for="exampleInputName">Update client name</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="name" [(ngModel)]="client.name" autocomplete="on" name="userName" [minlength]="rules.NAME.minLength" [maxlength]="rules.NAME.maxLength" [pattern]="rules.NAME.pattern" required>
+              <label for="exampleInputFirstName">Update client First name</label>
+              <input type="text" class="form-control" id="exampleInputFirstName" placeholder="first name" [(ngModel)]="client.firstName" autocomplete="on" name="firstName" [minlength]="rules.PERSON_NAME.minLength" [maxlength]="rules.PERSON_NAME.maxLength" [pattern]="rules.PERSON_NAME.pattern" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a name: {{ rules.NAME.minLength }}-{{ rules.NAME.maxLength }} characters, without &lt; or &gt;.
+                Please enter a first name: {{ rules.PERSON_NAME.minLength }}-{{ rules.PERSON_NAME.maxLength }} letters, starting with a letter; spaces, - and ' are allowed.
               </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputLastName">Update client Last name</label>
+              <input type="text" class="form-control" id="exampleInputLastName" placeholder="last name" [(ngModel)]="client.lastName" autocomplete="on" name="lastName" [minlength]="rules.PERSON_NAME.minLength" [maxlength]="rules.PERSON_NAME.maxLength" [pattern]="rules.PERSON_NAME.pattern" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a last name: {{ rules.PERSON_NAME.minLength }}-{{ rules.PERSON_NAME.maxLength }} letters, starting with a letter; spaces, - and ' are allowed.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputNickname">Update client Nickname</label>
+              <input type="text" class="form-control" id="exampleInputNickname" placeholder="nickname" [(ngModel)]="client.nickname" autocomplete="on" name="nickname" [minlength]="rules.NICKNAME.minLength" [maxlength]="rules.NICKNAME.maxLength" [pattern]="rules.NICKNAME.pattern" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter a nickname: {{ rules.NICKNAME.minLength }}-{{ rules.NICKNAME.maxLength }} characters: letters, digits, '.', '_' or '-', no spaces.
+              </div>
+              <small id="nicknameHelp" class="form-text text-muted">The client signs in with it. It must be unique.</small>
             </div>
             <div class="form-group">
               <label for="exampleInputClientID">Update client identity number</label>

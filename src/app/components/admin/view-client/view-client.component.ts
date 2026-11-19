@@ -39,7 +39,9 @@ export class ViewClientComponent implements OnInit {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
         this.client.id = client.id, 
-        this.client.name = client.name,
+        this.client.firstName = client.firstName,
+        this.client.lastName = client.lastName,
+        this.client.nickname = client.nickname,
         this.client.clientID = client.clientID,
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,

@@ -1,6 +1,6 @@
 /** Sign-in credentials. */
 export interface User {
-    userName: string;
+    nickname: string;
     password: string;
     /** "ADMIN" or "CLIENT". */
     type: string;

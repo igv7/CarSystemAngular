@@ -2,7 +2,11 @@
 export class Client {
     public constructor(
         public id?: number,
-        public name?: string,
+        /** First and last name: several clients may share them. */
+        public firstName?: string,
+        public lastName?: string,
+        /** The login: unique, ignoring case. */
+        public nickname?: string,
         /** Personal identity number: exactly 9 digits. Separate from `id`, the database key. */
         public clientID?: string,
         public birthday?: string,

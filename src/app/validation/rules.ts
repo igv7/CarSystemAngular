@@ -6,10 +6,17 @@ const NO_HTML = '[^<>]*';
  * sync with the backend's Car and Client annotations.
  */
 export const ValidationRules = {
-  /** Client name and sign-up username. */
-  NAME: { minLength: 2, maxLength: 30, pattern: NO_HTML },
-  /** Sign-in username: length and no HTML only; the backend checks the rest. */
-  USER_NAME: { maxLength: 30, pattern: NO_HTML },
+  /**
+   * Nickname, the login (the backend's Constants.NICKNAME_REGEX): Latin letters, digits, '.', '_' and '-',
+   * no spaces. Unique ignoring case; the backend checks that. Also used by the Sign In field.
+   */
+  NICKNAME: { minLength: 3, maxLength: 20, pattern: '[A-Za-z0-9._-]*' },
+  /**
+   * First and last name (the backend's Constants.PERSON_NAME_REGEX): letters of any language, spaces, hyphens
+   * and apostrophes, starting with a letter. A RegExp with the `u` flag, because `\p{L}` (any letter) needs it;
+   * Angular's `pattern` takes it as is, so it carries its own ^ and $.
+   */
+  PERSON_NAME: { minLength: 2, maxLength: 30, pattern: /^\p{L}[\p{L} '\-]*$/u },
   EMAIL: { maxLength: 100, pattern: '[^@\\s<>]+@[^@\\s<>]+\\.[^@\\s<>]+', example: 'name@example.com' },
   PHONE: { pattern: '[0-9]{3}-[0-9]{7}', example: '050-1234567' },
   PASSWORD: { minLength: 4, maxLength: 100 },

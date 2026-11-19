@@ -41,7 +41,9 @@ export class DeleteClientComponent implements OnInit {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
         this.client.id = client.id, 
-        this.client.name = client.name,
+        this.client.firstName = client.firstName,
+        this.client.lastName = client.lastName,
+        this.client.nickname = client.nickname,
         this.client.clientID = client.clientID,
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
@@ -62,7 +64,7 @@ export class DeleteClientComponent implements OnInit {
     if(confirm(`Are You sure You want to remove this Client? ` + `\n` + `Client ID: ${this.client.id}`)) {
     this.adminService.deleteClient(this.client.id).subscribe((c) => {
       this.log.info(`Success on delete Client Id: `,this.client.id = c.id);
-        alert(`Client Id: ${c.id} Name: `+c.name+ ` has been succesfully deleted!`);
+        alert(`Client Id: ${c.id} Nickname: ${c.nickname} has been succesfully deleted!`);
         this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS]);
     }, err => {
       this.log.error(`Failed on delete Client Id: `, this.client.id, err);

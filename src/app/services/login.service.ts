@@ -45,15 +45,18 @@ export class LoginService {
   private userAdmin = JSON.parse(sessionStorage.getItem(StorageKeys.USER_ADMIN) || 'false');
   /** Whether a client is signed in; checked by ClientGuardService. */
   private userClient = JSON.parse(sessionStorage.getItem(StorageKeys.USER_CLIENT) || 'false');
-  /** Name the user signed in with, shown in the dashboards' greeting; null when signed out. */
+  /** Nickname the user signed in with, shown in the dashboards' greeting; null when signed out. */
   private userName: string = sessionStorage.getItem(StorageKeys.USER_NAME);
 
-  /** Sends the credentials to the backend. The response body (text) is the token. */
-  login(userName, password, type): Observable<any> {
-    // Encoded so characters like & + # in a name or password reach the backend unchanged.
-    userName = String(userName).trim();
-    let url = this.urlsService.getLoginUrl() + '?userName=' + urlPart(userName) + "&password=" + urlPart(password) + "&type=" + urlPart(type);
-    this.log.debug(`Sending login request for ${userName} (${type})`);
+  /**
+   * Sends the credentials to the backend. The response body (text) is the token; a wrong nickname or password
+   * gets 401 with the backend's message as the body.
+   */
+  login(nickname, password, type): Observable<any> {
+    // Encoded so characters like & + # in a password reach the backend unchanged.
+    nickname = String(nickname).trim();
+    let url = this.urlsService.getLoginUrl() + '?nickname=' + urlPart(nickname) + "&password=" + urlPart(password) + "&type=" + urlPart(type);
+    this.log.debug(`Sending login request for ${nickname} (${type})`);
     return this.httpClient.post(url, null, { observe: 'response', responseType: 'text' });
   }
 

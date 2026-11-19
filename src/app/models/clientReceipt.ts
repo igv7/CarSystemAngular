@@ -3,7 +3,11 @@ export class ClientReceipt {
     public constructor(
         public receiptId?: number,
         public clientId?: number,
-        public clientName?: string,
+        /** The client's nickname; on receipts from before nicknames existed, their old login name. */
+        public clientNickname?: string,
+        /** Empty on receipts from before first and last names existed. */
+        public clientFirstName?: string,
+        public clientLastName?: string,
         /** The client's ClientID (9-digit personal identity number); `clientId` is the database id. */
         public clientIdentityNumber?: string,
         public clientPhoneNumber?: string,

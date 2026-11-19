@@ -13,13 +13,13 @@
         <div class="container-fluid">
           <form class="needs-validation" novalidate (ngSubmit)="f.valid ? onSubmit() : f.form.markAllAsTouched()" (reset)="onReset()" #f="ngForm" action="login" method="post"> 
             <div class="form-group">
-              <label for="exampleInputName">Username</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="enter a username" [ngModel]="userName" (ngModelChange)="onUserNameChange($event)" name="userName" [maxlength]="rules.USER_NAME.maxLength" [pattern]="rules.USER_NAME.pattern" autofocus required>
+              <label for="exampleInputNickname">Nickname</label>
+              <input type="text" class="form-control" id="exampleInputNickname" placeholder="enter your nickname" [ngModel]="nickname" (ngModelChange)="onNicknameChange($event)" name="nickname" [minlength]="rules.NICKNAME.minLength" [maxlength]="rules.NICKNAME.maxLength" [pattern]="rules.NICKNAME.pattern" autofocus required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <div class="invalid-feedback">
-                Please enter a username (without &lt; or &gt;).
+                Please enter your nickname: {{ rules.NICKNAME.minLength }}-{{ rules.NICKNAME.maxLength }} characters: letters, digits, '.', '_' or '-', no spaces.
               </div>
             </div>
             <div class="form-group">

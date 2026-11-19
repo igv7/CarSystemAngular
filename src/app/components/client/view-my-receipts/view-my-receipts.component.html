@@ -16,7 +16,9 @@
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr class="table-primary">
-                                <th>Client Name</th>
+                                <th>Client Nickname</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Identity Number</th>
                                 <th>Client Phone Number</th>
                                 <th>Client Email</th>
@@ -29,7 +31,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let cr of clientReceipts | clientReceiptDateFilter: listFilter">
-                                <td>{{cr.clientName}}</td>
+                                <td>{{cr.clientNickname}}</td>
+                                <td>{{cr.clientFirstName}}</td>
+                                <td>{{cr.clientLastName}}</td>
                                 <td>{{cr.clientIdentityNumber}}</td>
                                 <td>{{cr.clientPhoneNumber}}</td>
                                 <td>{{cr.clientEmail}}</td>

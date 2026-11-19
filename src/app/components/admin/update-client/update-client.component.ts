@@ -43,7 +43,9 @@ export class UpdateClientComponent implements OnInit {
     this.adminService.getClient(this.client.id).subscribe(client => {
       this.log.debug(`Success! `,
         this.client.id = client.id, 
-        this.client.name = client.name,
+        this.client.firstName = client.firstName,
+        this.client.lastName = client.lastName,
+        this.client.nickname = client.nickname,
         this.client.clientID = client.clientID,
         this.client.birthday = client.birthday,
         this.client.phoneNumber = client.phoneNumber,
@@ -65,10 +67,10 @@ export class UpdateClientComponent implements OnInit {
     const changes = { ...this.client, password: this.client.password || undefined };
     this.adminService.updateClient(changes).subscribe(client => {
       this.log.info(`Success on update Client! `,this.client = client);
-      alert(`Client Name: ${this.client.name} has been succesfully updated!`);
+      alert(`Client ${this.client.nickname} has been succesfully updated!`);
       this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENTS])
     }, err => {
-      this.log.error(`Failed on update Client! `, this.client.name, err);
+      this.log.error(`Failed on update Client! `, this.client.nickname, err);
       const message = serverErrorMessage(err);
       alert(message ? `Error on update Client!` + `\n\n` + message : `Error on update Client! ` + `\n` + `The reasons: ` + `\n` +
       `1. No internet connection` + `\n` + 
