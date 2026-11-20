@@ -1,0 +1,30 @@
+{
+  "name": "car-system-angular-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Playwright end-to-end tests for the Car System Angular front end",
+  "scripts": {
+    "test": "playwright test",
+    "test:mocked": "playwright test --project=mocked",
+    "test:browsers": "playwright test --project=firefox --project=webkit",
+    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:tools": "playwright test --project=tools",
+    "test:quality": "playwright test --project=quality",
+    "test:prod": "playwright test --project=prod-build",
+    "update-screenshots": "playwright test --project=quality --update-snapshots",
+    "test:real": "playwright test --project=real-backend",
+    "test:headed": "playwright test --project=mocked --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "install-browser": "playwright install chromium firefox webkit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.3"
+  }
+}

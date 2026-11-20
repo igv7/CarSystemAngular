@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ToyotaComponent } from './toyota.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('ToyotaComponent', () => {
-  let component: ToyotaComponent;
-  let fixture: ComponentFixture<ToyotaComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ToyotaComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ToyotaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(ToyotaComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

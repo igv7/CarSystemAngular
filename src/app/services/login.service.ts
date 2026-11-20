@@ -90,7 +90,7 @@ export class LoginService {
 
   /**
    * Sign Out button handler: asks for confirmation, goes to /home, then signs out. Signing out after
-   * navigating keeps the admin/client pages' canDeactivate() from asking a second time.
+   * navigating means the admin/client page is gone before its token is, so it can't send requests without one.
    */
   public confirmAndSignOut(): void {
     if (!confirm("Are you sure you want to sign out?")) {
@@ -109,8 +109,8 @@ export class LoginService {
 
   /**
    * Called when the backend no longer accepts the token (idle timeout or backend restart): tells the user,
-   * opens the sign-in page, then clears the sign-in state. Clearing after navigating keeps the admin/client
-   * pages' canDeactivate() from asking "exit?".
+   * opens the sign-in page, then clears the sign-in state. Clearing after navigating means the admin/client
+   * page is gone before its token is (see confirmAndSignOut()).
    */
   public sessionExpired(): void {
     if (this.expiring || !this.isLoggedIn) {

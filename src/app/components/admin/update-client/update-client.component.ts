@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 import { serverErrorMessage } from 'src/app/validation/sanitize';
-import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
 import { Messages, loadErrorMessage } from 'src/app/constants/messages';
@@ -52,12 +52,9 @@ export class UpdateClientComponent implements OnInit {
         this.client.email = client.email, 
         this.client.balance = client.balance);
       this.message = null;
-      this.router.navigate([AppRoutes.ADMIN_UPDATE_CLIENT, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client ID: `, this.client.id, err);
       this.message = loadErrorMessage(err, Messages.wrongClientId(this.client.id));
-      // Close the details of a car or client looked up before.
-      this.router.navigate([AppRoutes.ADMIN_UPDATE_CLIENT]);
     });
   }
 
@@ -93,11 +90,10 @@ export class UpdateClientComponent implements OnInit {
     this.title.setTitle(PageTitles.ADMIN);
   }
 
-  /** Reset button: clears the form, the client shown below the form and the message, and closes details opened from here. */
+  /** Reset button: clears the form, the client shown below the form and the message. */
   public reset(): void {
     this.client = new Client();
     this.message = null;
-    this.router.navigate([AppRoutes.ADMIN_UPDATE_CLIENT]);
   }
 
 }

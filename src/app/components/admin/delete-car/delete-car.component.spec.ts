@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DeleteCarComponent } from './delete-car.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('DeleteCarComponent', () => {
-  let component: DeleteCarComponent;
-  let fixture: ComponentFixture<DeleteCarComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DeleteCarComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteCarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(DeleteCarComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

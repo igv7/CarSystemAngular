@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MazdaComponent } from './mazda.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('MazdaComponent', () => {
-  let component: MazdaComponent;
-  let fixture: ComponentFixture<MazdaComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MazdaComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MazdaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(MazdaComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

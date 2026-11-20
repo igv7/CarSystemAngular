@@ -8,9 +8,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { AboutComponent } from './components/about/about.component';
 import { AdminGuardService } from './services/admin-guard.service';
-import { ExitAdminGuardService } from './services/exit-admin-guard.service';
 import { ClientGuardService } from './services/client-guard.service';
-import { ExitClientGuardService } from './services/exit-client-guard.service';
 import { SignupComponent } from './components/signup/signup.component';
 import { AudiComponent } from './components/cars/audi/audi.component';
 import { BmwComponent } from './components/cars/bmw/bmw.component';
@@ -45,9 +43,7 @@ import { ViewAllReceiptsComponent } from './components/admin/view-all-receipts/v
 import { ViewMyBalanceComponent } from './components/client/view-my-balance/view-my-balance.component';
 import { DeleteAccountComponent } from './components/client/delete-account/delete-account.component';
 import { ClientDetailsComponent } from './components/client/client-details/client-details.component';
-import { ClientIdComponent } from './components/client/client-id/client-id.component';
 import { CarDetailsComponent } from './components/cars/car-details/car-details.component';
-import { CarIdComponent } from './components/cars/car-id/car-id.component';
 import { ReceiptDetailsComponent } from './components/admin/receipt-details/receipt-details.component';
 import { ViewMyCarsComponent } from './components/client/view-my-cars/view-my-cars.component';
 import { ViewCarsComponent } from './components/client/view-cars/view-cars.component';
@@ -70,7 +66,7 @@ const routes: Routes = [
   { path: RoutePaths.SUBARU, component: SubaruComponent },
   { path: RoutePaths.TOYOTA, component: ToyotaComponent },
   { path: RoutePaths.VOLKSWAGEN, component: VolkswagenComponent },
-  { path: RoutePaths.CLIENT, canActivate: [ClientGuardService], canDeactivate: [ExitClientGuardService], component: ClientComponent, children: [
+  { path: RoutePaths.CLIENT, canActivate: [ClientGuardService], component: ClientComponent, children: [
     { path: RoutePaths.VIEW_CARS, component: ViewCarsComponent, children: [
       { path: `${RoutePaths.DETAILS}/:${ID_PARAM}`, component: DetailsComponent }
     ]},
@@ -83,47 +79,27 @@ const routes: Routes = [
     { path: RoutePaths.VIEW_MY_BALANCE, component: ViewMyBalanceComponent },
     { path: RoutePaths.DELETE_ACCOUNT, component: DeleteAccountComponent }
   ]},
-  { path: RoutePaths.ADMIN, canActivate: [AdminGuardService], canDeactivate: [ExitAdminGuardService], component: AdminComponent, children: [
+  { path: RoutePaths.ADMIN, canActivate: [AdminGuardService], component: AdminComponent, children: [
     { path: RoutePaths.ADD_CLIENT, component: AddClientComponent },
-    { path: RoutePaths.UPDATE_CLIENT, component: UpdateClientComponent, children: [
-      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
-    ]},
-    { path: RoutePaths.VIEW_CLIENT, component: ViewClientComponent, children: [
-      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
-    ]},
-    { path: RoutePaths.VIEW_CLIENT_BY_CLIENT_ID, component: ViewClientByClientIdComponent, children: [
-      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
-    ]},
+    { path: RoutePaths.UPDATE_CLIENT, component: UpdateClientComponent },
+    { path: RoutePaths.VIEW_CLIENT, component: ViewClientComponent },
+    { path: RoutePaths.VIEW_CLIENT_BY_CLIENT_ID, component: ViewClientByClientIdComponent },
     { path: RoutePaths.VIEW_ALL_CLIENTS, component: ViewAllClientsComponent, children: [
       { path: `${RoutePaths.CLIENT_DETAILS}/:${ID_PARAM}`, component: ClientDetailsComponent }
     ]},
-    { path: RoutePaths.DELETE_CLIENT, component: DeleteClientComponent, children: [
-      { path: `${RoutePaths.CLIENT_ID}/:${ID_PARAM}`, component: ClientIdComponent }
-    ]},
+    { path: RoutePaths.DELETE_CLIENT, component: DeleteClientComponent },
     { path: RoutePaths.ADD_CAR, component: AddCarComponent },
-    { path: RoutePaths.UPDATE_CAR, component: UpdateCarComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
-    { path: RoutePaths.VIEW_CAR, component: ViewCarComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
-    { path: RoutePaths.VIEW_CAR_BY_NUMBER, component: ViewCarByNumberComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
+    { path: RoutePaths.UPDATE_CAR, component: UpdateCarComponent },
+    { path: RoutePaths.VIEW_CAR, component: ViewCarComponent },
+    { path: RoutePaths.VIEW_CAR_BY_NUMBER, component: ViewCarByNumberComponent },
     { path: RoutePaths.VIEW_ALL_CARS, component: ViewAllCarsComponent, children: [
       { path: `${RoutePaths.CAR_DETAILS}/:${ID_PARAM}`, component: CarDetailsComponent }
     ]},
-    { path: RoutePaths.DELETE_CAR, component: DeleteCarComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
+    { path: RoutePaths.DELETE_CAR, component: DeleteCarComponent },
     { path: RoutePaths.VIEW_ALL_CARS_BY_TYPE, component: ViewAllCarsByTypeComponent },
     { path: RoutePaths.VIEW_ALL_CARS_BY_COLOR, component: ViewAllCarsByColorComponent },
-    { path: RoutePaths.RETURN_CAR, component: ReturnCarComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
-    { path: RoutePaths.VIEW_CLIENT_CAR_BY_NUMBER, component: ViewClientCarByNumberComponent, children: [
-      { path: `${RoutePaths.CAR_ID}/:${ID_PARAM}`, component: CarIdComponent }
-    ]},
+    { path: RoutePaths.RETURN_CAR, component: ReturnCarComponent },
+    { path: RoutePaths.VIEW_CLIENT_CAR_BY_NUMBER, component: ViewClientCarByNumberComponent },
     { path: RoutePaths.VIEW_ALL_CLIENT_CARS, component: ViewAllClientCarsComponent },
     { path: RoutePaths.VIEW_ALL_CLIENT_CARS_BY_TYPE, component: ViewAllClientCarsByTypeComponent },
     { path: RoutePaths.VIEW_ALL_CLIENT_CARS_BY_COLOR, component: ViewAllClientCarsByColorComponent },

@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BmwComponent } from './bmw.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('BmwComponent', () => {
-  let component: BmwComponent;
-  let fixture: ComponentFixture<BmwComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BmwComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BmwComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(BmwComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

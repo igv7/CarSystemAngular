@@ -33,7 +33,7 @@ export class DeleteAccountComponent implements OnInit {
     if(confirm(`Are You sure You want to Delete Your Account?`)) {
     this.clientService.deleteAccount().subscribe((client) => {
       this.log.info(`Success on delete Account `,this.client = client);
-      // Sign out after leaving /client, so its canDeactivate() doesn't ask "exit?" as well.
+      // Sign out after leaving /client, as LoginService.confirmAndSignOut() does.
       this.router.navigate([AppRoutes.HOME]).then(left => {
         if (left) {
           this.loginService.logout();

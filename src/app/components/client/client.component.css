@@ -58,5 +58,8 @@
     flex-basis: auto;
     height: auto;
     max-height: 50vh;
+    /* The menu's own height: 100% has nothing to fill here, so the sidebar scrolls instead; without this
+       a long menu runs past 50vh and lies under the content, which then covers its items. */
+    overflow-y: auto;
   }
 }

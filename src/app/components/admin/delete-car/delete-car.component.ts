@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
-import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
 import { Messages, loadErrorMessage } from 'src/app/constants/messages';
@@ -46,12 +46,9 @@ export class DeleteCarComponent implements OnInit {
         this.car.price = car.price, 
         this.car.image = car.image);
       this.message = null;
-      this.router.navigate([AppRoutes.ADMIN_DELETE_CAR, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Car! Wrong ID: `, this.car.id, err);
       this.message = loadErrorMessage(err, Messages.wrongCarId(this.car.id));
-      // Close the details of a car or client looked up before.
-      this.router.navigate([AppRoutes.ADMIN_DELETE_CAR]);
     });
   }
 
@@ -85,11 +82,10 @@ export class DeleteCarComponent implements OnInit {
     this.title.setTitle(PageTitles.ADMIN);
   }
 
-  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  /** Reset button: clears the form, the car shown below the form and the message. */
   public reset(): void {
     this.car = new Car();
     this.message = null;
-    this.router.navigate([AppRoutes.ADMIN_DELETE_CAR]);
   }
 
 }

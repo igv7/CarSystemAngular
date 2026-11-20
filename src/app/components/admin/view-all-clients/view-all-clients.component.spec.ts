@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewAllClientsComponent } from './view-all-clients.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('ViewAllClientsComponent', () => {
-  let component: ViewAllClientsComponent;
-  let fixture: ComponentFixture<ViewAllClientsComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ViewAllClientsComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ViewAllClientsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(ViewAllClientsComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

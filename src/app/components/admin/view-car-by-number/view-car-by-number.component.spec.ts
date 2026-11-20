@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewCarByNumberComponent } from './view-car-by-number.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('ViewCarByNumberComponent', () => {
-  let component: ViewCarByNumberComponent;
-  let fixture: ComponentFixture<ViewCarByNumberComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ViewCarByNumberComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ViewCarByNumberComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(ViewCarByNumberComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

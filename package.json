@@ -8,6 +8,7 @@
     "log-server": "node log-server.js",
     "build": "ng build",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless --progress=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

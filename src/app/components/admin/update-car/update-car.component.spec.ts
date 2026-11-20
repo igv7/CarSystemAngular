@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UpdateCarComponent } from './update-car.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('UpdateCarComponent', () => {
-  let component: UpdateCarComponent;
-  let fixture: ComponentFixture<UpdateCarComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UpdateCarComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(UpdateCarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(UpdateCarComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

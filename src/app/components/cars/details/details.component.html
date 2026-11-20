@@ -31,7 +31,7 @@
                         <tr>
                             <th>Image for familiarize only</th>
                             <td class="table-dark">
-                                <button *ngIf="car.amount" type="submit" class="btn btn-success" (click)="getCar(car.id)">Get Car</button>&nbsp;&nbsp;
+                                <button *ngIf="car?.amount" type="submit" class="btn btn-success" (click)="getCar(car.id)">Get Car</button>&nbsp;&nbsp;
                                 <a href="/assets/images/CARS/{{car?.type}}.jpg" target="blank">
                                 <img src="/assets/images/CARS/{{car?.type}}.jpg" width="150" height="90">
                                 </a>

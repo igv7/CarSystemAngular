@@ -1,16 +1,12 @@
-import { TestBed } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-  let service: AuthService;
+  afterEach(() => sessionStorage.clear());
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('reads the token from sessionStorage', () => {
+    const auth = new AuthService();
+    expect(auth.getToken()).toBeNull();
+    sessionStorage.setItem('token', 'tok');
+    expect(auth.getToken()).toBe('tok');
   });
 });

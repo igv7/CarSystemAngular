@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentCanDeactivate } from 'src/app/services/exit-admin-guard.service';
-import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { LoginService } from 'src/app/services/login.service';
 import { MenuSection } from '../side-menu/side-menu.component';
@@ -14,29 +12,7 @@ import { StorageKeys } from 'src/app/constants/storage-keys';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, ComponentCanDeactivate {
-
-  /** Set by save(); while false and nobody is signed in, leaving the page asks for confirmation. */
-  saved: boolean = false;
-  /**
-   * Marks the page as saved so leaving it no longer asks for confirmation (not called anywhere at the
-   * moment).
-   */
-  save() {
-    this.saved = true;
-  }
-  /**
-   * Called by ExitAdminGuardService when leaving `/admin`: asks for confirmation unless the page was saved or
-   * someone is signed in.
-   */
-  canDeactivate(): boolean | Observable<boolean> {
-    if (!this.saved && this.loginService.isLoggedIn == false) {
-      return confirm("Are You sure You want to exit?");
-    }
-    else {
-      return true;
-    }
-  }
+export class AdminComponent implements OnInit {
 
   /** Whether an operation is open; when false the overview text is shown instead. */
   public hasChild = false;

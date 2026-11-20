@@ -21,15 +21,22 @@ export class RangeValidatorDirective implements Validator {
 
   constructor(private el: ElementRef<HTMLInputElement>) { }
 
-  /** Empty values pass; `required` reports those. Dates are compared as yyyy-MM-dd strings. */
+  /**
+   * Empty values pass; `required` reports those. Dates are compared as yyyy-MM-dd strings. A date field is
+   * recognized by its `type` attribute, not the property: a browser without a date picker reports the
+   * property as "text", and the user then types the date, which must be yyyy-MM-dd.
+   */
   validate(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value === null || value === undefined || value === '') {
       return null;
     }
-    const isDate = this.el.nativeElement.type === 'date';
+    const isDate = this.el.nativeElement.getAttribute('type') === 'date';
     const toComparable = (v: string | number) => isDate ? String(v) : Number(v);
     const actual = toComparable(value);
+    if (isDate && !/^\d{4}-\d{2}-\d{2}$/.test(actual as string)) {
+      return { date: { actual: value } };
+    }
     if (!isDate && isNaN(actual as number)) {
       return { number: { actual: value } };
     }

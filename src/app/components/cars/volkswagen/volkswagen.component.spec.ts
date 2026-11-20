@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VolkswagenComponent } from './volkswagen.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('VolkswagenComponent', () => {
-  let component: VolkswagenComponent;
-  let fixture: ComponentFixture<VolkswagenComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ VolkswagenComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VolkswagenComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(VolkswagenComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

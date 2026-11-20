@@ -70,13 +70,12 @@ export class ViewAllClientCarsByTypeComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
-  /** Reset button: clears the form, the cars table and the message, and closes details opened from here. */
+  /** Reset button: clears the form, the cars table and the message. */
   public reset(): void {
     this.client = new Client();
     this.car = new Car();
     this.cars = null;
     this.message = null;
-    this.router.navigate([AppRoutes.ADMIN_VIEW_ALL_CLIENT_CARS_BY_TYPE]);
   }
 
 }

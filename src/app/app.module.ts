@@ -25,9 +25,7 @@ import { ToyotaComponent } from './components/cars/toyota/toyota.component';
 import { VolkswagenComponent } from './components/cars/volkswagen/volkswagen.component';
 import { AuthService } from './services/auth.service';
 import { AdminGuardService } from './services/admin-guard.service';
-import { ExitAdminGuardService } from './services/exit-admin-guard.service';
 import { ClientGuardService } from './services/client-guard.service';
-import { ExitClientGuardService } from './services/exit-client-guard.service';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpLoggingInterceptorService } from './http-logging-interceptor.service';
@@ -62,9 +60,7 @@ import { CarFilterPipe } from './pipes/car-filter.pipe';
 import { ClientFilterPipe } from './pipes/client-filter.pipe';
 import { ClientReceiptFilterPipe } from './pipes/client-receipt-filter.pipe';
 import { ClientDetailsComponent } from './components/client/client-details/client-details.component';
-import { ClientIdComponent } from './components/client/client-id/client-id.component';
 import { CarDetailsComponent } from './components/cars/car-details/car-details.component';
-import { CarIdComponent } from './components/cars/car-id/car-id.component';
 import { ViewAllClientCarsComponent } from './components/admin/view-all-client-cars/view-all-client-cars.component';
 import { ReceiptDetailsComponent } from './components/admin/receipt-details/receipt-details.component';
 import { ViewMyCarsComponent } from './components/client/view-my-cars/view-my-cars.component';
@@ -125,9 +121,7 @@ import { PageMessageComponent } from './components/page-message/page-message.com
     ClientFilterPipe,
     ClientReceiptFilterPipe,
     ClientDetailsComponent,
-    ClientIdComponent,
     CarDetailsComponent,
-    CarIdComponent,
     ViewAllClientCarsComponent,
     ReceiptDetailsComponent,
     ViewMyCarsComponent,
@@ -147,7 +141,7 @@ import { PageMessageComponent } from './components/page-message/page-message.com
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, HttpClientModule
   ],
-  providers: [AuthService, AdminGuardService, ExitAdminGuardService, ClientGuardService, ExitClientGuardService, LoginService, {
+  providers: [AuthService, AdminGuardService, ClientGuardService, LoginService, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true

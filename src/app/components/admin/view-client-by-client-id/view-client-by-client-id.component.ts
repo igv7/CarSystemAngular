@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
-import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
 import { Messages, loadErrorMessage } from 'src/app/constants/messages';
@@ -41,12 +41,9 @@ export class ViewClientByClientIdComponent implements OnInit {
     this.adminService.getClientByClientID(clientID).subscribe(client => {
       this.log.debug(`Success! `, this.client = client);
       this.message = null;
-      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_BY_CLIENT_ID, RoutePaths.CLIENT_ID, this.client.id]);
     }, err => {
       this.log.error(`Failed on get Client by identity number: `, clientID, err);
       this.message = loadErrorMessage(err, Messages.wrongClientClientId(clientID));
-      // Close the details of a client looked up before.
-      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_BY_CLIENT_ID]);
     });
   }
 
@@ -62,11 +59,10 @@ export class ViewClientByClientIdComponent implements OnInit {
     this.title.setTitle(PageTitles.ADMIN);
   }
 
-  /** Reset button: clears the form, the client shown below the form and the message, and closes details opened from here. */
+  /** Reset button: clears the form, the client shown below the form and the message. */
   public reset(): void {
     this.client = new Client();
     this.message = null;
-    this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_BY_CLIENT_ID]);
   }
 
 }

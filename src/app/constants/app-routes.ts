@@ -50,9 +50,7 @@ export const RoutePaths = {
   VIEW_MY_BALANCE: 'view-my-balance',
   DELETE_ACCOUNT: 'delete-account',
 
-  // Detail pages (children of a list or lookup page); the id follows as the next segment
-  CAR_ID: 'car-id',
-  CLIENT_ID: 'client-id',
+  // Detail pages (children of a list page); the id follows as the next segment
   CAR_DETAILS: 'car-details',
   CLIENT_DETAILS: 'client-details',
   RECEIPT_DETAILS: 'receipt-details',
@@ -60,7 +58,7 @@ export const RoutePaths = {
   DETAILS_RECEIPT: 'details-receipt',
 };
 
-/** Route parameter that holds the id on detail pages (`car-id/:id`). */
+/** Route parameter that holds the id on detail pages (`car-details/:id`). */
 export const ID_PARAM = 'id';
 
 /** Builds a `/<parent>/<child>` link. */

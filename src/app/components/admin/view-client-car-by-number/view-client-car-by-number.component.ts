@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
-import { AppRoutes, RoutePaths } from 'src/app/constants/app-routes';
+import { AppRoutes } from 'src/app/constants/app-routes';
 import { PageTitles } from 'src/app/constants/page-titles';
 import { ValidationRules } from 'src/app/validation/rules';
 import { Messages, loadErrorMessage } from 'src/app/constants/messages';
@@ -49,12 +49,9 @@ export class ViewClientCarByNumberComponent implements OnInit {
         this.car.price = car.price, 
         this.car.image = car.image);
       this.message = null;
-      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER, RoutePaths.CAR_ID, this.car.id]);
     }, err => {
       this.log.error(`Failed on get Client Car by number: `, this.car.number, err);
       this.message = loadErrorMessage(err, Messages.wrongClientCarNumber(id, number));
-      // Close the details of a car or client looked up before.
-      this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER]);
     });
   }
 
@@ -70,12 +67,11 @@ export class ViewClientCarByNumberComponent implements OnInit {
     this.title.setTitle(PageTitles.ADMIN);
   }
 
-  /** Reset button: clears the form, the car shown below the form and the message, and closes details opened from here. */
+  /** Reset button: clears the form, the car shown below the form and the message. */
   public reset(): void {
     this.client = new Client();
     this.car = new Car();
     this.message = null;
-    this.router.navigate([AppRoutes.ADMIN_VIEW_CLIENT_CAR_BY_NUMBER]);
   }
 
 }

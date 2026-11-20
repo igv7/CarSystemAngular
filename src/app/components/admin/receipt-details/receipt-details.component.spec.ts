@@ -1,25 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ReceiptDetailsComponent } from './receipt-details.component';
+import { setUpComponent } from 'src/app/testing/component-test';
 
 describe('ReceiptDetailsComponent', () => {
-  let component: ReceiptDetailsComponent;
-  let fixture: ComponentFixture<ReceiptDetailsComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ReceiptDetailsComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ReceiptDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const fixture = await setUpComponent(ReceiptDetailsComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

@@ -1,16 +1,10 @@
-import { TestBed } from '@angular/core/testing';
-
 import { ItemsService } from './items.service';
 
 describe('ItemsService', () => {
-  let service: ItemsService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ItemsService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('starts with empty holders (nothing in the app uses it at the moment)', () => {
+    const items = new ItemsService();
+    expect(items.car).toEqual({});
+    expect(items.cars).toEqual([]);
+    expect(items.clientReceipts).toEqual([]);
   });
 });
